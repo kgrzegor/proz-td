@@ -1,18 +1,16 @@
 package com.mygdx.game.screens;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.screens.ui.GameLabel;
 
 public class GameplayScreen extends AbstractScreen{
 
 	
-	private Label scoreLabel, heartLabel, stageLabel, timerLabel;
+	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel;
 	private Button nextStageButton;
 	
 	public GameplayScreen(MyGdxGame game) 
@@ -22,11 +20,16 @@ public class GameplayScreen extends AbstractScreen{
 
 	protected void init() 
 	{		
-		initScoreLabel();
-		initHeartLabel();
-		initStageLabel();
-		initTimerLabel();
+		initLabels();
 		initNextStageButton();
+	}
+
+	private void initLabels() 
+	{
+		scoreLabel = new GameLabel(stage,20,MyGdxGame.HEIGHT-20);
+		heartLabel = new GameLabel(stage,150,MyGdxGame.HEIGHT-20);
+		stageLabel = new GameLabel(stage,300,MyGdxGame.HEIGHT-20);
+		timerLabel = new GameLabel(stage,400,MyGdxGame.HEIGHT-20);
 	}
 
 	private void initNextStageButton() {
@@ -47,43 +50,6 @@ public class GameplayScreen extends AbstractScreen{
 			}
 		});
 		
-	}
-
-	private void initScoreLabel() 
-	{
-		LabelStyle labelStyle = new LabelStyle();
-		labelStyle.font = new BitmapFont();
-		scoreLabel = new Label("", labelStyle);
-		scoreLabel.setX(20);
-		scoreLabel.setY(MyGdxGame.HEIGHT-20);
-		stage.addActor(scoreLabel);
-	}
-	private void initHeartLabel() 
-	{
-		LabelStyle labelStyle = new LabelStyle();
-		labelStyle.font = new BitmapFont();
-		heartLabel = new Label("", labelStyle);
-		heartLabel.setX(150);
-		heartLabel.setY(MyGdxGame.HEIGHT-20);
-		stage.addActor(heartLabel);
-	}
-	private void initStageLabel() 
-	{
-		LabelStyle labelStyle = new LabelStyle();
-		labelStyle.font = new BitmapFont();
-		stageLabel = new Label("", labelStyle);
-		stageLabel.setX(300);
-		stageLabel.setY(MyGdxGame.HEIGHT-20);
-		stage.addActor(stageLabel);
-	}
-	private void initTimerLabel() 
-	{
-		LabelStyle labelStyle = new LabelStyle();
-		labelStyle.font = new BitmapFont();
-		timerLabel = new Label("", labelStyle);
-		timerLabel.setX(400);
-		timerLabel.setY(MyGdxGame.HEIGHT-20);
-		stage.addActor(timerLabel);
 	}
 	
 	public void render(float delta) 

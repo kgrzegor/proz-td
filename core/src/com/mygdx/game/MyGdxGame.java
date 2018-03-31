@@ -31,7 +31,10 @@ public class MyGdxGame extends Game {
 	}
 
 	public void nextStage() {
-		++currentStage;
+		//if(currentStage == 0)
+		// Count to start	
+		if(currentStage < lastStage )
+			++currentStage;
 	}
 	
 	/*
@@ -53,11 +56,6 @@ public class MyGdxGame extends Game {
 
 	public int getCurrentStage() {
 		return currentStage;
-	}
-
-
-	public void setCurrentStage(int currentStage) {
-		this.currentStage = currentStage;
 	}
 
 

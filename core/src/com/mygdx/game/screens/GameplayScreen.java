@@ -1,17 +1,16 @@
 package com.mygdx.game.screens;
 
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
+import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.screens.ui.GameLabel;
+import com.mygdx.game.screens.ui.NextStageButton;
 
 public class GameplayScreen extends AbstractScreen{
 
 	
 	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel, goldLabel;
-	private Button nextStageButton;
+	private NextStageButton nextStageButton;
 	
 	public GameplayScreen(MyGdxGame game) 
 	{
@@ -22,6 +21,8 @@ public class GameplayScreen extends AbstractScreen{
 	{		
 		initLabels();
 		initNextStageButton();
+		game.setLastStage(30);
+		game.setLivesLeft(3);
 	}
 
 	private void initLabels() 
@@ -34,23 +35,16 @@ public class GameplayScreen extends AbstractScreen{
 	}
 
 	private void initNextStageButton() {
-		nextStageButton = new Button(new ButtonStyle());
-		nextStageButton.setWidth(100);
-		nextStageButton.setHeight(20);
-		nextStageButton.setX(700);
-		nextStageButton.setY(MyGdxGame.HEIGHT-40);
-		nextStageButton.setDebug(true);
+		nextStageButton = new NextStageButton(new IClickCallback() 
+				{
+					public void onClick()
+					{
+						game.nextStage();
+					}
+				});
+		
 		stage.addActor(nextStageButton);
-		
-		nextStageButton.addListener(new ClickListener()
-		{
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
-			{
-				game.nextStage();
-				return super.touchDown(event, x, y, pointer, button);
-			}
-		});
-		
+				
 	}
 	
 	public void render(float delta) 

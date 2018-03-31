@@ -3,6 +3,7 @@ package com.mygdx.game.screens;
 
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.entities.Mob;
 import com.mygdx.game.screens.ui.GameLabel;
 import com.mygdx.game.screens.ui.NextStageButton;
 
@@ -11,6 +12,7 @@ public class GameplayScreen extends AbstractScreen{
 	
 	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel, goldLabel;
 	private NextStageButton nextStageButton;
+	private Mob mob;
 	
 	public GameplayScreen(MyGdxGame game) 
 	{
@@ -21,8 +23,17 @@ public class GameplayScreen extends AbstractScreen{
 	{		
 		initLabels();
 		initNextStageButton();
+		initMob();
 		game.setLastStage(30);
 		game.setLivesLeft(3);
+	}
+
+	private void initMob()
+	{
+		mob = new Mob(game);
+		
+		stage.addActor(mob);
+		mob.followPath();
 	}
 
 	private void initLabels() 

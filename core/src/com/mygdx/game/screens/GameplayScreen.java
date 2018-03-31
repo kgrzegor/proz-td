@@ -3,7 +3,7 @@ package com.mygdx.game.screens;
 
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.entities.Mob;
+import com.mygdx.game.controllers.MobController;
 import com.mygdx.game.screens.ui.GameLabel;
 import com.mygdx.game.screens.ui.NextStageButton;
 
@@ -12,7 +12,7 @@ public class GameplayScreen extends AbstractScreen{
 	
 	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel, goldLabel;
 	private NextStageButton nextStageButton;
-	private Mob mob;
+	private MobController mobController;
 	
 	public GameplayScreen(MyGdxGame game) 
 	{
@@ -20,20 +20,18 @@ public class GameplayScreen extends AbstractScreen{
 	}
 
 	protected void init() 
-	{		
-		initLabels();
-		initNextStageButton();
-		initMob();
+	{	
 		game.setLastStage(30);
 		game.setLivesLeft(3);
+		game.setGold(700);
+		initLabels();
+		initNextStageButton(); 
+		initMobController();		
 	}
 
-	private void initMob()
+	private void initMobController()
 	{
-		mob = new Mob(game);
-		
-		stage.addActor(mob);
-		mob.followPath();
+		mobController = new MobController(stage);
 	}
 
 	private void initLabels() 
@@ -50,7 +48,7 @@ public class GameplayScreen extends AbstractScreen{
 				{
 					public void onClick()
 					{
-						game.nextStage();
+						game.nextStage(mobController);
 					}
 				});
 		

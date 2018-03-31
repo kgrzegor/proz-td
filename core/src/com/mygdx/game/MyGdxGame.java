@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.mygdx.game.controllers.MobController;
 import com.mygdx.game.screens.SplashScreen;
 import com.badlogic.gdx.Game;
 
@@ -30,11 +31,13 @@ public class MyGdxGame extends Game {
 		points += value;
 	}
 
-	public void nextStage() {
+	public void nextStage(MobController mobController) {
 		//if(currentStage == 0)
 		// Count to start	
 		if(currentStage < lastStage )
 			++currentStage;
+		
+		mobController.startWave();
 	}
 	
 	/*

@@ -18,6 +18,7 @@ public class MyGdxGame extends Game {
 	private int lastStage;
 	private int timeUntilNextStage;
 	private int livesLeft;
+	private int gold;
 	
 	@Override
 	public void create () {
@@ -87,6 +88,18 @@ public class MyGdxGame extends Game {
 
 	public void setLivesLeft(int livesLeft) {
 		this.livesLeft = livesLeft;
+	}
+
+
+	public int getGold()
+	{
+		return gold;
+	}
+
+
+	public void setGold(int gold)
+	{
+		this.gold = gold;
 	}
 
 

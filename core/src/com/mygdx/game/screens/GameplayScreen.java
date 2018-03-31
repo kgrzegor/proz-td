@@ -10,7 +10,7 @@ import com.mygdx.game.screens.ui.GameLabel;
 public class GameplayScreen extends AbstractScreen{
 
 	
-	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel;
+	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel, goldLabel;
 	private Button nextStageButton;
 	
 	public GameplayScreen(MyGdxGame game) 
@@ -30,14 +30,15 @@ public class GameplayScreen extends AbstractScreen{
 		heartLabel = new GameLabel(stage,150,MyGdxGame.HEIGHT-20);
 		stageLabel = new GameLabel(stage,300,MyGdxGame.HEIGHT-20);
 		timerLabel = new GameLabel(stage,400,MyGdxGame.HEIGHT-20);
+		goldLabel = new GameLabel(stage,550,MyGdxGame.HEIGHT-20);
 	}
 
 	private void initNextStageButton() {
 		nextStageButton = new Button(new ButtonStyle());
 		nextStageButton.setWidth(100);
 		nextStageButton.setHeight(20);
-		nextStageButton.setX(600);
-		nextStageButton.setY(MyGdxGame.HEIGHT-20);
+		nextStageButton.setX(700);
+		nextStageButton.setY(MyGdxGame.HEIGHT-40);
 		nextStageButton.setDebug(true);
 		stage.addActor(nextStageButton);
 		
@@ -68,6 +69,7 @@ public class GameplayScreen extends AbstractScreen{
 		heartLabel.setText("Lives: " + game.getLivesLeft() + " / 3");
 		stageLabel.setText("Stage: " + game.getCurrentStage() + " / " + game.getLastStage());
 		timerLabel.setText("Time: "  + game.getTimeUntilNextStage() + " s");
+		goldLabel.setText("Gold: " + game.getGold() + " g");
 		stage.act();
 	}
 

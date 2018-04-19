@@ -1,13 +1,13 @@
 package com.mygdx.game.screens;
 
 
-import com.mygdx.game.screens.ui.IClickCallback;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controllers.MobController;
 import com.mygdx.game.screens.ui.EmptyFieldButton;
 import com.mygdx.game.screens.ui.GameLabel;
+import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.NextStageButton;
 import com.mygdx.services.PlayerLivesService;
 
@@ -35,11 +35,16 @@ public class GameplayScreen extends AbstractScreen{
 		game.setLastStage(30);
 		game.setGold(700);
 		initMapTexture();
-		
 		initLabels();
 		initNextStageButton(); 
-		initMobController();	
 		initEmptyFieldButtons();
+		initPlayerLivesService();
+		initMobController();	
+	}
+
+	private void initPlayerLivesService()
+	{
+		playerLivesService = new PlayerLivesService();		
 	}
 
 	private void initMapTexture()
@@ -51,7 +56,7 @@ public class GameplayScreen extends AbstractScreen{
 
 	private void initMobController() // put this somewhere
 	{
-		mobController = new MobController(stage);
+		mobController = new MobController(stage,playerLivesService);
 	}
 
 	private void initLabels() // put this into UI

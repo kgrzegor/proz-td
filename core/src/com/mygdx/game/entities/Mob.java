@@ -12,21 +12,22 @@ public class Mob extends Image
 	
 	private final static int STARTING_X = -100; //TODO this should be current 
 	private final static int STARTING_Y = 300;  // stage base (X,Y)
-	
+	MobInterface mobInterface;
 
-	public Mob()
+	public Mob(MobInterface mobInterface)
 	{
 		super(new Texture("mob.png"));
-		init();		
+		init(mobInterface);
 		//on click show mob info
 	}
 	
-	private void init()
+	private void init(MobInterface mobInterface2)
 	{
 		
 		this.setOrigin(WIDHT / 2, HEIGHT / 2);
 		this.setSize(WIDHT, HEIGHT);
 		this.setPosition(STARTING_X, STARTING_Y);		
+		this.mobInterface = mobInterface2;
 	}
 
 	public void followPath()
@@ -39,6 +40,7 @@ public class Mob extends Image
 		
 			public void run() {
 				Mob.this.remove();
+				mobInterface.makeDamage();
 				}
 		});
 		

@@ -54,12 +54,12 @@ public class GameplayScreen extends AbstractScreen{
 		
 	}
 
-	private void initMobController() // put this somewhere
+	private void initMobController()
 	{
 		mobController = new MobController(stage,playerLivesService);
 	}
 
-	private void initLabels() // put this into UI
+	private void initLabels()
 	{
 		scoreLabel = new GameLabel(stage,20,MyGdxGame.HEIGHT-20);
 		heartLabel = new GameLabel(stage,150,MyGdxGame.HEIGHT-20);
@@ -80,7 +80,7 @@ public class GameplayScreen extends AbstractScreen{
 		
 		stage.addActor(nextStageButton);
 	}
-	private void initEmptyFieldButtons()
+	private void initEmptyFieldButtons() //put this into controllers
 	{
 		fieldButtons = new EmptyFieldButton[2];
 		debug = 0;

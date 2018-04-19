@@ -35,7 +35,7 @@ public class MobController
 	}
 	private void addMobToStage()
 	{
-		Mob mob = new Mob(new MobInterface()
+		Mob mob = new Mob(new MobInterface() // TODO this should be outside constructor - for taking damage
 		{
 			
 			@Override

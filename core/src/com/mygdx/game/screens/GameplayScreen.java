@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controllers.MobController;
+import com.mygdx.game.controllers.TowerController;
 import com.mygdx.game.screens.ui.FieldButton;
 import com.mygdx.game.screens.ui.GameLabel;
 import com.mygdx.game.screens.ui.IClickCallback;
@@ -19,9 +20,7 @@ public class GameplayScreen extends AbstractScreen
 	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel, goldLabel;
 	private NextStageButton nextStageButton;
 	private MobController mobController;
-	private FieldButton[] fieldButtons;
-
-	private int debug;
+	private TowerController towerController;
 
 	public GameplayScreen(MyGdxGame game)
 	{
@@ -35,7 +34,7 @@ public class GameplayScreen extends AbstractScreen
 		initMapTexture();
 		initLabels();
 		initNextStageButton();
-		initFieldButtons();
+		initTowerController();
 		initPlayerLivesService();
 		initMobController();
 	}
@@ -79,31 +78,9 @@ public class GameplayScreen extends AbstractScreen
 		stage.addActor(nextStageButton);
 	}
 
-	private void initFieldButtons() // put this into controllers
+	private void initTowerController() // put this into controllers
 	{
-		fieldButtons = new FieldButton[2];
-		debug = 0;
-
-		fieldButtons[0] = new FieldButton(new IClickCallback()
-		{
-			public void onClick()
-			{
-				++debug;
-				System.out.println(debug);
-			}
-		}, 300, 420);
-
-		fieldButtons[1] = new FieldButton(new IClickCallback()
-		{
-			public void onClick()
-			{
-				++debug;
-				System.out.println(debug);
-			}
-		}, 800, 420);
-
-		for (int i = 0; i < fieldButtons.length; ++i)
-			stage.addActor(fieldButtons[i]);
+		towerController = new TowerController(stage);
 	}
 
 	public void render(float delta)

@@ -1,7 +1,10 @@
 package com.mygdx.game.screens.ui;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.screens.ui.IClickCallback;
@@ -36,8 +39,11 @@ public class NextStageButton extends Button
 
 	private static ButtonStyle prepareStyle()
 	{
-		// TODO image for button
+		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("ui-gray.atlas"));
+		Skin skin = new Skin(atlas);
 		ButtonStyle buttonStyle = new ButtonStyle();
+		buttonStyle.up = skin.getDrawable("button_03");
+		buttonStyle.down = skin.getDrawable("button_01");
 		return buttonStyle;
 	}
 }

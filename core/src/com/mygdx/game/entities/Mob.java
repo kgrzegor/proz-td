@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class Mob extends Image
 {
-	private final static int WIDHT = 78;
-	private final static int HEIGHT = 112;
+	private final static int WIDHT = 39;
+	private final static int HEIGHT = 56;
 
 	private final static int STARTING_X = -100; // TODO this should be current
 	private final static int STARTING_Y = 300; // stage base (X,Y)
@@ -38,7 +38,6 @@ public class Mob extends Image
 
 		Action c = Actions.run(new Runnable()
 		{
-
 			public void run()
 			{
 				Mob.this.remove();

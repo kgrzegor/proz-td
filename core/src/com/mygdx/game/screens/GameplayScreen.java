@@ -43,7 +43,8 @@ public class GameplayScreen extends AbstractScreen{
 		goldLabel = new GameLabel(stage,550,MyGdxGame.HEIGHT-20);
 	}
 
-	private void initNextStageButton() {
+	private void initNextStageButton() 
+	{
 		nextStageButton = new NextStageButton(new IClickCallback() 
 				{
 					public void onClick()

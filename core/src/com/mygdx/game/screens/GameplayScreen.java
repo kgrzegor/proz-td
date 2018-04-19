@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controllers.MobController;
 import com.mygdx.game.controllers.TowerController;
-import com.mygdx.game.screens.ui.FieldButton;
 import com.mygdx.game.screens.ui.GameLabel;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.NextStageButton;
@@ -20,6 +19,7 @@ public class GameplayScreen extends AbstractScreen
 	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel, goldLabel;
 	private NextStageButton nextStageButton;
 	private MobController mobController;
+	@SuppressWarnings("unused")
 	private TowerController towerController;
 
 	public GameplayScreen(MyGdxGame game)

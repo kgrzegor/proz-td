@@ -4,9 +4,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class EmptyFieldButton extends Button
+public class FieldButton extends Button
 {
-	public EmptyFieldButton (final IClickCallback callBack, int X, int Y)
+	public FieldButton (final IClickCallback callBack, int X, int Y)
 	{
 		super(prepareStyle());
 		
@@ -18,8 +18,8 @@ public class EmptyFieldButton extends Button
 
 	private void init(final IClickCallback callBack)
 	{
-		this.setWidth(50);
-		this.setHeight(20);
+		this.setWidth(100);
+		this.setHeight(100);
 		this.setDebug(true);
 		
 		this.addListener(new ClickListener()

@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controllers.MobController;
-import com.mygdx.game.screens.ui.EmptyFieldButton;
+import com.mygdx.game.screens.ui.FieldButton;
 import com.mygdx.game.screens.ui.GameLabel;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.NextStageButton;
@@ -20,7 +20,7 @@ public class GameplayScreen extends AbstractScreen{
 	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel, goldLabel;
 	private NextStageButton nextStageButton;
 	private MobController mobController;
-	private EmptyFieldButton [] fieldButtons;
+	private FieldButton [] fieldButtons;
 	
 	
 	private int debug;
@@ -82,24 +82,26 @@ public class GameplayScreen extends AbstractScreen{
 	}
 	private void initEmptyFieldButtons() //put this into controllers
 	{
-		fieldButtons = new EmptyFieldButton[2];
+		fieldButtons = new FieldButton[2];
 		debug = 0;
-		fieldButtons[0] = new EmptyFieldButton(new IClickCallback() 
+		
+		fieldButtons[0] = new FieldButton(new IClickCallback() 
 		{
 			public void onClick()
 			{
 				++debug;
 				System.out.println(debug);
 			}
-		},100,100);
-		fieldButtons[1] = new EmptyFieldButton(new IClickCallback() 
+		},300,420);
+		
+		fieldButtons[1] = new FieldButton(new IClickCallback() 
 		{
 			public void onClick()
 			{
 				++debug;
 				System.out.println(debug);
 			}
-		},300,200);
+		},800,420);
 		
 		for (int i = 0; i < fieldButtons.length; ++i)
 		stage.addActor(fieldButtons[i]);

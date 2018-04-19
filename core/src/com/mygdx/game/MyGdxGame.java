@@ -18,7 +18,6 @@ public class MyGdxGame extends Game {
 	private int currentStage;
 	private int lastStage;
 	private int timeUntilNextStage;
-	private int livesLeft;
 	private int gold;
 	
 	@Override
@@ -79,16 +78,6 @@ public class MyGdxGame extends Game {
 
 	public void setTimeUntilNextStage(int timeUntilNextStage) {
 		this.timeUntilNextStage = timeUntilNextStage;
-	}
-
-
-	public int getLivesLeft() {
-		return livesLeft;
-	}
-
-
-	public void setLivesLeft(int livesLeft) {
-		this.livesLeft = livesLeft;
 	}
 
 

@@ -2,17 +2,28 @@ package com.mygdx.game.screens;
 
 
 import com.mygdx.game.screens.ui.IClickCallback;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controllers.MobController;
+import com.mygdx.game.screens.ui.EmptyFieldButton;
 import com.mygdx.game.screens.ui.GameLabel;
 import com.mygdx.game.screens.ui.NextStageButton;
+import com.mygdx.services.PlayerLivesService;
 
 public class GameplayScreen extends AbstractScreen{
 
 	
+	private PlayerLivesService playerLivesService;
+	
+	private Image mapImg;
 	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel, goldLabel;
 	private NextStageButton nextStageButton;
 	private MobController mobController;
+	private EmptyFieldButton [] fieldButtons;
+	
+	
+	private int debug;
 	
 	public GameplayScreen(MyGdxGame game) 
 	{
@@ -22,19 +33,28 @@ public class GameplayScreen extends AbstractScreen{
 	protected void init() 
 	{	
 		game.setLastStage(30);
-		game.setLivesLeft(3);
 		game.setGold(700);
+		initMapTexture();
+		
 		initLabels();
 		initNextStageButton(); 
-		initMobController();		
+		initMobController();	
+		initEmptyFieldButtons();
 	}
 
-	private void initMobController()
+	private void initMapTexture()
+	{
+		mapImg = new Image(new Texture("map.jpg"));
+		stage.addActor(mapImg);
+		
+	}
+
+	private void initMobController() // put this somewhere
 	{
 		mobController = new MobController(stage);
 	}
 
-	private void initLabels() 
+	private void initLabels() // put this into UI
 	{
 		scoreLabel = new GameLabel(stage,20,MyGdxGame.HEIGHT-20);
 		heartLabel = new GameLabel(stage,150,MyGdxGame.HEIGHT-20);
@@ -43,7 +63,7 @@ public class GameplayScreen extends AbstractScreen{
 		goldLabel = new GameLabel(stage,550,MyGdxGame.HEIGHT-20);
 	}
 
-	private void initNextStageButton() 
+	private void initNextStageButton()  //put this into controllers
 	{
 		nextStageButton = new NextStageButton(new IClickCallback() 
 				{
@@ -54,8 +74,32 @@ public class GameplayScreen extends AbstractScreen{
 				});
 		
 		stage.addActor(nextStageButton);
-				
 	}
+	private void initEmptyFieldButtons()
+	{
+		fieldButtons = new EmptyFieldButton[2];
+		debug = 0;
+		fieldButtons[0] = new EmptyFieldButton(new IClickCallback() 
+		{
+			public void onClick()
+			{
+				++debug;
+				System.out.println(debug);
+			}
+		},100,100);
+		fieldButtons[1] = new EmptyFieldButton(new IClickCallback() 
+		{
+			public void onClick()
+			{
+				++debug;
+				System.out.println(debug);
+			}
+		},300,200);
+		
+		for (int i = 0; i < fieldButtons.length; ++i)
+		stage.addActor(fieldButtons[i]);
+	}
+	
 	
 	public void render(float delta) 
 	{
@@ -70,11 +114,16 @@ public class GameplayScreen extends AbstractScreen{
 	private void update() 
 	{
 		scoreLabel.setText("Score: " + game.getPoints());
-		heartLabel.setText("Lives: " + game.getLivesLeft() + " / 3");
+		heartLabel.setText("Lives: " + playerLivesService.getLivesLeft() + " / 3");
 		stageLabel.setText("Stage: " + game.getCurrentStage() + " / " + game.getLastStage());
 		timerLabel.setText("Time: "  + game.getTimeUntilNextStage() + " s");
 		goldLabel.setText("Gold: " + game.getGold() + " g");
 		stage.act();
+	}
+
+	public PlayerLivesService getPlayerLivesService()
+	{
+		return playerLivesService;
 	}
 
 }

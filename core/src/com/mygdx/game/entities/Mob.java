@@ -7,38 +7,42 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class Mob extends Image
 {
-	private final static int WIDHT = 80;
-	private final static int HEIGHT = 80;
+	private final static int WIDHT = 78;
+	private final static int HEIGHT = 112;
 	
 	private final static int STARTING_X = -100; //TODO this should be current 
-	private final static int STARTING_Y = 500;  // stage base (X,Y)
+	private final static int STARTING_Y = 300;  // stage base (X,Y)
+	
 
 	public Mob()
 	{
-		super(new Texture("badlogic.jpg"));
-		
-		this.setOrigin(WIDHT / 2, HEIGHT / 2);
-		this.setSize(WIDHT, HEIGHT);
-		
-		this.setPosition(STARTING_X, STARTING_Y);
-		
+		super(new Texture("mob.png"));
+		init();		
 		//on click show mob info
 	}
 	
+	private void init()
+	{
+		
+		this.setOrigin(WIDHT / 2, HEIGHT / 2);
+		this.setSize(WIDHT, HEIGHT);
+		this.setPosition(STARTING_X, STARTING_Y);		
+	}
+
 	public void followPath()
 	{
-		Action a = Actions.parallel(Actions.moveBy(300, 0, 5));
+		Action a = Actions.parallel(Actions.moveBy(1400, 0, 15));
 		
-		Action b = Actions.parallel(Actions.moveBy(0, -200, 4));
+		//Action b = Actions.parallel(Actions.moveBy(0, -200, 4));
 		
 		Action c = Actions.run(new Runnable() {
 		
 			public void run() {
 				Mob.this.remove();
-			}
+				}
 		});
 		
-		this.addAction(Actions.sequence(a, b, c));
+		this.addAction(Actions.sequence(a, c));
 	}
 	
 }

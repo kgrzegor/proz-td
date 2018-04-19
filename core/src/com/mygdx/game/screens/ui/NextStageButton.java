@@ -8,10 +8,10 @@ import com.mygdx.game.screens.ui.IClickCallback;
 
 public class NextStageButton extends Button
 {
-	public NextStageButton (final IClickCallback callBack)
+	public NextStageButton(final IClickCallback callBack)
 	{
 		super(prepareStyle());
-		
+
 		init(callBack);
 	}
 
@@ -20,10 +20,9 @@ public class NextStageButton extends Button
 		this.setWidth(100);
 		this.setHeight(20);
 		this.setX(700);
-		this.setY(MyGdxGame.HEIGHT-20);
+		this.setY(MyGdxGame.HEIGHT - 30);
 		this.setDebug(true);
-		
-		
+
 		this.addListener(new ClickListener()
 		{
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
@@ -32,13 +31,12 @@ public class NextStageButton extends Button
 				return super.touchDown(event, x, y, pointer, button);
 			}
 		});
-		
-		
+
 	}
 
 	private static ButtonStyle prepareStyle()
 	{
-		//TODO image for button
+		// TODO image for button
 		ButtonStyle buttonStyle = new ButtonStyle();
 		return buttonStyle;
 	}

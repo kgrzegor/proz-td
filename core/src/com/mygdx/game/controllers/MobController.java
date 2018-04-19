@@ -9,18 +9,19 @@ import com.mygdx.services.PlayerLivesService;
 
 public class MobController
 {
-	private int spawnTime; //TODO: vectors for whole stage 
+	private int spawnTime; // TODO: vectors for whole stage
 	private int spawnCount;
 	private Stage stage;
 	private PlayerLivesService playerLivesService;
+
 	public MobController(Stage stage, PlayerLivesService playerLivesService2)
 	{
 		spawnTime = 3;
 		spawnCount = 15;
-		this.stage = stage; 
+		this.stage = stage;
 		this.playerLivesService = playerLivesService2;
 	}
-	
+
 	public void startWave()
 	{
 		Timer.schedule(new Task()
@@ -30,28 +31,28 @@ public class MobController
 				addMobToStage();
 			}
 
-			
 		}, spawnTime, spawnTime, spawnCount);
 	}
+
 	private void addMobToStage()
 	{
 		Mob mob = new Mob(new MobInterface() // TODO this should be outside constructor - for taking damage
 		{
-			
+
 			@Override
 			public void takeDamage()
 			{
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			public void makeDamage()
 			{
-				playerLivesService.makeDamage();				
+				playerLivesService.makeDamage();
 			}
 		});
 		stage.addActor(mob);
 		mob.followPath();
-		
+
 	}
 }

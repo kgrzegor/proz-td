@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.entities.Mob;
 import com.mygdx.game.entities.MobInterface;
-import com.mygdx.services.PlayerLivesService;
+import com.mygdx.game.services.PlayerLivesService;
 
 public class MobController
 {

@@ -20,7 +20,7 @@ public class FieldButton extends Button
 	{
 		this.setWidth(100);
 		this.setHeight(100);
-		this.setDebug(true);
+		// this.setDebug(true);
 
 		this.addListener(new ClickListener()
 		{

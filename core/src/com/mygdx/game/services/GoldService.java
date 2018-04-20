@@ -1,4 +1,4 @@
-package com.mygdx.services;
+package com.mygdx.game.services;
 
 public class GoldService
 {

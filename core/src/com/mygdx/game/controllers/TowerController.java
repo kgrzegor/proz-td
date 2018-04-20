@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.entities.Tower;
 import com.mygdx.game.screens.ui.FieldButton;
 import com.mygdx.game.screens.ui.IClickCallback;
-import com.mygdx.services.GoldService;
+import com.mygdx.game.services.GoldService;
 
 public class TowerController
 {

@@ -8,8 +8,8 @@ import com.mygdx.game.controllers.TowerController;
 import com.mygdx.game.screens.ui.GameLabel;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.NextStageButton;
-import com.mygdx.services.GoldService;
-import com.mygdx.services.PlayerLivesService;
+import com.mygdx.game.services.GoldService;
+import com.mygdx.game.services.PlayerLivesService;
 
 public class GameplayScreen extends AbstractScreen
 {

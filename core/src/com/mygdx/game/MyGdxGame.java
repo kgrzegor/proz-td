@@ -18,7 +18,7 @@ public class MyGdxGame extends Game
 	private int currentStage;
 	private int lastStage;
 	private int timeUntilNextStage;
-	private int gold;
+
 
 	@Override
 	public void create()
@@ -84,14 +84,5 @@ public class MyGdxGame extends Game
 		this.timeUntilNextStage = timeUntilNextStage;
 	}
 
-	public int getGold()
-	{
-		return gold;
-	}
-
-	public void setGold(int gold)
-	{
-		this.gold = gold;
-	}
 
 }

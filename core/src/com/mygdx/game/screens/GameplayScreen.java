@@ -8,12 +8,14 @@ import com.mygdx.game.controllers.TowerController;
 import com.mygdx.game.screens.ui.GameLabel;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.NextStageButton;
+import com.mygdx.services.GoldService;
 import com.mygdx.services.PlayerLivesService;
 
 public class GameplayScreen extends AbstractScreen
 {
 
 	private PlayerLivesService playerLivesService;
+	private GoldService goldService;
 
 	private Image mapImg;
 	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel, goldLabel;
@@ -30,13 +32,19 @@ public class GameplayScreen extends AbstractScreen
 	protected void init()
 	{
 		game.setLastStage(30);
-		game.setGold(700);
 		initMapTexture();
 		initLabels();
 		initNextStageButton();
-		initTowerController();
 		initPlayerLivesService();
 		initMobController();
+		initGoldService();
+		
+		initTowerController();
+	}
+	
+	private void initGoldService()
+	{
+		goldService = new GoldService();
 	}
 
 	private void initPlayerLivesService()
@@ -80,7 +88,7 @@ public class GameplayScreen extends AbstractScreen
 
 	private void initTowerController() // put this into controllers
 	{
-		towerController = new TowerController(stage);
+		towerController = new TowerController(stage, goldService);
 	}
 
 	public void render(float delta)
@@ -99,7 +107,7 @@ public class GameplayScreen extends AbstractScreen
 		heartLabel.setText("Lives: " + playerLivesService.getLivesLeft() + " / 3");
 		stageLabel.setText("Stage: " + game.getCurrentStage() + " / " + game.getLastStage());
 		timerLabel.setText("Time: " + game.getTimeUntilNextStage() + " s");
-		goldLabel.setText("Gold: " + game.getGold() + " g");
+		goldLabel.setText("Gold: " + goldService.getGold() + " g");
 		stage.act();
 	}
 

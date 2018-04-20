@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.entities.Tower;
 import com.mygdx.game.screens.ui.FieldButton;
 import com.mygdx.game.screens.ui.IClickCallback;
+import com.mygdx.services.GoldService;
 
 public class TowerController
 {
@@ -13,15 +14,17 @@ public class TowerController
 	private FieldButton[] fieldButtons;
 	private Tower[] towers;
 	private Stage stage;
+	private GoldService goldService;
 
-	public TowerController(Stage stage)
+	public TowerController(Stage stage, GoldService goldService)
 	{
-		init(stage);
+		init(stage,goldService);
 	}
 
-	private void init(Stage stage)
+	private void init(Stage stage, GoldService goldService)
 	{
 		this.stage = stage;
+		this.goldService = goldService;
 		initFieldButtons();
 		initTowers();
 	}
@@ -43,9 +46,12 @@ public class TowerController
 				{
 					if (towers[id] == null)
 					{
-						// TODO check if player has gold and gold--
-						towers[id] = new Tower(xCords[id], yCords[id]);
-						stage.addActor(towers[id]);
+						if (goldService.spendGold(500)) //magic numbers
+						{
+							towers[id] = new Tower(xCords[id], yCords[id]);
+							stage.addActor(towers[id]);
+						}
+						
 					}
 
 					// else

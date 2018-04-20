@@ -20,11 +20,10 @@ public class NextStageButton extends Button
 
 	private void init(final IClickCallback callBack)
 	{
-		this.setWidth(100);
-		this.setHeight(20);
-		this.setX(700);
-		this.setY(MyGdxGame.HEIGHT - 30);
-		this.setDebug(true);
+		this.setWidth(64);
+		this.setHeight(32);
+		this.setX(650);
+		this.setY(MyGdxGame.HEIGHT - 40);
 
 		this.addListener(new ClickListener()
 		{

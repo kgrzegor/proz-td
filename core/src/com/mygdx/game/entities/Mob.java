@@ -10,15 +10,15 @@ public class Mob extends Image
 	private final static int WIDHT = 39;
 	private final static int HEIGHT = 56;
 
-	private final static int STARTING_X = -100; // TODO this should be current
-	private final static int STARTING_Y = 300; // stage base (X,Y)
+	private final static int STARTING_X = -100; // TODO this should be current stage base (X,Y)
+	private final static int STARTING_Y = 300;
 	MobInterface mobInterface;
 
 	public Mob(MobInterface mobInterface)
 	{
 		super(new Texture("mob.png"));
 		init(mobInterface);
-		// on click show mob info
+		// TODO on click show mob info
 	}
 
 	private void init(MobInterface mobInterface2)

@@ -48,7 +48,7 @@ public class FieldController
 					{
 						if (goldService.spendGold(500)) //magic numbers
 						{
-							towers[id] = new Tower(xCords[id], yCords[id]);
+							towers[id] = new Tower(xCords[id], yCords[id], stage);
 							stage.addActor(towers[id]);
 						}
 						

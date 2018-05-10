@@ -41,6 +41,7 @@ public class MobController
 
 	private void addMobToStage()
 	{
+		//should be changed to newMob as in projectileController
 		Mobs.add(new Mob(new MobInterface()
 		{
 

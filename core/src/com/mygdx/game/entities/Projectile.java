@@ -7,15 +7,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class Projectile extends Image
 {
-	private final static int WIDHT = 5;
-	private final static int HEIGHT = 5;
+	private final static int WIDHT = 10;
+	private final static int HEIGHT = 10;
 	
 	
 	float directionX;
 	float directionY;
 	private float aSlope;
 	
-	public Projectile(float projectileSpeed, int damage, int towerRadius, float originX, float originY, float targetX, float targetY)
+	public Projectile(int towerRadius, float originX, float originY, float targetX, float targetY)
 	{
 		super(new Texture("projectile.png"));
 		init(originX, originY);
@@ -39,8 +39,6 @@ public class Projectile extends Image
 			directionX = 0;
 			directionY = targetY - originY > 0 ? towerRadius : -towerRadius;
 		}
-			
-		this.fire(projectileSpeed);
 	}
 	private void init(float originX, float originY)
 	{
@@ -55,9 +53,18 @@ public class Projectile extends Image
 		directionX = (float) (Math.cos(alpha) * towerRadius);		
 	}
 	
-	private void fire(float projectileSpeed)
+	public void fire(float projectileSpeed)
 	{
 		Action a = Actions.parallel(Actions.moveBy(directionX, directionY, 1/projectileSpeed));
+		Action c = Actions.run(new Runnable()
+		{
+			public void run()
+			{
+				Projectile.this.remove();
+			}
+		});
+		
+		this.addAction(Actions.sequence(a, c));
 	}
 
 

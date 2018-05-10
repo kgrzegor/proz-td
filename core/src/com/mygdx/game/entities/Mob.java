@@ -40,7 +40,7 @@ public class Mob extends Image
 		{
 			public void run()
 			{
-				this.remove();
+				Mob.this.remove();
 				mobInterface.makeDamage();
 			}
 		});

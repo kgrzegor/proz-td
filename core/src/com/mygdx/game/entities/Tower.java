@@ -30,9 +30,10 @@ public class Tower extends Image
 		super(new Texture("tower.png"));
 		this.stage = stage;
 		this.targets = mobsList;
+		this.setPosition((100 - 72) / 2 + xCord, yCord);  // magic numbers
 		init();
 
-		this.setPosition((100 - 72) / 2 + xCord, yCord); // magic numbers
+		
 		this.startShooting();
 	}
 
@@ -43,10 +44,11 @@ public class Tower extends Image
 		this.myX = this.getX(Align.center);
 		this.myY = this.getY(Align.center);
 		this.towerRadius = 500;
-		this.projectileController = new ProjectileController(this.getOriginX(), this.getOriginY(), towerRadius, stage);
-		this.projectileSpeed = 1;
+		this.projectileController = new ProjectileController(this.myX, this.myY, towerRadius, stage);
+		this.projectileSpeed = 1.5f;
 		this.fireRate = 3;
 		this.damage = 10;
+		
 	}
 
 	private void startShooting()

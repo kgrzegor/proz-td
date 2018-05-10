@@ -38,10 +38,10 @@ public class GameplayScreen extends AbstractScreen
 		initPlayerLivesService();
 		initMobController();
 		initGoldService();
-		
+
 		initTowerController();
 	}
-	
+
 	private void initGoldService()
 	{
 		goldService = new GoldService();
@@ -88,7 +88,7 @@ public class GameplayScreen extends AbstractScreen
 
 	private void initTowerController() // put this into controllers
 	{
-		
+
 		towerController = new FieldController(stage, goldService, mobController.getMobsList());
 	}
 

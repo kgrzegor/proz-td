@@ -16,11 +16,12 @@ public class MobController
 	private Stage stage;
 	private PlayerLivesService playerLivesService;
 	private ArrayList<Mob> mobsList;
+	private Mob newMob;
 
 	public MobController(Stage stage, PlayerLivesService playerLivesService2)
 	{
 		spawnTime = 3;
-		spawnCount = 15;
+		spawnCount = 1;
 		this.stage = stage;
 		this.playerLivesService = playerLivesService2;
 		mobsList = new ArrayList<Mob>();
@@ -36,13 +37,13 @@ public class MobController
 				addMobToStage();
 			}
 
-		}, spawnTime / 10, spawnTime, spawnCount);
+		}, spawnTime / 10, spawnTime, spawnCount-1);
 	}
 
 	private void addMobToStage()
 	{
 		// should be changed to newMob as in projectileController
-		mobsList.add(new Mob(new MobInterface()
+		newMob = new Mob(new MobInterface()
 		{
 
 			@Override
@@ -56,9 +57,10 @@ public class MobController
 			{
 				playerLivesService.makeDamage();
 			}
-		}));
-		stage.addActor(mobsList.get(mobsList.size() - 1));
-		mobsList.get(mobsList.size() - 1).followPath();
+		});
+		stage.addActor(newMob);
+		newMob.followPath();
+		mobsList.add(newMob);
 
 	}
 

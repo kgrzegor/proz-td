@@ -7,7 +7,7 @@ import com.mygdx.game.entities.Projectile;
 
 public class ProjectileController
 {
-	private float originX, originY;
+	private float towerX, towerY;
 	private ArrayList<Projectile> ProjectilesList;
 	private Projectile newProjectile;
 	private int towerRadius;
@@ -15,8 +15,8 @@ public class ProjectileController
 
 	public ProjectileController(float X, float Y, int towerRadius, Stage stage)
 	{
-		this.originX = X;
-		this.originY = Y;
+		this.towerX = X;
+		this.towerY = Y;
 		this.towerRadius = towerRadius;
 		ProjectilesList = new ArrayList<Projectile>();
 		this.stage = stage;
@@ -24,9 +24,8 @@ public class ProjectileController
 
 	public void add(float projectileSpeed, int damage, float targetX, float targetY)
 	{
-		System.out.println("Shooting: " + targetX + " " + targetY);
-		newProjectile = new Projectile(towerRadius, originX, originY, targetX, targetY);
-		
+		newProjectile = new Projectile(towerRadius, towerX, towerY, targetX, targetY);
+	
 		stage.addActor(newProjectile);
 		newProjectile.fire(projectileSpeed);
 		ProjectilesList.add(newProjectile);

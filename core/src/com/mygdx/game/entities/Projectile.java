@@ -13,44 +13,22 @@ public class Projectile extends Image
 	
 	float directionX;
 	float directionY;
-	private float aSlope;
-	
-	public Projectile(int towerRadius, float originX, float originY, float targetX, float targetY)
+
+	public Projectile(int towerRadius, float towerX, float towerY, float targetX, float targetY)
 	{
 		super(new Texture("projectile.png"));
-		init(originX, originY);
+		this.setPosition(towerX, towerY);
+		init();
+		//TODO both  direction should'nt be sinus
+		double distance = Math.hypot(targetX-towerX, targetY-towerY);
+		directionX = (float)Math.sin((targetX-towerX)/distance) * towerRadius;
+		directionY = (float)Math.sin((targetY-towerY)/distance) * towerRadius;
 		
-		if ( Math.abs(targetX - originX) > 0.01)
-		{
-			this.aSlope = (targetY - originY) / (targetX - originX);
-			
-			if (Math.abs(aSlope) > 0.01)
-			{
-				calulateDirections(towerRadius);				
-			}
-			else
-			{
-				directionY = 0;
-				directionX = targetX - originX > 0 ? towerRadius : -towerRadius;
-			}
-		}
-		else
-		{
-			directionX = 0;
-			directionY = targetY - originY > 0 ? towerRadius : -towerRadius;
-		}
 	}
-	private void init(float originX, float originY)
+	private void init()
 	{
 		this.setOrigin(WIDHT / 2, HEIGHT / 2);
 		this.setSize(WIDHT, HEIGHT);
-		this.setPosition(originX, originY);
-	}
-	private void calulateDirections(int towerRadius)
-	{
-		double alpha = Math.atan(aSlope);
-		directionX = (float) (Math.sin(alpha) * towerRadius);
-		directionX = (float) (Math.cos(alpha) * towerRadius);		
 	}
 	
 	public void fire(float projectileSpeed)

@@ -24,11 +24,12 @@ public class ProjectileController
 
 	public void add(float projectileSpeed, int damage, float targetX, float targetY)
 	{
+		System.out.println("Shooting: " + targetX + " " + targetY);
 		newProjectile = new Projectile(towerRadius, originX, originY, targetX, targetY);
-		ProjectilesList.add(newProjectile);
+		
 		stage.addActor(newProjectile);
 		newProjectile.fire(projectileSpeed);
-		newProjectile = null;
+		ProjectilesList.add(newProjectile);
 	}
 	// check if any Projectile hit target
 }

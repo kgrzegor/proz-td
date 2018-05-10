@@ -88,7 +88,8 @@ public class GameplayScreen extends AbstractScreen
 
 	private void initTowerController() // put this into controllers
 	{
-		towerController = new FieldController(stage, goldService);
+		
+		towerController = new FieldController(stage, goldService, mobController.getMobsList());
 	}
 
 	public void render(float delta)

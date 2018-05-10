@@ -15,7 +15,7 @@ public class MobController
 	private int spawnCount;
 	private Stage stage;
 	private PlayerLivesService playerLivesService;
-	private ArrayList<Mob> Mobs;
+	private ArrayList<Mob> mobsList;
 
 	public MobController(Stage stage, PlayerLivesService playerLivesService2)
 	{
@@ -23,8 +23,8 @@ public class MobController
 		spawnCount = 15;
 		this.stage = stage;
 		this.playerLivesService = playerLivesService2;
-		Mobs = new ArrayList<Mob>();
-		
+		mobsList = new ArrayList<Mob>();
+
 	}
 
 	public void startWave()
@@ -36,13 +36,13 @@ public class MobController
 				addMobToStage();
 			}
 
-		}, spawnTime, spawnTime, spawnCount);
+		}, spawnTime / 10, spawnTime, spawnCount);
 	}
 
 	private void addMobToStage()
 	{
-		//should be changed to newMob as in projectileController
-		Mobs.add(new Mob(new MobInterface()
+		// should be changed to newMob as in projectileController
+		mobsList.add(new Mob(new MobInterface()
 		{
 
 			@Override
@@ -57,8 +57,13 @@ public class MobController
 				playerLivesService.makeDamage();
 			}
 		}));
-		stage.addActor(Mobs.get(Mobs.size()-1));
-		Mobs.get(Mobs.size()-1).followPath();
+		stage.addActor(mobsList.get(mobsList.size() - 1));
+		mobsList.get(mobsList.size() - 1).followPath();
 
+	}
+
+	public ArrayList<Mob> getMobsList()
+	{
+		return mobsList;
 	}
 }

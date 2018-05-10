@@ -6,7 +6,7 @@ public class GoldService
 
 	public GoldService()
 	{
-		setGold(700); // magic numbers
+		setGold(1000); // magic numbers
 	}
 
 	public int getGold()

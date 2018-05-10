@@ -20,8 +20,8 @@ public class MobController
 
 	public MobController(Stage stage, PlayerLivesService playerLivesService2)
 	{
-		spawnTime = 3;
-		spawnCount = 1;
+		spawnTime = 2;
+		spawnCount = 15;
 		this.stage = stage;
 		this.playerLivesService = playerLivesService2;
 		mobsList = new ArrayList<Mob>();

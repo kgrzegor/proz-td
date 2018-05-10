@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.controllers.ProjectileController;
 
 public class Tower extends Image
@@ -30,10 +32,9 @@ public class Tower extends Image
 		super(new Texture("tower.png"));
 		this.stage = stage;
 		this.targets = mobsList;
-		this.setPosition((100 - 72) / 2 + xCord, yCord);  // magic numbers
+		this.setPosition((100 - 72) / 2 + xCord, yCord); // magic numbers
 		init();
 
-		
 		this.startShooting();
 	}
 
@@ -45,25 +46,37 @@ public class Tower extends Image
 		this.myY = this.getY(Align.center);
 		this.towerRadius = 500;
 		this.projectileController = new ProjectileController(this.myX, this.myY, towerRadius, stage);
-		this.projectileSpeed = 1.5f;
-		this.fireRate = 3;
+		this.projectileSpeed = 0.5f;
+		this.fireRate = 1;
 		this.damage = 10;
-		
+
 	}
 
 	private void startShooting()
 	{
-		float targetX;
-		float targetY;
-		for (Mob target : targets)
+
+		Timer.schedule(new Task()
 		{
+			public void run()
+			{
+				float targetX;
+				float targetY;
+				for (Mob target : targets)
+				{
 
-			targetX = target.getX(Align.center);
-			targetY = target.getY(Align.center);
+					targetX = target.getX(Align.center);
+					targetY = target.getY(Align.center);
 
-			if (Math.hypot(targetX - myX, targetY - myY) <= towerRadius)
-				this.shoot(targetX, targetY);
-		}
+					if (Math.hypot(targetX - myX, targetY - myY) <= towerRadius)
+					{
+						Tower.this.shoot(targetX, targetY);
+						break;
+					}
+
+				}
+			}
+
+		}, 0, fireRate);
 
 	}
 

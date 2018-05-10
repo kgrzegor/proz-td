@@ -1,5 +1,7 @@
 package com.mygdx.game.controllers;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
@@ -13,6 +15,7 @@ public class MobController
 	private int spawnCount;
 	private Stage stage;
 	private PlayerLivesService playerLivesService;
+	private ArrayList<Mob> Mobs;
 
 	public MobController(Stage stage, PlayerLivesService playerLivesService2)
 	{
@@ -20,6 +23,8 @@ public class MobController
 		spawnCount = 15;
 		this.stage = stage;
 		this.playerLivesService = playerLivesService2;
+		Mobs = new ArrayList<Mob>();
+		
 	}
 
 	public void startWave()
@@ -36,7 +41,7 @@ public class MobController
 
 	private void addMobToStage()
 	{
-		Mob mob = new Mob(new MobInterface()
+		Mobs.add(new Mob(new MobInterface()
 		{
 
 			@Override
@@ -50,9 +55,9 @@ public class MobController
 			{
 				playerLivesService.makeDamage();
 			}
-		});
-		stage.addActor(mob);
-		mob.followPath();
+		}));
+		stage.addActor(Mobs.get(Mobs.size()-1));
+		Mobs.get(Mobs.size()-1).followPath();
 
 	}
 }

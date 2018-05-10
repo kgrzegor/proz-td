@@ -6,7 +6,7 @@ import com.mygdx.game.screens.ui.FieldButton;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.services.GoldService;
 
-public class TowerController
+public class FieldController
 {
 	private final int[] xCords = { 300, 800 };
 	private final int[] yCords = { 400, 400 };
@@ -16,7 +16,7 @@ public class TowerController
 	private Stage stage;
 	private GoldService goldService;
 
-	public TowerController(Stage stage, GoldService goldService)
+	public FieldController(Stage stage, GoldService goldService)
 	{
 		init(stage,goldService);
 	}

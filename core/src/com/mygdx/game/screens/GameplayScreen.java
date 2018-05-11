@@ -11,6 +11,7 @@ import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.NextStageButton;
 import com.mygdx.game.services.GoldService;
 import com.mygdx.game.services.PlayerLivesService;
+import com.mygdx.game.services.PointsService;
 
 public class GameplayScreen extends AbstractScreen
 {
@@ -24,6 +25,7 @@ public class GameplayScreen extends AbstractScreen
 	private MobController mobController;
 	@SuppressWarnings("unused")
 	private FieldController towerController;
+	private PointsService pointsService;
 	private Tower[] towers;
 
 	public GameplayScreen(MyGdxGame game)
@@ -40,10 +42,15 @@ public class GameplayScreen extends AbstractScreen
 		initNextStageButton();
 		initPlayerLivesService();
 		initGoldService();
-
+		initPointServce();
 		initMobController();
 		initTowerController();
 		towers = towerController.getTowers();
+	}
+
+	private void initPointServce()
+	{
+		pointsService = new PointsService();		
 	}
 
 	private void initGoldService()
@@ -65,7 +72,7 @@ public class GameplayScreen extends AbstractScreen
 
 	private void initMobController()
 	{
-		mobController = new MobController(stage, playerLivesService, goldService);
+		mobController = new MobController(stage, playerLivesService, goldService, pointsService);
 	}
 
 	private void initLabels()
@@ -108,7 +115,7 @@ public class GameplayScreen extends AbstractScreen
 
 	private void update()
 	{
-		scoreLabel.setText("Score: " + game.getPoints());
+		scoreLabel.setText("Score: " + pointsService.getPoints());
 		heartLabel.setText("Lives: " + playerLivesService.getLivesLeft() + " / 3");
 		stageLabel.setText("Stage: " + game.getCurrentStage() + " / " + game.getLastStage());
 		timerLabel.setText("Time: " + game.getTimeUntilNextStage() + " s");

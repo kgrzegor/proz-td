@@ -14,7 +14,6 @@ public class MyGdxGame extends Game
 
 	private boolean paused;
 
-	private int points;
 	private int currentStage;
 	private int lastStage;
 	private int timeUntilNextStage;
@@ -23,11 +22,6 @@ public class MyGdxGame extends Game
 	public void create()
 	{
 		this.setScreen(new SplashScreen(this));
-	}
-
-	public void addPoints(int value)
-	{
-		points += value;
 	}
 
 	public void nextStage(MobController mobController)
@@ -53,10 +47,6 @@ public class MyGdxGame extends Game
 		this.paused = paused;
 	}
 
-	public int getPoints()
-	{
-		return points;
-	}
 
 	public int getCurrentStage()
 	{

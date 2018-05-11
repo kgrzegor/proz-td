@@ -22,6 +22,8 @@ public class FieldButton extends Button
 		this.setHeight(100);
 		// this.setDebug(true);
 
+		
+		
 		this.addListener(new ClickListener()
 		{
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)

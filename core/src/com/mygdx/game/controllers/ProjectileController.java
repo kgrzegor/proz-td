@@ -3,6 +3,7 @@ package com.mygdx.game.controllers;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.CountdownEventAction;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.entities.Mob;
 import com.mygdx.game.entities.Projectile;
@@ -25,6 +26,7 @@ public class ProjectileController
 		ProjectilesList = new ArrayList<Projectile>();
 		this.stage = stage;
 		this.targets = targets;
+		
 	}
 
 	public void add(float projectileSpeed, int damage, float targetX, float targetY)
@@ -43,7 +45,7 @@ public class ProjectileController
 		newProjectile.fire(projectileSpeed);
 		ProjectilesList.add(newProjectile);
 	}
-	// check if any Projectile hit target
+	// check if any projectile hit target
 
 	public void checkHits()
 	{

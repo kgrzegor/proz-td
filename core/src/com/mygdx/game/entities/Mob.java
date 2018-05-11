@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class Mob extends Image
+public class Mob extends Image 
 {
 	private final static int WIDHT = 39;
 	private final static int HEIGHT = 56;
@@ -25,7 +25,7 @@ public class Mob extends Image
 
 	private void init()
 	{
-
+		
 		this.setOrigin(WIDHT / 2, HEIGHT / 2);
 		this.setSize(WIDHT, HEIGHT);
 		this.setPosition(STARTING_X, STARTING_Y);

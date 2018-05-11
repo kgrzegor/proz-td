@@ -14,7 +14,7 @@ public class Mob extends Image
 	private final static int STARTING_Y = 300;
 	MobInterface mobInterface;
 	int health;
-	
+
 	public Mob(MobInterface mobInterface)
 	{
 		super(new Texture("mob.png"));
@@ -52,13 +52,13 @@ public class Mob extends Image
 
 	public void takeDamage(int damage)
 	{
-		health -=damage;
+		health -= damage;
 		if (health <= 0)
 		{
 			mobInterface.die(this);
 			mobInterface.removeFromStage(this);
 		}
-		
+
 	}
 
 }

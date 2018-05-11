@@ -30,7 +30,7 @@ public class FieldController
 
 	private void init()
 	{
-		
+
 		initFieldButtons();
 		initTowers();
 	}
@@ -52,12 +52,12 @@ public class FieldController
 				{
 					if (towers[id] == null)
 					{
-						if (goldService.spendGold(500)) //magic numbers
+						if (goldService.spendGold(500)) // magic numbers
 						{
 							towers[id] = new Tower(xCords[id], yCords[id], stage, mobsList);
 							stage.addActor(towers[id]);
 						}
-						
+
 					}
 
 					// else

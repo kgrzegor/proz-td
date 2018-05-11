@@ -40,7 +40,7 @@ public class MobController
 				addMobToStage();
 			}
 
-		}, spawnTime / 10, spawnTime, spawnCount-1);
+		}, spawnTime / 10, spawnTime, spawnCount - 1);
 	}
 
 	private void addMobToStage()
@@ -51,7 +51,7 @@ public class MobController
 			@Override
 			public void die(Mob mob)
 			{
-				goldService.addGold(50); //magic numbers
+				goldService.addGold(50); // magic numbers
 			}
 
 			@Override

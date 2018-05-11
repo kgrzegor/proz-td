@@ -31,15 +31,14 @@ public class ProjectileController
 	{
 		newProjectile = new Projectile(new ProjectileInterface()
 		{
-			
+
 			@Override
 			public void removeFromList(Projectile projectile)
 			{
-				ProjectilesList.remove(projectile);				
+				ProjectilesList.remove(projectile);
 			}
-		},
-				towerRadius, towerX, towerY, targetX, targetY, damage);
-		
+		}, towerRadius, towerX, towerY, targetX, targetY, damage);
+
 		stage.addActor(newProjectile);
 		newProjectile.fire(projectileSpeed);
 		ProjectilesList.add(newProjectile);
@@ -51,8 +50,8 @@ public class ProjectileController
 		for (Projectile p : ProjectilesList)
 			for (Mob m : targets)
 			{
-				if ((Math.abs(m.getX(Align.center) - p.getX(Align.center))) <= m.getWidth()/2
-				&&	(Math.abs(m.getY(Align.center) - p.getY(Align.center)))	<= m.getHeight()/2)
+				if ((Math.abs(m.getX(Align.center) - p.getX(Align.center))) <= m.getWidth() / 2
+						&& (Math.abs(m.getY(Align.center) - p.getY(Align.center))) <= m.getHeight() / 2)
 				{
 					p.hit(m);
 					return;

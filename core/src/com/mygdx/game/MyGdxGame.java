@@ -19,7 +19,6 @@ public class MyGdxGame extends Game
 	private int lastStage;
 	private int timeUntilNextStage;
 
-
 	@Override
 	public void create()
 	{
@@ -83,6 +82,5 @@ public class MyGdxGame extends Game
 	{
 		this.timeUntilNextStage = timeUntilNextStage;
 	}
-
 
 }

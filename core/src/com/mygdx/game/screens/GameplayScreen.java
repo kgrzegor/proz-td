@@ -24,7 +24,7 @@ public class GameplayScreen extends AbstractScreen
 	private MobController mobController;
 	@SuppressWarnings("unused")
 	private FieldController towerController;
-	private Tower[] towers; 
+	private Tower[] towers;
 
 	public GameplayScreen(MyGdxGame game)
 	{
@@ -34,14 +34,14 @@ public class GameplayScreen extends AbstractScreen
 	protected void init()
 	{
 		game.setLastStage(30);
-		
+
 		initMapTexture();
 		initLabels();
 		initNextStageButton();
-		initPlayerLivesService();		
+		initPlayerLivesService();
 		initGoldService();
-		
-		initMobController();		
+
+		initMobController();
 		initTowerController();
 		towers = towerController.getTowers();
 	}
@@ -113,8 +113,8 @@ public class GameplayScreen extends AbstractScreen
 		stageLabel.setText("Stage: " + game.getCurrentStage() + " / " + game.getLastStage());
 		timerLabel.setText("Time: " + game.getTimeUntilNextStage() + " s");
 		goldLabel.setText("Gold: " + goldService.getGold() + " g");
-		
-		for(int i = 0; i < 2; ++i)
+
+		for (int i = 0; i < 2; ++i)
 		{
 			if (towers[i] != null)
 				towers[i].getProjectileController().checkHits();

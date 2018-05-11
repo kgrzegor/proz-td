@@ -5,4 +5,6 @@ public interface MobInterface
 	void takeDamage();
 
 	void makeDamage();
+
+	void removeFromList(Mob mob);
 }

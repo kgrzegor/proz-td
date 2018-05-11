@@ -42,14 +42,13 @@ public class MobController
 
 	private void addMobToStage()
 	{
-		// should be changed to newMob as in projectileController
 		newMob = new Mob(new MobInterface()
 		{
 
 			@Override
 			public void takeDamage()
 			{
-				// TODO Auto-generated method stub
+				
 			}
 
 			@Override
@@ -57,11 +56,16 @@ public class MobController
 			{
 				playerLivesService.makeDamage();
 			}
+
+			@Override
+			public void removeFromList(Mob mob)
+			{
+				mobsList.remove(mob);
+			}
 		});
 		stage.addActor(newMob);
 		newMob.followPath();
 		mobsList.add(newMob);
-
 	}
 
 	public ArrayList<Mob> getMobsList()

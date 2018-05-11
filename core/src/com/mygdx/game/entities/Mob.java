@@ -40,12 +40,19 @@ public class Mob extends Image
 		{
 			public void run()
 			{
+				mobInterface.removeFromList(Mob.this);
 				Mob.this.remove();
 				mobInterface.makeDamage();
 			}
 		});
 
 		this.addAction(Actions.sequence(a, c));
+	}
+
+	public void takeDamage()
+	{
+		mobInterface.removeFromList(Mob.this);
+		Mob.this.remove();
 	}
 
 }

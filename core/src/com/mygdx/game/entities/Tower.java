@@ -20,7 +20,6 @@ public class Tower extends Image
 
 	private ProjectileController projectileController;
 	private float projectileSpeed;
-	@SuppressWarnings("unused")
 	private float fireRate; // smaller = better
 	private int damage;
 	private int towerRadius;
@@ -45,9 +44,9 @@ public class Tower extends Image
 		this.myX = this.getX(Align.center);
 		this.myY = this.getY(Align.center);
 		this.towerRadius = 500;
-		this.projectileController = new ProjectileController(this.myX, this.myY, towerRadius, stage);
-		this.projectileSpeed = 0.5f;
-		this.fireRate = 1;
+		this.projectileController = new ProjectileController(this.myX, this.myY, towerRadius, stage, targets);
+		this.projectileSpeed = 1.5f;
+		this.fireRate = 0.8f;
 		this.damage = 10;
 
 	}
@@ -85,4 +84,8 @@ public class Tower extends Image
 		projectileController.add(projectileSpeed, damage, targetX, targetY);
 	}
 
+	public ProjectileController getProjectileController()
+	{
+		return projectileController;
+	}
 }

@@ -72,4 +72,8 @@ public class FieldController
 			stage.addActor(fieldButtons[i]);
 	}
 
+	public Tower[] getTowers()
+	{
+		return towers;
+	}
 }

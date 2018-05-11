@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controllers.MobController;
+import com.mygdx.game.entities.Tower;
 import com.mygdx.game.controllers.FieldController;
 import com.mygdx.game.screens.ui.GameLabel;
 import com.mygdx.game.screens.ui.IClickCallback;
@@ -23,6 +24,7 @@ public class GameplayScreen extends AbstractScreen
 	private MobController mobController;
 	@SuppressWarnings("unused")
 	private FieldController towerController;
+	private Tower[] towers; 
 
 	public GameplayScreen(MyGdxGame game)
 	{
@@ -32,6 +34,7 @@ public class GameplayScreen extends AbstractScreen
 	protected void init()
 	{
 		game.setLastStage(30);
+		
 		initMapTexture();
 		initLabels();
 		initNextStageButton();
@@ -40,6 +43,7 @@ public class GameplayScreen extends AbstractScreen
 		initGoldService();
 
 		initTowerController();
+		towers = towerController.getTowers();
 	}
 
 	private void initGoldService()
@@ -109,6 +113,12 @@ public class GameplayScreen extends AbstractScreen
 		stageLabel.setText("Stage: " + game.getCurrentStage() + " / " + game.getLastStage());
 		timerLabel.setText("Time: " + game.getTimeUntilNextStage() + " s");
 		goldLabel.setText("Gold: " + goldService.getGold() + " g");
+		
+		for(int i = 0; i < 2; ++i)
+		{
+			if (towers[i] != null)
+				towers[i].getProjectileController().checkHits();
+		}
 		stage.act();
 	}
 

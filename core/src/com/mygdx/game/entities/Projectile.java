@@ -13,14 +13,16 @@ public class Projectile extends Image
 	
 	float directionX;
 	float directionY;
+	int damage;
 	
 	ProjectileInterface projectileInterface;
 
-	public Projectile(ProjectileInterface projectileInterface, int towerRadius, float towerX, float towerY, float targetX, float targetY)
+	public Projectile(ProjectileInterface projectileInterface, int towerRadius, float towerX, float towerY, float targetX, float targetY, int damage)
 	{
 		super(new Texture("projectile.png"));
 		this.setPosition(towerX, towerY);
 		this.projectileInterface = projectileInterface;
+		this.damage = damage;
 		init();
 		//TODO both  direction shouldn't be sinus
 		double distance = Math.hypot(targetX-towerX, targetY-towerY);
@@ -50,10 +52,10 @@ public class Projectile extends Image
 	}
 	public void hit(Mob m)
 	{
-		System.out.println("HIT");
 		projectileInterface.removeFromList(this);
-		m.takeDamage();
+		m.takeDamage(damage);
 		this.remove();
 	}
+
 
 }

@@ -7,23 +7,26 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.entities.Mob;
 import com.mygdx.game.entities.MobInterface;
+import com.mygdx.game.services.GoldService;
 import com.mygdx.game.services.PlayerLivesService;
 
 public class MobController
 {
-	private int spawnTime; // TODO: vectors for whole stage
+	private float spawnTime; // TODO: vectors for whole stage
 	private int spawnCount;
 	private Stage stage;
 	private PlayerLivesService playerLivesService;
 	private ArrayList<Mob> mobsList;
 	private Mob newMob;
+	private GoldService goldService;
 
-	public MobController(Stage stage, PlayerLivesService playerLivesService2)
+	public MobController(Stage stage, PlayerLivesService playerLivesService2, GoldService goldService)
 	{
-		spawnTime = 2;
+		spawnTime = 3f;
 		spawnCount = 15;
 		this.stage = stage;
 		this.playerLivesService = playerLivesService2;
+		this.goldService = goldService;
 		mobsList = new ArrayList<Mob>();
 
 	}
@@ -46,9 +49,9 @@ public class MobController
 		{
 
 			@Override
-			public void takeDamage()
+			public void die(Mob mob)
 			{
-				
+				goldService.addGold(50); //magic numbers
 			}
 
 			@Override
@@ -58,9 +61,10 @@ public class MobController
 			}
 
 			@Override
-			public void removeFromList(Mob mob)
+			public void removeFromStage(Mob mob)
 			{
 				mobsList.remove(mob);
+				mob.remove();
 			}
 		});
 		stage.addActor(newMob);

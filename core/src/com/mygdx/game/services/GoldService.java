@@ -6,7 +6,7 @@ public class GoldService
 
 	public GoldService()
 	{
-		setGold(1000); // magic numbers
+		gold = 1000; // magic numbers
 	}
 
 	public int getGold()
@@ -14,9 +14,9 @@ public class GoldService
 		return gold;
 	}
 
-	public void setGold(int gold)
+	public void addGold(int gold)
 	{
-		this.gold = gold;
+		this.gold += gold;
 	}
 
 	public boolean spendGold(int cost)

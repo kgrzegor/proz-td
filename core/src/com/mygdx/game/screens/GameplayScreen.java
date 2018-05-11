@@ -38,10 +38,10 @@ public class GameplayScreen extends AbstractScreen
 		initMapTexture();
 		initLabels();
 		initNextStageButton();
-		initPlayerLivesService();
-		initMobController();
+		initPlayerLivesService();		
 		initGoldService();
-
+		
+		initMobController();		
 		initTowerController();
 		towers = towerController.getTowers();
 	}
@@ -65,7 +65,7 @@ public class GameplayScreen extends AbstractScreen
 
 	private void initMobController()
 	{
-		mobController = new MobController(stage, playerLivesService);
+		mobController = new MobController(stage, playerLivesService, goldService);
 	}
 
 	private void initLabels()

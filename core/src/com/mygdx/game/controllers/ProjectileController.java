@@ -38,7 +38,7 @@ public class ProjectileController
 				ProjectilesList.remove(projectile);				
 			}
 		},
-				towerRadius, towerX, towerY, targetX, targetY);
+				towerRadius, towerX, towerY, targetX, targetY, damage);
 		
 		stage.addActor(newProjectile);
 		newProjectile.fire(projectileSpeed);
@@ -57,8 +57,6 @@ public class ProjectileController
 					p.hit(m);
 					return;
 				}
-					
-				
 			}
 	}
 }

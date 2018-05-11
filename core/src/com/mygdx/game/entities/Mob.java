@@ -13,21 +13,23 @@ public class Mob extends Image
 	private final static int STARTING_X = -100; // TODO this should be current stage base (X,Y)
 	private final static int STARTING_Y = 300;
 	MobInterface mobInterface;
-
+	int health;
+	
 	public Mob(MobInterface mobInterface)
 	{
 		super(new Texture("mob.png"));
-		init(mobInterface);
+		this.mobInterface = mobInterface;
+		init();
 		// TODO on click show mob info
 	}
 
-	private void init(MobInterface mobInterface2)
+	private void init()
 	{
 
 		this.setOrigin(WIDHT / 2, HEIGHT / 2);
 		this.setSize(WIDHT, HEIGHT);
 		this.setPosition(STARTING_X, STARTING_Y);
-		this.mobInterface = mobInterface2;
+		this.health = 35;
 	}
 
 	public void followPath()
@@ -40,8 +42,7 @@ public class Mob extends Image
 		{
 			public void run()
 			{
-				mobInterface.removeFromList(Mob.this);
-				Mob.this.remove();
+				mobInterface.removeFromStage(Mob.this);
 				mobInterface.makeDamage();
 			}
 		});
@@ -49,10 +50,15 @@ public class Mob extends Image
 		this.addAction(Actions.sequence(a, c));
 	}
 
-	public void takeDamage()
+	public void takeDamage(int damage)
 	{
-		mobInterface.removeFromList(Mob.this);
-		Mob.this.remove();
+		health -=damage;
+		if (health <= 0)
+		{
+			mobInterface.die(this);
+			mobInterface.removeFromStage(this);
+		}
+		
 	}
 
 }

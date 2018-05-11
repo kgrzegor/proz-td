@@ -50,7 +50,6 @@ public class MobController
 	{
 		newMob = new Mob(new MobInterface()
 		{
-
 			@Override
 			public void die(Mob mob)
 			{

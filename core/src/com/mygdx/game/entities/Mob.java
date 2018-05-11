@@ -53,10 +53,17 @@ public class Mob extends Image
 	public void takeDamage(int damage)
 	{
 		health -= damage;
+		
 		if (health <= 0)
 		{
 			mobInterface.die(this);
 			mobInterface.removeFromStage(this);
+		}
+		else
+		{
+			Action a = Actions.parallel(Actions.rotateBy(15, 0.1f));
+			Action b = Actions.parallel(Actions.rotateBy(-15, 0.2f));
+			this.addAction(Actions.sequence(a,b));
 		}
 
 	}

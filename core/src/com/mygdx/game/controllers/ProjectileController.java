@@ -26,7 +26,6 @@ public class ProjectileController
 		ProjectilesList = new ArrayList<Projectile>();
 		this.stage = stage;
 		this.targets = targets;
-		
 	}
 
 	public void add(float projectileSpeed, int damage, float targetX, float targetY)

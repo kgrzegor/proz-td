@@ -23,8 +23,7 @@ public class GameplayScreen extends AbstractScreen
 	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel, goldLabel;
 	private NextStageButton nextStageButton;
 	private MobController mobController;
-	@SuppressWarnings("unused")
-	private FieldController towerController;
+	private FieldController fieldController;
 	private PointsService pointsService;
 	private Tower[] towers;
 
@@ -45,7 +44,7 @@ public class GameplayScreen extends AbstractScreen
 		initPointServce();
 		initMobController();
 		initTowerController();
-		towers = towerController.getTowers();
+		towers = fieldController.getTowers();
 	}
 
 	private void initPointServce()
@@ -100,7 +99,7 @@ public class GameplayScreen extends AbstractScreen
 	private void initTowerController() // put this into controllers
 	{
 
-		towerController = new FieldController(stage, goldService, mobController.getMobsList());
+		fieldController = new FieldController(stage, goldService, mobController.getMobsList());
 	}
 
 	public void render(float delta)

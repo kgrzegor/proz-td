@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.mygdx.game.events.EnemyDamageListener;
 
 public class Mob extends Image 
 {
@@ -30,6 +31,8 @@ public class Mob extends Image
 		this.setSize(WIDHT, HEIGHT);
 		this.setPosition(STARTING_X, STARTING_Y);
 		this.health = 35;
+		
+		this.addListener(new EnemyDamageListener(this));
 	}
 
 	public void followPath()

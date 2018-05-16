@@ -12,7 +12,7 @@ public class Projectile extends Image
 
 	float directionX;
 	float directionY;
-	int damage;
+	private int damage;
 
 	ProjectileInterface projectileInterface;
 
@@ -52,11 +52,14 @@ public class Projectile extends Image
 		this.addAction(Actions.sequence(a, c));
 	}
 
-	public void hit(Mob m)
+	public void hit()
 	{
 		projectileInterface.removeFromList(this);
-		m.takeDamage(damage);
 		this.remove();
 	}
 
+	public int getDamage()
+	{
+		return damage;
+	}
 }

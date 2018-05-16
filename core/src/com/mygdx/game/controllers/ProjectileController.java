@@ -3,11 +3,11 @@ package com.mygdx.game.controllers;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.CountdownEventAction;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.entities.Mob;
 import com.mygdx.game.entities.Projectile;
 import com.mygdx.game.entities.ProjectileInterface;
+import com.mygdx.game.events.DamageEvent;
 
 public class ProjectileController
 {
@@ -45,7 +45,6 @@ public class ProjectileController
 		newProjectile.fire(projectileSpeed);
 		ProjectilesList.add(newProjectile);
 	}
-	// check if any projectile hit target
 
 	public void checkHits()
 	{
@@ -55,7 +54,8 @@ public class ProjectileController
 				if ((Math.abs(m.getX(Align.center) - p.getX(Align.center))) <= m.getWidth() / 2
 						&& (Math.abs(m.getY(Align.center) - p.getY(Align.center))) <= m.getHeight() / 2)
 				{
-					p.hit(m);
+					m.fire(new DamageEvent(p.getDamage()));
+					p.hit();
 					return;
 				}
 			}

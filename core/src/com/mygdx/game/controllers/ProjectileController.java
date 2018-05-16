@@ -60,4 +60,9 @@ public class ProjectileController
 				}
 			}
 	}
+
+	public void setTowerRadius(int towerRadius)
+	{
+		this.towerRadius = towerRadius;
+	}
 }

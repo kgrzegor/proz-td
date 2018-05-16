@@ -13,6 +13,7 @@ public class Projectile extends Image
 	float directionX;
 	float directionY;
 	private int damage;
+	private double distance;
 
 	ProjectileInterface projectileInterface;
 
@@ -25,7 +26,7 @@ public class Projectile extends Image
 		this.damage = damage;
 		init();
 		// TODO both direction shouldn't be sinus
-		double distance = Math.hypot(targetX - towerX, targetY - towerY);
+		this.distance = Math.hypot(targetX - towerX, targetY - towerY);
 		directionX = (float) Math.sin((targetX - towerX) / distance) * towerRadius;
 		directionY = (float) Math.sin((targetY - towerY) / distance) * towerRadius;
 
@@ -39,7 +40,7 @@ public class Projectile extends Image
 
 	public void fire(float projectileSpeed)
 	{
-		Action a = Actions.parallel(Actions.moveBy(directionX, directionY, 1 / projectileSpeed));
+		Action a = Actions.parallel(Actions.moveBy(directionX, directionY, (float) (distance / projectileSpeed)));
 		Action c = Actions.run(new Runnable()
 		{
 			public void run()

@@ -3,12 +3,15 @@ package com.mygdx.game.entities;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.controllers.ProjectileController;
+import com.mygdx.game.controllers.TowerController;
 
 public class Tower extends Image
 {
@@ -25,7 +28,7 @@ public class Tower extends Image
 	private int towerRadius;
 	private ArrayList<Mob> targets;
 	private Stage stage;
-
+	private TowerController towerController;
 	public Tower(int xCord, int yCord, Stage stage, ArrayList<Mob> mobsList)
 	{
 		super(new Texture("tower.png"));
@@ -45,10 +48,21 @@ public class Tower extends Image
 		this.myY = this.getY(Align.center);
 		this.towerRadius = 500;
 		this.projectileController = new ProjectileController(this.myX, this.myY, towerRadius, stage, targets);
-		this.projectileSpeed = 1.5f;
+		this.projectileSpeed = 150f;
 		this.fireRateCooldown = 0.8f;
 		this.damage = 10;
+		this.towerController = new TowerController(this, stage, myX, myY);
 
+		this.addListener(new ClickListener()
+			{
+				public void clicked(InputEvent event, float x, float y)
+				{
+					towerController.showMenu();
+					
+				}
+			}
+		);
+		
 	}
 
 	private void startShooting()
@@ -68,7 +82,7 @@ public class Tower extends Image
 
 					if (Math.hypot(targetX - myX, targetY - myY) <= towerRadius)
 					{
-						Tower.this.shoot(targetX, targetY);
+						Tower.this.shoot(targetX, targetY,Math.hypot(targetX - myX, targetY - myY));
 						break;
 					}
 
@@ -79,7 +93,7 @@ public class Tower extends Image
 
 	}
 
-	private void shoot(float targetX, float targetY)
+	private void shoot(float targetX, float targetY, double distance)
 	{
 		projectileController.add(projectileSpeed, damage, targetX, targetY);
 	}
@@ -87,5 +101,23 @@ public class Tower extends Image
 	public ProjectileController getProjectileController()
 	{
 		return projectileController;
+	}
+
+	public void upgradeRadius()
+	{
+		towerRadius *= 1.1;
+		projectileController.setTowerRadius(towerRadius);
+		System.out.println("radius = " + towerRadius);
+	}
+
+	public void upgradeDamage()
+	{
+		damage *= 1.5;		
+	}
+
+	public void upgradeFireRateCooldown()
+	{
+		fireRateCooldown *= 0.8;
+		//TODO this one is bugged;
 	}
 }

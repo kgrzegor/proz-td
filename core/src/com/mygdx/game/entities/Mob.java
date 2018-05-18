@@ -48,7 +48,6 @@ public class Mob extends Image
 		int currentCords = currentPath;
 		for (int i = 0; i < actions.length - 1; ++i, ++currentCords)
 		{
-			
 			Action move = Actions.moveTo(xCords[currentCords], 720 - yCords[currentCords], caculateDistance(currentCords) / 100);
 			Action pathNumber = Actions.run(new Runnable()
 			{

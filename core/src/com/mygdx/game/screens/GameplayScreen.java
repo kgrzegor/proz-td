@@ -1,15 +1,13 @@
 package com.mygdx.game.screens;
 
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controllers.MobController;
+import com.mygdx.game.controllers.PopoutController;
 import com.mygdx.game.entities.Entities;
 import com.mygdx.game.entities.Tower;
 import com.mygdx.game.controllers.FieldController;
-import com.mygdx.game.screens.ui.GameButton;
 import com.mygdx.game.screens.ui.GameLabel;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.NextStageButton;
@@ -26,7 +24,7 @@ public class GameplayScreen extends AbstractScreen
 	private Image mapImg;
 	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel, goldLabel;
 	private NextStageButton nextStageButton;
-	private GameButton popoutButton;
+	private PopoutController popoutController;
 	private MobController mobController;
 	private FieldController fieldController;
 	private PointsService pointsService;
@@ -50,7 +48,13 @@ public class GameplayScreen extends AbstractScreen
 		initMobController();
 		initTowerController();
 		towers = fieldController.getTowers();
-		initpopoutButton();
+		initPopoutController();
+	}
+
+	private void initPopoutController()
+	{
+		final Entities [] popout = {mobController, fieldController};
+		popoutController = new PopoutController(stage, popout);
 	}
 
 	private void initPointServce()
@@ -94,29 +98,18 @@ public class GameplayScreen extends AbstractScreen
 		{
 			public void onClick()
 			{
+				if (game.getCurrentStage() == 0)
+					popoutController.startPopouts();
+				
 				game.nextStage(mobController);
+				
 			}
 		});
 
 		stage.addActor(nextStageButton);
 	}
 	
-	private void initpopoutButton()
-	{
-		final Entities [] popout = {mobController, fieldController};
-		
-		popoutButton = new GameButton.Builder(new IClickCallback()
-		{
-			@Override
-			public void onClick()
-			{
-				Random rand = new Random();
-				popout[rand.nextInt(2)].popoutEffect(10);		
-			}
-		}).position(100, 100).height(100).width(100).debug(true).build();
-		
-		stage.addActor(popoutButton);
-	}
+	
 
 	private void initTowerController()
 	{

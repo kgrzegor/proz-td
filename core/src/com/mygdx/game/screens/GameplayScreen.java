@@ -119,7 +119,7 @@ public class GameplayScreen extends AbstractScreen
 		timerLabel.setText("Time: " + game.getTimeUntilNextStage() + " s");
 		goldLabel.setText("Gold: " + goldService.getGold() + " g");
 
-		for (int i = 0; i < 2; ++i)
+		for (int i = 0; i < towers.length; ++i)
 		{
 			if (towers[i] != null)
 				towers[i].getProjectileController().checkHits();

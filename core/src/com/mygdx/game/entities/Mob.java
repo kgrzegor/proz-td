@@ -41,7 +41,7 @@ public class Mob extends Image
 	{
 		Action [] actions = new Action[xCords.length +1];
 		for (int i = 0; i < actions.length - 1; ++i)
-			actions[i] = Actions.moveTo(xCords[i], 720 - yCords[i], 3);
+			actions[i] = Actions.moveTo(xCords[i], 720 - yCords[i], caculateDistance(i)/100);
 		
 		
 		actions[actions.length - 1] = Actions.run(new Runnable()
@@ -72,6 +72,13 @@ public class Mob extends Image
 			this.addAction(Actions.sequence(a,b));
 		}
 
+	}
+	public float caculateDistance(int id)
+	{
+		if (id == 0)
+			return (float) Math.hypot(STARTING_X - xCords[id], STARTING_Y - yCords[id]);
+		else
+			return (float) Math.hypot(xCords[id-1] - xCords[id], yCords[id-1] - yCords[id]);
 	}
 
 }

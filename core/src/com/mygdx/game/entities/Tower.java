@@ -50,7 +50,7 @@ public class Tower extends Image
 		this.projectileController = new ProjectileController(this.myX, this.myY, towerRadius, stage, targets);
 		this.projectileSpeed = 150f;
 		this.fireRateCooldown = 0.8f;
-		this.damage = 10;
+		this.damage = 1;
 		this.towerController = new TowerController(this, stage, myX, myY);
 
 		this.addListener(new ClickListener()
@@ -58,7 +58,6 @@ public class Tower extends Image
 				public void clicked(InputEvent event, float x, float y)
 				{
 					towerController.showMenu();
-					
 				}
 			}
 		);

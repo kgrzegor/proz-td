@@ -3,13 +3,14 @@ package com.mygdx.game.controllers;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.entities.Entities;
 import com.mygdx.game.entities.Mob;
 import com.mygdx.game.entities.Tower;
 import com.mygdx.game.screens.ui.GameButton;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.services.GoldService;
 
-public class FieldController
+public class FieldController implements Entities
 {
 	private final int[] xCords = { 210, 115, 525, 335, 525, 850, 740, 975 };
 	private final int[] yCords = { 560, 400, 475, 400, 280, 315, 535, 535 };
@@ -77,5 +78,13 @@ public class FieldController
 	public Tower[] getTowers()
 	{
 		return towers;
+	}
+
+	@Override
+	public void popoutEffect(float strength)
+	{
+		for(Tower t : towers)
+			if (t != null)
+				t.bonusDamage(strength);
 	}
 }

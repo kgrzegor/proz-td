@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
+import com.mygdx.game.entities.Entities;
 import com.mygdx.game.entities.Mob;
 import com.mygdx.game.entities.MobInterface;
 import com.mygdx.game.services.GoldService;
 import com.mygdx.game.services.PlayerLivesService;
 import com.mygdx.game.services.PointsService;
 
-public class MobController
+public class MobController implements Entities 
 {
 	private float spawnTime; // TODO: vectors for whole stage
 	private int spawnCount;
@@ -80,10 +81,10 @@ public class MobController
 		return mobsList;
 	}
 
-	public void freezeAll()
+	public void popoutEffect(float time)
 	{
+		time/=10;
 		for (Mob m : mobsList)
-			m.freeze(3);
-		
+			m.freeze(time);		
 	}
 }

@@ -25,8 +25,6 @@ public class GameButton extends Button
 
 	private void init(final IClickCallback callback)
 	{
-		
-
 		this.addListener(new ClickListener()
 		{
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)

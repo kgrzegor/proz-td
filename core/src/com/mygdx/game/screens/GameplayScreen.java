@@ -1,9 +1,12 @@
 package com.mygdx.game.screens;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controllers.MobController;
+import com.mygdx.game.entities.Entities;
 import com.mygdx.game.entities.Tower;
 import com.mygdx.game.controllers.FieldController;
 import com.mygdx.game.screens.ui.GameButton;
@@ -23,7 +26,7 @@ public class GameplayScreen extends AbstractScreen
 	private Image mapImg;
 	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel, goldLabel;
 	private NextStageButton nextStageButton;
-	private GameButton freezeButton;
+	private GameButton popoutButton;
 	private MobController mobController;
 	private FieldController fieldController;
 	private PointsService pointsService;
@@ -47,7 +50,7 @@ public class GameplayScreen extends AbstractScreen
 		initMobController();
 		initTowerController();
 		towers = fieldController.getTowers();
-		initFreezeButton();
+		initpopoutButton();
 	}
 
 	private void initPointServce()
@@ -98,18 +101,21 @@ public class GameplayScreen extends AbstractScreen
 		stage.addActor(nextStageButton);
 	}
 	
-	private void initFreezeButton()
+	private void initpopoutButton()
 	{
-		freezeButton = new GameButton.Builder(new IClickCallback()
+		final Entities [] popout = {mobController, fieldController};
+		
+		popoutButton = new GameButton.Builder(new IClickCallback()
 		{
 			@Override
 			public void onClick()
 			{
-				mobController.freezeAll();				
+				Random rand = new Random();
+				popout[rand.nextInt(2)].popoutEffect(10);		
 			}
 		}).position(100, 100).height(100).width(100).debug(true).build();
 		
-		stage.addActor(freezeButton);
+		stage.addActor(popoutButton);
 	}
 
 	private void initTowerController()

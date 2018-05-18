@@ -50,7 +50,7 @@ public class Tower extends Image
 		this.projectileController = new ProjectileController(this.myX, this.myY, towerRadius, stage, targets);
 		this.projectileSpeed = 150f;
 		this.fireRateCooldown = 0.8f;
-		this.damage = 1;
+		this.damage = 10;
 		this.towerController = new TowerController(this, stage, myX, myY);
 
 		this.addListener(new ClickListener()
@@ -118,5 +118,19 @@ public class Tower extends Image
 	{
 		fireRateCooldown *= 0.8;
 		//TODO this one is bugged;
+	}
+	
+	public void bonusDamage(final float percent)
+	{
+		damage *= 1 + percent/100;
+		System.out.println("My damage: " + damage);
+		Timer.schedule(new Task()
+		{
+			public void run()
+			{
+				damage/= percent/100;
+			}
+
+		}, 15);
 	}
 }

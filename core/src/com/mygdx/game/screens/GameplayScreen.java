@@ -59,14 +59,13 @@ public class GameplayScreen extends AbstractScreen
 
 	private void initPlayerLivesService()
 	{
-		playerLivesService = new PlayerLivesService();
+		playerLivesService = new PlayerLivesService(game);
 	}
 
 	private void initMapTexture()
 	{
 		mapImg = new Image(new Texture("map.jpg"));
 		stage.addActor(mapImg);
-
 	}
 
 	private void initMobController()

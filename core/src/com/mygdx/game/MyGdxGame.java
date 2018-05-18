@@ -1,7 +1,7 @@
 package com.mygdx.game;
 
 import com.mygdx.game.controllers.MobController;
-import com.mygdx.game.screens.SplashScreen;
+import com.mygdx.game.screens.MenuScreen;
 import com.badlogic.gdx.Game;
 
 public class MyGdxGame extends Game
@@ -21,7 +21,7 @@ public class MyGdxGame extends Game
 	@Override
 	public void create()
 	{
-		this.setScreen(new SplashScreen(this));
+		this.setScreen(new MenuScreen(this));
 	}
 
 	public void nextStage(MobController mobController)

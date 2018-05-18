@@ -51,6 +51,7 @@ public class Projectile extends Image
 		});
 
 		this.addAction(Actions.sequence(a, c));
+		
 	}
 
 	public void hit()

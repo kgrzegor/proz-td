@@ -11,9 +11,9 @@ import com.mygdx.game.services.GoldService;
 
 public class FieldController
 {
-	private final int[] xCords = { 300, 800 };
-	private final int[] yCords = { 400, 400 };
-	private final int nFields = 2;
+	private final int[] xCords = { 210, 115, 525, 335, 525, 850, 740, 975 };
+	private final int[] yCords = { 560, 400, 475, 400, 280, 315, 535, 535 };
+	private final int nFields = 8;
 	private GameButton[] fieldButtons;
 	private Tower[] towers;
 	private Stage stage;
@@ -30,10 +30,10 @@ public class FieldController
 
 	private void init()
 	{
-
 		initFieldButtons();
 		initTowers();
 	}
+
 
 	private void initTowers()
 	{
@@ -50,21 +50,23 @@ public class FieldController
 			{
 				public void onClick()
 				{
+					System.out.println("My id: " + id);
 					if (towers[id] == null)
 					{
-						if (goldService.spendGold(500)) // magic numbers
+						if (goldService.spendGold(10)) // magic numbers
 						{
-							towers[id] = new Tower(xCords[id], yCords[id], stage, mobsList);
+							towers[id] = new Tower(xCords[id], 720 - yCords[id], stage, mobsList);
 							stage.addActor(towers[id]);
 						}
 					}
 
 				}
 			})
-			.position(xCords[i], yCords[i])
-			.height(100)
+			.position(xCords[i], 720 - yCords[i])
+			.height(60)
 			.width(100)
-			.debug(true)
+			.image("field.png")
+			//.debug(true)
 			.build();
 		}
 

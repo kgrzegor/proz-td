@@ -32,6 +32,7 @@ public class MenuScreen extends AbstractScreen
 
 			}
 		}).position(500, 300).height(66).width(150).debug(false).image("start.png").build();
+		
 		stage.addActor(newGame);
 	}
 

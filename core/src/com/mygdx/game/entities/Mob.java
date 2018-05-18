@@ -8,11 +8,13 @@ import com.mygdx.game.events.EnemyDamageListener;
 
 public class Mob extends Image 
 {
+	private final static int[] xCords = {145,470,470,1000,1000,670,670,1380};
+	private final static int[] yCords = {455,455,180,180,400,400,580,580};
 	private final static int WIDHT = 39;
 	private final static int HEIGHT = 56;
 
-	private final static int STARTING_X = -100; // TODO this should be current stage base (X,Y)
-	private final static int STARTING_Y = 300;
+	private final static int STARTING_X = 145;
+	private final static int STARTING_Y = -100;
 	MobInterface mobInterface;
 	int health;
 
@@ -37,11 +39,12 @@ public class Mob extends Image
 
 	public void followPath()
 	{
-		Action a = Actions.parallel(Actions.moveBy(1400, 0, 15));
-
-		// Action b = Actions.parallel(Actions.moveBy(0, -200, 4));
-
-		Action c = Actions.run(new Runnable()
+		Action [] actions = new Action[xCords.length +1];
+		for (int i = 0; i < actions.length - 1; ++i)
+			actions[i] = Actions.moveTo(xCords[i], 720 - yCords[i], 3);
+		
+		
+		actions[actions.length - 1] = Actions.run(new Runnable()
 		{
 			public void run()
 			{
@@ -50,7 +53,7 @@ public class Mob extends Image
 			}
 		});
 
-		this.addAction(Actions.sequence(a, c));
+		this.addAction(Actions.sequence(actions));
 	}
 
 	public void takeDamage(int damage)
@@ -64,8 +67,8 @@ public class Mob extends Image
 		}
 		else
 		{
-			Action a = Actions.parallel(Actions.rotateBy(15, 0.1f));
-			Action b = Actions.parallel(Actions.rotateBy(-15, 0.2f));
+			Action a = Actions.parallel(Actions.rotateBy(15, 0.1f), Actions.sizeBy(-4, -4, 0.1f));
+			Action b = Actions.parallel(Actions.rotateBy(-15, 0.2f), Actions.sizeBy(4,4, 0.2f));
 			this.addAction(Actions.sequence(a,b));
 		}
 

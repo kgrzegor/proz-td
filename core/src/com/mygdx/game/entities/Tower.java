@@ -34,7 +34,7 @@ public class Tower extends Image
 		super(new Texture("tower.png"));
 		this.stage = stage;
 		this.targets = mobsList;
-		this.setPosition((100 - 72) / 2 + xCord, yCord); // magic numbers
+		this.setPosition(15 + xCord, yCord + 7);
 		init();
 
 		this.startShooting();

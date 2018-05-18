@@ -79,4 +79,11 @@ public class MobController
 	{
 		return mobsList;
 	}
+
+	public void freezeAll()
+	{
+		for (Mob m : mobsList)
+			m.freeze(3);
+		
+	}
 }

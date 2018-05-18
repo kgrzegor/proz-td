@@ -6,6 +6,7 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controllers.MobController;
 import com.mygdx.game.entities.Tower;
 import com.mygdx.game.controllers.FieldController;
+import com.mygdx.game.screens.ui.GameButton;
 import com.mygdx.game.screens.ui.GameLabel;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.NextStageButton;
@@ -22,6 +23,7 @@ public class GameplayScreen extends AbstractScreen
 	private Image mapImg;
 	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel, goldLabel;
 	private NextStageButton nextStageButton;
+	private GameButton freezeButton;
 	private MobController mobController;
 	private FieldController fieldController;
 	private PointsService pointsService;
@@ -45,6 +47,7 @@ public class GameplayScreen extends AbstractScreen
 		initMobController();
 		initTowerController();
 		towers = fieldController.getTowers();
+		initFreezeButton();
 	}
 
 	private void initPointServce()
@@ -82,7 +85,7 @@ public class GameplayScreen extends AbstractScreen
 		goldLabel = new GameLabel(stage, 550, MyGdxGame.HEIGHT - 20);
 	}
 
-	private void initNextStageButton() // put this into controllers
+	private void initNextStageButton()
 	{
 		nextStageButton = new NextStageButton(new IClickCallback()
 		{
@@ -94,8 +97,22 @@ public class GameplayScreen extends AbstractScreen
 
 		stage.addActor(nextStageButton);
 	}
+	
+	private void initFreezeButton()
+	{
+		freezeButton = new GameButton.Builder(new IClickCallback()
+		{
+			@Override
+			public void onClick()
+			{
+				mobController.freezeAll();				
+			}
+		}).position(100, 100).height(100).width(100).debug(true).build();
+		
+		stage.addActor(freezeButton);
+	}
 
-	private void initTowerController() // put this into controllers
+	private void initTowerController()
 	{
 
 		fieldController = new FieldController(stage, goldService, mobController.getMobsList());

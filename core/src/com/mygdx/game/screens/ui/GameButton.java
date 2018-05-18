@@ -1,8 +1,12 @@
 package com.mygdx.game.screens.ui;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class GameButton extends Button
 {
@@ -73,6 +77,17 @@ public class GameButton extends Button
 		public Builder debug(boolean debug)
 		{
 			this.debug = debug;
+			return this;
+		}
+		public Builder image(String name)
+		{
+			Texture myTexture = new Texture(Gdx.files.internal(name));
+			TextureRegion myTextureRegion = new TextureRegion(myTexture);
+			TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
+			
+			this.buttonStyle.up = myTexRegionDrawable;
+			this.buttonStyle.down = myTexRegionDrawable;
+			
 			return this;
 		}
 		

@@ -1,11 +1,11 @@
 package com.mygdx.game.entities;
 
-import com.badlogic.gdx.graphics.Texture;
+
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class Projectile extends Image
+
+public class Projectile extends Entity
 {
 	private final static int WIDHT = 10;
 	private final static int HEIGHT = 10;
@@ -20,22 +20,15 @@ public class Projectile extends Image
 	public Projectile(ProjectileInterface projectileInterface, int towerRadius, float towerX, float towerY,
 			float targetX, float targetY, int damage)
 	{
-		super(new Texture("projectile.png"));
-		this.setPosition(towerX, towerY);
+		super("projectile.png", (int)towerX, (int)towerY, WIDHT, HEIGHT);
+
 		this.projectileInterface = projectileInterface;
 		this.damage = damage;
-		init();
-		// TODO both direction shouldn't be sinus
+		
 		this.distance = Math.hypot(targetX - towerX, targetY - towerY);
 		directionX = (float) Math.sin((targetX - towerX) / distance) * towerRadius;
 		directionY = (float) Math.sin((targetY - towerY) / distance) * towerRadius;
 
-	}
-
-	private void init()
-	{
-		this.setOrigin(WIDHT / 2, HEIGHT / 2);
-		this.setSize(WIDHT, HEIGHT);
 	}
 
 	public void fire(float projectileSpeed)

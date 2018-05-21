@@ -2,10 +2,10 @@ package com.mygdx.game.entities;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.Texture;
+
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.Align;
@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.controllers.ProjectileController;
 import com.mygdx.game.controllers.TowerController;
 
-public class Tower extends Image
+public class Tower extends Entity
 {
 	private final static int WIDHT = 74;
 	private final static int HEIGHT = 120;
@@ -31,7 +31,8 @@ public class Tower extends Image
 	private TowerController towerController;
 	public Tower(int xCord, int yCord, Stage stage, ArrayList<Mob> mobsList)
 	{
-		super(new Texture("tower.png"));
+		super("tower.png", xCord, yCord, WIDHT, HEIGHT);
+		
 		this.stage = stage;
 		this.targets = mobsList;
 		this.setPosition(15 + xCord, yCord + 7);
@@ -48,7 +49,7 @@ public class Tower extends Image
 		this.myY = this.getY(Align.center);
 		this.towerRadius = 500;
 		this.projectileController = new ProjectileController(myX, myY, towerRadius, stage, targets);
-		this.projectileSpeed = 150f;
+		this.projectileSpeed = 450f;
 		this.fireRateCooldown = 0.8f;
 		this.damage = 10;
 		this.towerController = new TowerController(this, stage, myX, myY);

@@ -1,14 +1,12 @@
 package com.mygdx.game.entities;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.events.EnemyDamageListener;
 
-public class Mob extends Image
+public class Mob extends Entity
 {
 	private final static int[] xCords = { 145, 470, 470, 1000, 1000, 670, 670, 1380 };
 	private final static int[] yCords = { 455, 455, 180, 180, 400, 400, 580, 580 };
@@ -24,22 +22,13 @@ public class Mob extends Image
 
 	public Mob(MobInterface mobInterface)
 	{
-		super(new Texture("mob.png"));
+		super("mob.png", STARTING_X, STARTING_Y, WIDHT, HEIGHT);
 		this.mobInterface = mobInterface;
-		init();
-		// TODO on click show mob inf
-	}
-
-	private void init()
-	{
-
-		this.setOrigin(WIDHT / 2, HEIGHT / 2);
-		this.setSize(WIDHT, HEIGHT);
-		this.setPosition(STARTING_X, STARTING_Y);
+		
 		this.health = 35;
 		this.currentPath = 0;
-
 		this.addListener(new EnemyDamageListener(this));
+
 	}
 
 	public void followPath()

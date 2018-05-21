@@ -14,6 +14,8 @@ import com.mygdx.game.screens.ui.NextStageButton;
 import com.mygdx.game.services.GoldService;
 import com.mygdx.game.services.PlayerLivesService;
 import com.mygdx.game.services.PointsService;
+import com.mygdx.game.services.StageService;
+import com.mygdx.game.services.TimeService;
 
 public class GameplayScreen extends AbstractScreen
 {
@@ -26,9 +28,11 @@ public class GameplayScreen extends AbstractScreen
 	private NextStageButton nextStageButton;
 	private PopoutController popoutController;
 	private MobController mobController;
+	private StageService stageService;
 	private FieldController fieldController;
 	private PointsService pointsService;
 	private Tower[] towers;
+	private TimeService timeService;
 
 	public GameplayScreen(MyGdxGame game)
 	{
@@ -37,7 +41,6 @@ public class GameplayScreen extends AbstractScreen
 
 	protected void init()
 	{
-		game.setLastStage(30);
 
 		initMapTexture();
 		initLabels();
@@ -46,9 +49,16 @@ public class GameplayScreen extends AbstractScreen
 		initGoldService();
 		initPointServce();
 		initMobController();
+		initStageService();
 		initTowerController();
 		towers = fieldController.getTowers();
 		initPopoutController();
+	}
+
+	private void initStageService()
+	{
+		stageService = new StageService(mobController);
+		timeService = new TimeService(stageService);
 	}
 
 	private void initPopoutController()
@@ -98,10 +108,14 @@ public class GameplayScreen extends AbstractScreen
 		{
 			public void onClick()
 			{
-				if (game.getCurrentStage() == 0)
+				if (stageService.getCurrentStage() == 0)
+				{
 					popoutController.startPopouts();
+					timeService.start();
 
-				game.nextStage(mobController);
+				}
+
+				stageService.nextStage();
 
 			}
 		});
@@ -129,8 +143,8 @@ public class GameplayScreen extends AbstractScreen
 	{
 		scoreLabel.setText("Score: " + pointsService.getPoints());
 		heartLabel.setText("Lives: " + playerLivesService.getLivesLeft() + " / 3");
-		stageLabel.setText("Stage: " + game.getCurrentStage() + " / " + game.getLastStage());
-		timerLabel.setText("Time: " + game.getTimeUntilNextStage() + " s");
+		stageLabel.setText("Stage: " + stageService.getCurrentStage() + " / " + stageService.getLastStage());
+		timerLabel.setText("Time: " + timeService.getTime() + " s");
 		goldLabel.setText("Gold: " + goldService.getGold() + " g");
 
 		for (int i = 0; i < towers.length; ++i)

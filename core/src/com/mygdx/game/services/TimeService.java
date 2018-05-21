@@ -6,15 +6,17 @@ import com.badlogic.gdx.utils.Timer.Task;
 public class TimeService
 {
 
-	int time;
+	private int time;
 	StageService stageService;
-	public TimeService()
+	public TimeService(StageService stageService)
 	{
 		this.time = 0;
+		this.stageService = stageService;
 	}
 
 	public void start()
 	{
+		resetTime();
 		Timer.schedule(new Task()
 		{
 
@@ -40,6 +42,12 @@ public class TimeService
 
 	public void resetTime()
 	{
-		time = 0;
+		time = 5;
 	}
+
+	public int getTime()
+	{
+		return time;
+	}
+
 }

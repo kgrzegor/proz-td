@@ -45,41 +45,17 @@ public class GameplayScreen extends AbstractScreen
 		initMapTexture();
 		initLabels();
 		initNextStageButton();
-		initPlayerLivesService();
-		initGoldService();
-		initPointServce();
-		initMobController();
-		initStageService();
-		initTowerController();
-		towers = fieldController.getTowers();
-		initPopoutController();
-	}
-
-	private void initStageService()
-	{
+		playerLivesService = new PlayerLivesService(game);
+		goldService = new GoldService();
+		pointsService = new PointsService();
+		mobController = new MobController(stage, playerLivesService, goldService, pointsService);
 		stageService = new StageService(mobController);
 		timeService = new TimeService(stageService);
-	}
-
-	private void initPopoutController()
-	{
+		fieldController = new FieldController(stage, goldService, mobController.getMobsList());
+		towers = fieldController.getTowers();
+		
 		final Entities[] popout = { mobController, fieldController };
 		popoutController = new PopoutController(stage, popout);
-	}
-
-	private void initPointServce()
-	{
-		pointsService = new PointsService();
-	}
-
-	private void initGoldService()
-	{
-		goldService = new GoldService();
-	}
-
-	private void initPlayerLivesService()
-	{
-		playerLivesService = new PlayerLivesService(game);
 	}
 
 	private void initMapTexture()
@@ -88,10 +64,6 @@ public class GameplayScreen extends AbstractScreen
 		stage.addActor(mapImg);
 	}
 
-	private void initMobController()
-	{
-		mobController = new MobController(stage, playerLivesService, goldService, pointsService);
-	}
 
 	private void initLabels()
 	{
@@ -116,17 +88,12 @@ public class GameplayScreen extends AbstractScreen
 				}
 
 				stageService.nextStage();
+				timeService.resetTime();
 
 			}
 		});
 
 		stage.addActor(nextStageButton);
-	}
-
-	private void initTowerController()
-	{
-
-		fieldController = new FieldController(stage, goldService, mobController.getMobsList());
 	}
 
 	public void render(float delta)

@@ -47,7 +47,7 @@ public class Tower extends Image
 		this.myX = this.getX(Align.center);
 		this.myY = this.getY(Align.center);
 		this.towerRadius = 500;
-		this.projectileController = new ProjectileController(this.myX, this.myY, towerRadius, stage, targets);
+		this.projectileController = new ProjectileController(myX, myY, towerRadius, stage, targets);
 		this.projectileSpeed = 150f;
 		this.fireRateCooldown = 0.8f;
 		this.damage = 10;
@@ -118,7 +118,6 @@ public class Tower extends Image
 	{
 		
 		fireRateCooldown *= 0.8;
-		//TODO this one is bugged;
 	}
 	
 	public void bonusDamage(final float percent)

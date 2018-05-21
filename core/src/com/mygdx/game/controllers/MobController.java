@@ -19,7 +19,6 @@ public class MobController implements Entities
 	private Stage stage;
 	private PlayerLivesService playerLivesService;
 	private ArrayList<Mob> mobsList;
-	private Mob newMob;
 	private GoldService goldService;
 	private PointsService pointsService;
 
@@ -50,7 +49,7 @@ public class MobController implements Entities
 
 	private void addMobToStage()
 	{
-		newMob = new Mob(new MobInterface()
+		Mob newMob = new Mob(new MobInterface()
 		{
 			@Override
 			public void die(Mob mob)

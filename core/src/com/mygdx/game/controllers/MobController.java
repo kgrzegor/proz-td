@@ -14,7 +14,7 @@ import com.mygdx.game.services.PointsService;
 
 public class MobController implements Entities
 {
-	private float spawnTime; // TODO: vectors for whole stage
+	private float spawnTime;
 	private int spawnCount;
 	private Stage stage;
 	private PlayerLivesService playerLivesService;
@@ -32,10 +32,9 @@ public class MobController implements Entities
 		this.goldService = goldService;
 		this.pointsService = pointsService;
 		mobsList = new ArrayList<Mob>();
-
 	}
 
-	public void startWave()
+	public void startWave(int id)
 	{
 		Timer.schedule(new Task()
 		{
@@ -44,7 +43,7 @@ public class MobController implements Entities
 				addMobToStage();
 			}
 
-		}, spawnTime / 10, spawnTime, spawnCount - 1);
+		}, 0, spawnTime, spawnCount - 1);
 	}
 
 	private void addMobToStage()
@@ -54,8 +53,8 @@ public class MobController implements Entities
 			@Override
 			public void die(Mob mob)
 			{
-				goldService.addGold(50); // magic numbers
-				pointsService.addPoints(10);
+				goldService.addGold(mob.getGold()); // magic numbers
+				pointsService.addPoints(mob.getPoints());
 			}
 
 			@Override

@@ -8,6 +8,7 @@ public class EndGameScreen extends AbstractScreen
 {
 
 	private Image endImg;
+
 	public EndGameScreen(MyGdxGame game)
 	{
 		super(game);
@@ -18,7 +19,7 @@ public class EndGameScreen extends AbstractScreen
 	protected void init()
 	{
 		endImg = new Image(new Texture("menu.png"));
-		stage.addActor(endImg);		
+		stage.addActor(endImg);
 	}
 
 	public void render(float delta)

@@ -53,9 +53,9 @@ public class GameplayScreen extends AbstractScreen
 		timeService = new TimeService(stageService);
 		fieldController = new FieldController(stage, goldService, mobController.getMobsList());
 		towers = fieldController.getTowers();
-		
+
 		final Entities[] popout = { mobController, fieldController };
-		popoutController = new PopoutController(stage, popout);
+		popoutController = new PopoutController(stage, popout, stageService);
 	}
 
 	private void initMapTexture()
@@ -63,7 +63,6 @@ public class GameplayScreen extends AbstractScreen
 		mapImg = new Image(new Texture("map.jpg"));
 		stage.addActor(mapImg);
 	}
-
 
 	private void initLabels()
 	{

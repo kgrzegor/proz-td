@@ -3,7 +3,7 @@ package com.mygdx.game.services;
 public class PointsService
 {
 	private int points;
-	
+
 	public PointsService()
 	{
 		points = 0;

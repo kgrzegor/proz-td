@@ -19,13 +19,17 @@ public class Mob extends Entity
 	private MobInterface mobInterface;
 	private int health;
 	private int currentPath;
+	private int gold;
+	private int points;
 
 	public Mob(MobInterface mobInterface)
 	{
 		super("mob.png", STARTING_X, STARTING_Y, WIDHT, HEIGHT);
 		this.mobInterface = mobInterface;
-		
+
 		this.health = 35;
+		this.gold = 50;
+		this.points = 10;
 		this.currentPath = 0;
 		this.addListener(new EnemyDamageListener(this));
 
@@ -96,6 +100,21 @@ public class Mob extends Entity
 				followPath();
 			}
 		}, time);
+	}
+
+	public int getGold()
+	{
+		return gold;
+	}
+
+	public void setGold(int gold)
+	{
+		this.gold = gold;
+	}
+
+	public int getPoints()
+	{
+		return points;
 	}
 
 }

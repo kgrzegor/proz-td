@@ -18,7 +18,7 @@ public class MyGdxGame extends Game
 	{
 		this.setScreen(new MenuScreen(this));
 	}
-	
+
 	public boolean isPaused()
 	{
 		return paused;

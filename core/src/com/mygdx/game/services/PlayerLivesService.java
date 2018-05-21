@@ -17,7 +17,7 @@ public class PlayerLivesService
 	public void makeDamage()
 	{
 		--livesLeft;
-		if(livesLeft == 0)
+		if (livesLeft == 0)
 			game.setScreen(new EndGameScreen(game));
 	}
 

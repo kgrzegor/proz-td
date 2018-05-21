@@ -1,9 +1,7 @@
 package com.mygdx.game.entities;
 
-
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-
 
 public class Projectile extends Entity
 {
@@ -20,11 +18,11 @@ public class Projectile extends Entity
 	public Projectile(ProjectileInterface projectileInterface, int towerRadius, float towerX, float towerY,
 			float targetX, float targetY, int damage)
 	{
-		super("projectile.png", (int)towerX, (int)towerY, WIDHT, HEIGHT);
+		super("projectile.png", (int) towerX, (int) towerY, WIDHT, HEIGHT);
 
 		this.projectileInterface = projectileInterface;
 		this.damage = damage;
-		
+
 		this.distance = Math.hypot(targetX - towerX, targetY - towerY);
 		directionX = (float) Math.sin((targetX - towerX) / distance) * towerRadius;
 		directionY = (float) Math.sin((targetY - towerY) / distance) * towerRadius;
@@ -44,7 +42,7 @@ public class Projectile extends Entity
 		});
 
 		this.addAction(Actions.sequence(a, c));
-		
+
 	}
 
 	public void hit()

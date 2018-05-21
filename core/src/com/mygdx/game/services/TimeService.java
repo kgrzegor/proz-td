@@ -7,13 +7,11 @@ public class TimeService
 {
 
 	private int time;
-	private boolean stopped;
 	StageService stageService;
 
 	public TimeService(StageService stageService)
 	{
 		this.time = 5;
-		this.stopped = false;
 		this.stageService = stageService;
 	}
 
@@ -35,10 +33,7 @@ public class TimeService
 				{
 					time = 0;
 				}
-				
-					
-				
-					
+
 			}
 		}, 1);
 	}
@@ -58,12 +53,6 @@ public class TimeService
 	public void resetTime()
 	{
 		time = 5;
-	}
-
-	public void stopTime()
-	{
-		this.time = 0;
-		stopped = true;
 	}
 
 	public int getTime()

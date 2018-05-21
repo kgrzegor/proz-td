@@ -2,7 +2,6 @@ package com.mygdx.game.entities;
 
 import java.util.ArrayList;
 
-
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -18,8 +17,8 @@ public class Tower extends Entity
 	private final static int WIDHT = 74;
 	private final static int HEIGHT = 120;
 
-	private float myX;
-	private float myY;
+	private float X;
+	private float Y;
 
 	private ProjectileController projectileController;
 	private float projectileSpeed;
@@ -29,10 +28,11 @@ public class Tower extends Entity
 	private ArrayList<Mob> targets;
 	private Stage stage;
 	private TowerController towerController;
+
 	public Tower(int xCord, int yCord, Stage stage, ArrayList<Mob> mobsList)
 	{
 		super("tower.png", xCord, yCord, WIDHT, HEIGHT);
-		
+
 		this.stage = stage;
 		this.targets = mobsList;
 		this.setPosition(15 + xCord, yCord + 7);
@@ -43,26 +43,23 @@ public class Tower extends Entity
 
 	public void init()
 	{
-		this.setOrigin(WIDHT / 2, HEIGHT / 2);
-		this.setSize(WIDHT, HEIGHT);
-		this.myX = this.getX(Align.center);
-		this.myY = this.getY(Align.center);
+		this.X = this.getX(Align.center);
+		this.Y = this.getY(Align.center);
 		this.towerRadius = 500;
-		this.projectileController = new ProjectileController(myX, myY, towerRadius, stage, targets);
+		this.projectileController = new ProjectileController(X, Y, towerRadius, stage, targets);
 		this.projectileSpeed = 450f;
 		this.fireRateCooldown = 0.8f;
 		this.damage = 10;
-		this.towerController = new TowerController(this, stage, myX, myY);
+		this.towerController = new TowerController(this, stage);
 
 		this.addListener(new ClickListener()
+		{
+			public void clicked(InputEvent event, float x, float y)
 			{
-				public void clicked(InputEvent event, float x, float y)
-				{
-					towerController.showMenu();
-				}
+				towerController.showMenu();
 			}
-		);
-		
+		});
+
 	}
 
 	private void startShooting()
@@ -76,7 +73,7 @@ public class Tower extends Entity
 			}
 
 		}, fireRateCooldown);
-		
+
 	}
 
 	private void shoot()
@@ -89,7 +86,7 @@ public class Tower extends Entity
 			targetX = target.getX(Align.center);
 			targetY = target.getY(Align.center);
 
-			if (Math.hypot(targetX - myX, targetY - myY) <= towerRadius)
+			if (Math.hypot(targetX - X, targetY - Y) <= towerRadius)
 			{
 				projectileController.add(projectileSpeed, damage, targetX, targetY);
 				break;
@@ -112,27 +109,37 @@ public class Tower extends Entity
 
 	public void upgradeDamage()
 	{
-		damage *= 1.5;		
+		damage *= 1.5;
 	}
 
 	public void upgradeFireRateCooldown()
 	{
-		
+
 		fireRateCooldown *= 0.8;
 	}
-	
+
 	public void bonusDamage(final float percent)
 	{
-		damage *= 1 + percent/100;
+		damage *= 1 + percent / 100;
 		System.out.println("My damage: " + damage);
 		Timer.schedule(new Task()
 		{
 			public void run()
 			{
-				damage/= 1 + percent/100;
+				damage /= 1 + percent / 100;
 				System.out.println("My damage: " + damage);
 			}
 
 		}, 15);
+	}
+
+	public int getTowerY()
+	{
+		return (int) Y;
+	}
+
+	public int getTowerX()
+	{
+		return (int) X;
 	}
 }

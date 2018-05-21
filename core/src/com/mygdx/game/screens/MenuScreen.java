@@ -22,7 +22,7 @@ public class MenuScreen extends AbstractScreen
 		// TODO new asstets
 		menuImg = new Image(new Texture("menu.png"));
 		stage.addActor(menuImg);
-		
+
 		newGame = new GameButton.Builder(new IClickCallback()
 		{
 			@Override
@@ -32,7 +32,7 @@ public class MenuScreen extends AbstractScreen
 
 			}
 		}).position(500, 300).height(66).width(150).debug(false).image("start.png").build();
-		
+
 		stage.addActor(newGame);
 	}
 

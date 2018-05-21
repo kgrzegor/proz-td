@@ -19,15 +19,11 @@ public class GoldService
 		this.gold += gold;
 	}
 
-	public boolean spendGold(int cost)
+	public void spendGold(int cost) throws Exception
 	{
 		if (gold >= cost)
-		{
 			gold -= cost;
-			return true;
-		} else
-		{
-			return false;
-		}
+		else
+			throw new Exception("Not enough gold!\nYou need " + (cost - gold) + "g more.");
 	}
 }

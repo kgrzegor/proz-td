@@ -7,7 +7,7 @@ public class TimeService
 {
 
 	int time;
-
+	StageService stageService;
 	public TimeService()
 	{
 		this.time = 0;
@@ -29,14 +29,13 @@ public class TimeService
 	protected void nextSecond()
 	{
 		if (time > 0)
-		--time;
+			--time;
 		else
 		{
-			waveService.nextWave();
+			stageService.nextStage();
 			resetTime();
 		}
-			
-		
+
 	}
 
 	public void resetTime()

@@ -66,35 +66,35 @@ public class Tower extends Image
 
 	private void startShooting()
 	{
-
 		Timer.schedule(new Task()
 		{
 			public void run()
 			{
-				float targetX;
-				float targetY;
-				for (Mob target : targets)
-				{
-
-					targetX = target.getX(Align.center);
-					targetY = target.getY(Align.center);
-
-					if (Math.hypot(targetX - myX, targetY - myY) <= towerRadius)
-					{
-						Tower.this.shoot(targetX, targetY,Math.hypot(targetX - myX, targetY - myY));
-						break;
-					}
-
-				}
+				shoot();
+				startShooting();
 			}
 
-		}, 0, fireRateCooldown);
-
+		}, fireRateCooldown);
+		
 	}
 
-	private void shoot(float targetX, float targetY, double distance)
+	private void shoot()
 	{
-		projectileController.add(projectileSpeed, damage, targetX, targetY);
+		float targetX;
+		float targetY;
+		for (Mob target : targets)
+		{
+
+			targetX = target.getX(Align.center);
+			targetY = target.getY(Align.center);
+
+			if (Math.hypot(targetX - myX, targetY - myY) <= towerRadius)
+			{
+				projectileController.add(projectileSpeed, damage, targetX, targetY);
+				break;
+			}
+
+		}
 	}
 
 	public ProjectileController getProjectileController()
@@ -116,6 +116,7 @@ public class Tower extends Image
 
 	public void upgradeFireRateCooldown()
 	{
+		
 		fireRateCooldown *= 0.8;
 		//TODO this one is bugged;
 	}
@@ -128,7 +129,8 @@ public class Tower extends Image
 		{
 			public void run()
 			{
-				damage/= percent/100;
+				damage/= 1 + percent/100;
+				System.out.println("My damage: " + damage);
 			}
 
 		}, 15);

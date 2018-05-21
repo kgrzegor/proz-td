@@ -35,7 +35,7 @@ public class PopoutController
 					@Override
 					public void onClick()
 					{
-						popout[rand.nextInt(2)].popoutEffect(10);
+						popout[rand.nextInt(2)].popoutEffect(30);
 						gameButton.remove();
 					}
 				}).position(rand.nextInt(1080)+100, rand.nextInt(520)+100).height(25).width(28).image("popout.png").debug(false).build();

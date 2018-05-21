@@ -29,8 +29,8 @@ public class TowerController
 	private void init()
 	{
 		menuOpened = false;
-		this.height = 50;
-		this.width = 50;
+		this.height = 58;
+		this.width = 120;
 	}
 
 	public void showMenu()
@@ -64,10 +64,11 @@ public class TowerController
 				closeMenu();						
 			}
 		})
-		.position(X,Y-height)
+		.position(X,100+Y-height)
 		.height(height)
 		.width(width)
-		.debug(true)
+		//.debug(true)
+		.image("close.png")
 		.build();
 		
 	}
@@ -81,10 +82,11 @@ public class TowerController
 				tower.upgradeFireRateCooldown();						
 			}
 		})
-		.position(X-width,Y-height)
+		.position(X-width,100+Y-height)
 		.height(height)
 		.width(width)
-		.debug(true)
+		//.debug(true)
+		.image("firerate.png")
 		.build();
 		
 		
@@ -99,10 +101,11 @@ public class TowerController
 				tower.upgradeDamage();						
 			}
 		})
-		.position(X,Y)
+		.position(X,100+Y)
 		.height(height)
 		.width(width)
-		.debug(true)
+		//.debug(true)
+		.image("damage.png")
 		.build();
 		
 	}
@@ -116,10 +119,11 @@ public class TowerController
 				tower.upgradeRadius();
 			}
 		})
-		.position(X-width,Y)
+		.position(X-width,100+Y)
 		.height(height)
 		.width(width)
-		.debug(true)
+		//.debug(true)
+		.image("range.png")
 		.build();
 		
 	}

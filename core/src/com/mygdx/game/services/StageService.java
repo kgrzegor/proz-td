@@ -18,9 +18,11 @@ public class StageService
 	public void nextStage()
 	{
 		if (currentStage < lastStage)
+		{
 			++currentStage;
-
-		mobController.startWave();
+			mobController.startWave();
+		}
+		
 	}
 
 	public int getCurrentStage()

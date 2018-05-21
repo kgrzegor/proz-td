@@ -13,23 +13,24 @@ public class PopoutController
 {
 	private GameButton gameButton;
 	private Stage stage;
-	private final Entities [] popout;
+	private final Entities[] popout;
 	private Random rand;
-	public PopoutController(Stage stage, final Entities [] popout)
-	{		
+
+	public PopoutController(Stage stage, final Entities[] popout)
+	{
 		this.stage = stage;
 		this.popout = popout;
 		this.rand = new Random();
-		
+
 	}
-	
-	 public void startPopouts()
+
+	public void startPopouts()
 	{
 		Timer.schedule(new Task()
 		{
 			public void run()
 			{
-				
+
 				gameButton = new GameButton.Builder(new IClickCallback()
 				{
 					@Override
@@ -38,10 +39,11 @@ public class PopoutController
 						popout[rand.nextInt(2)].popoutEffect(30);
 						gameButton.remove();
 					}
-				}).position(rand.nextInt(1080)+100, rand.nextInt(520)+100).height(25).width(28).image("popout.png").debug(false).build();
-				
+				}).position(rand.nextInt(1080) + 100, rand.nextInt(520) + 100).height(25).width(28).image("popout.png")
+						.debug(false).build();
+
 				stage.addActor(gameButton);
-				
+
 				Timer.schedule(new Task()
 				{
 					public void run()
@@ -50,10 +52,10 @@ public class PopoutController
 					}
 				}, 3);
 			}
-			
+
 		}
 
-		, 5, 5);
+				, 5, 5);
 	}
-	
+
 }

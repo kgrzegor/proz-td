@@ -34,11 +34,11 @@ public class TowerController
 	}
 
 	public void showMenu()
-	{		
+	{
 		if (menuOpened)
 			return;
 		menuOpened = true;
-		
+
 		initUpgradeRadius();
 		initUpgradeDamage();
 		initUpgradeFireRateCooldown();
@@ -61,16 +61,12 @@ public class TowerController
 		{
 			public void onClick()
 			{
-				closeMenu();						
+				closeMenu();
 			}
-		})
-		.position(X,100+Y-height)
-		.height(height)
-		.width(width)
-		//.debug(true)
-		.image("close.png")
-		.build();
-		
+		}).position(X, 100 + Y - height).height(height).width(width)
+				// .debug(true)
+				.image("close.png").build();
+
 	}
 
 	private void initUpgradeFireRateCooldown()
@@ -79,17 +75,12 @@ public class TowerController
 		{
 			public void onClick()
 			{
-				tower.upgradeFireRateCooldown();						
+				tower.upgradeFireRateCooldown();
 			}
-		})
-		.position(X-width,100+Y-height)
-		.height(height)
-		.width(width)
-		//.debug(true)
-		.image("firerate.png")
-		.build();
-		
-		
+		}).position(X - width, 100 + Y - height).height(height).width(width)
+				// .debug(true)
+				.image("firerate.png").build();
+
 	}
 
 	private void initUpgradeDamage()
@@ -98,16 +89,12 @@ public class TowerController
 		{
 			public void onClick()
 			{
-				tower.upgradeDamage();						
+				tower.upgradeDamage();
 			}
-		})
-		.position(X,100+Y)
-		.height(height)
-		.width(width)
-		//.debug(true)
-		.image("damage.png")
-		.build();
-		
+		}).position(X, 100 + Y).height(height).width(width)
+				// .debug(true)
+				.image("damage.png").build();
+
 	}
 
 	private void initUpgradeRadius()
@@ -118,14 +105,10 @@ public class TowerController
 			{
 				tower.upgradeRadius();
 			}
-		})
-		.position(X-width,100+Y)
-		.height(height)
-		.width(width)
-		//.debug(true)
-		.image("range.png")
-		.build();
-		
+		}).position(X - width, 100 + Y).height(height).width(width)
+				// .debug(true)
+				.image("range.png").build();
+
 	}
 
 	protected void closeMenu()

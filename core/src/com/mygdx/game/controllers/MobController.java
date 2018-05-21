@@ -12,7 +12,7 @@ import com.mygdx.game.services.GoldService;
 import com.mygdx.game.services.PlayerLivesService;
 import com.mygdx.game.services.PointsService;
 
-public class MobController implements Entities 
+public class MobController implements Entities
 {
 	private float spawnTime; // TODO: vectors for whole stage
 	private int spawnCount;
@@ -23,7 +23,8 @@ public class MobController implements Entities
 	private GoldService goldService;
 	private PointsService pointsService;
 
-	public MobController(Stage stage, PlayerLivesService playerLivesService, GoldService goldService, PointsService pointsService)
+	public MobController(Stage stage, PlayerLivesService playerLivesService, GoldService goldService,
+			PointsService pointsService)
 	{
 		spawnTime = 3f;
 		spawnCount = 15;
@@ -83,8 +84,8 @@ public class MobController implements Entities
 
 	public void popoutEffect(float time)
 	{
-		time/=10;
+		time /= 10;
 		for (Mob m : mobsList)
-			m.freeze(time);		
+			m.freeze(time);
 	}
 }

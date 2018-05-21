@@ -53,13 +53,13 @@ public class GameplayScreen extends AbstractScreen
 
 	private void initPopoutController()
 	{
-		final Entities [] popout = {mobController, fieldController};
+		final Entities[] popout = { mobController, fieldController };
 		popoutController = new PopoutController(stage, popout);
 	}
 
 	private void initPointServce()
 	{
-		pointsService = new PointsService();		
+		pointsService = new PointsService();
 	}
 
 	private void initGoldService()
@@ -100,16 +100,14 @@ public class GameplayScreen extends AbstractScreen
 			{
 				if (game.getCurrentStage() == 0)
 					popoutController.startPopouts();
-				
+
 				game.nextStage(mobController);
-				
+
 			}
 		});
 
 		stage.addActor(nextStageButton);
 	}
-	
-	
 
 	private void initTowerController()
 	{

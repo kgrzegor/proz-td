@@ -47,7 +47,6 @@ public class MyGdxGame extends Game
 		this.paused = paused;
 	}
 
-
 	public int getCurrentStage()
 	{
 		return currentStage;

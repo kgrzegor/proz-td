@@ -35,7 +35,6 @@ public class FieldController implements Entities
 		initTowers();
 	}
 
-
 	private void initTowers()
 	{
 		towers = new Tower[nFields];
@@ -62,13 +61,9 @@ public class FieldController implements Entities
 					}
 
 				}
-			})
-			.position(xCords[i], 720 - yCords[i])
-			.height(60)
-			.width(100)
-			.image("field.png")
-			//.debug(true)
-			.build();
+			}).position(xCords[i], 720 - yCords[i]).height(60).width(100).image("field.png")
+					// .debug(true)
+					.build();
 		}
 
 		for (int i = 0; i < fieldButtons.length; ++i)
@@ -83,7 +78,7 @@ public class FieldController implements Entities
 	@Override
 	public void popoutEffect(float strength)
 	{
-		for(Tower t : towers)
+		for (Tower t : towers)
 			if (t != null)
 				t.bonusDamage(strength);
 	}

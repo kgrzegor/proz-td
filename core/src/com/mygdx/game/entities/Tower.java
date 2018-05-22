@@ -2,10 +2,9 @@ package com.mygdx.game.entities;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.Align;
@@ -13,13 +12,13 @@ import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.controllers.ProjectileController;
 import com.mygdx.game.controllers.TowerController;
 
-public class Tower extends Image
+public class Tower extends Entity
 {
 	private final static int WIDHT = 74;
 	private final static int HEIGHT = 120;
 
-	private float myX;
-	private float myY;
+	private float X;
+	private float Y;
 
 	private ProjectileController projectileController;
 	private float projectileSpeed;
@@ -29,12 +28,14 @@ public class Tower extends Image
 	private ArrayList<Mob> targets;
 	private Stage stage;
 	private TowerController towerController;
+
 	public Tower(int xCord, int yCord, Stage stage, ArrayList<Mob> mobsList)
 	{
-		super(new Texture("tower.png"));
+		super("tower.png", xCord, yCord, WIDHT, HEIGHT);
+
 		this.stage = stage;
 		this.targets = mobsList;
-		this.setPosition((100 - 72) / 2 + xCord, yCord); // magic numbers
+		this.setPosition(15 + xCord, yCord + 7);
 		init();
 
 		this.startShooting();
@@ -42,60 +43,56 @@ public class Tower extends Image
 
 	public void init()
 	{
-		this.setOrigin(WIDHT / 2, HEIGHT / 2);
-		this.setSize(WIDHT, HEIGHT);
-		this.myX = this.getX(Align.center);
-		this.myY = this.getY(Align.center);
+		this.X = this.getX(Align.center);
+		this.Y = this.getY(Align.center);
 		this.towerRadius = 500;
-		this.projectileController = new ProjectileController(this.myX, this.myY, towerRadius, stage, targets);
-		this.projectileSpeed = 150f;
+		this.projectileController = new ProjectileController(X, Y, towerRadius, stage, targets);
+		this.projectileSpeed = 450f;
 		this.fireRateCooldown = 0.8f;
 		this.damage = 10;
-		this.towerController = new TowerController(this, stage, myX, myY);
+		this.towerController = new TowerController(this, stage);
 
 		this.addListener(new ClickListener()
+		{
+			public void clicked(InputEvent event, float x, float y)
 			{
-				public void clicked(InputEvent event, float x, float y)
-				{
-					towerController.showMenu();
-					
-				}
+				towerController.showMenu();
 			}
-		);
-		
+		});
+
 	}
 
 	private void startShooting()
 	{
-
 		Timer.schedule(new Task()
 		{
 			public void run()
 			{
-				float targetX;
-				float targetY;
-				for (Mob target : targets)
-				{
-
-					targetX = target.getX(Align.center);
-					targetY = target.getY(Align.center);
-
-					if (Math.hypot(targetX - myX, targetY - myY) <= towerRadius)
-					{
-						Tower.this.shoot(targetX, targetY,Math.hypot(targetX - myX, targetY - myY));
-						break;
-					}
-
-				}
+				shoot();
+				startShooting();
 			}
 
-		}, 0, fireRateCooldown);
+		}, fireRateCooldown);
 
 	}
 
-	private void shoot(float targetX, float targetY, double distance)
+	private void shoot()
 	{
-		projectileController.add(projectileSpeed, damage, targetX, targetY);
+		float targetX;
+		float targetY;
+		for (Mob target : targets)
+		{
+
+			targetX = target.getX(Align.center);
+			targetY = target.getY(Align.center);
+
+			if (Math.hypot(targetX - X, targetY - Y) <= towerRadius)
+			{
+				projectileController.add(projectileSpeed, damage, targetX, targetY);
+				break;
+			}
+
+		}
 	}
 
 	public ProjectileController getProjectileController()
@@ -112,12 +109,37 @@ public class Tower extends Image
 
 	public void upgradeDamage()
 	{
-		damage *= 1.5;		
+		damage *= 1.5;
 	}
 
 	public void upgradeFireRateCooldown()
 	{
+
 		fireRateCooldown *= 0.8;
-		//TODO this one is bugged;
+	}
+
+	public void bonusDamage(final float percent)
+	{
+		damage *= 1 + percent / 100;
+		System.out.println("My damage: " + damage);
+		Timer.schedule(new Task()
+		{
+			public void run()
+			{
+				damage /= 1 + percent / 100;
+				System.out.println("My damage: " + damage);
+			}
+
+		}, 15);
+	}
+
+	public int getTowerY()
+	{
+		return (int) Y;
+	}
+
+	public int getTowerX()
+	{
+		return (int) X;
 	}
 }

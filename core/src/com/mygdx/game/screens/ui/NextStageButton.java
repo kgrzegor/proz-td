@@ -33,7 +33,6 @@ public class NextStageButton extends Button
 				return super.touchDown(event, x, y, pointer, button);
 			}
 		});
-
 	}
 
 	private static ButtonStyle prepareStyle()

@@ -8,37 +8,34 @@ import com.mygdx.game.screens.ui.IClickCallback;
 public class TowerController
 {
 	private boolean menuOpened;
-	private int X, Y;
-	private int height, width;
+	private int towerX, towerY;
+	private int buttonHeight, buttonWidth;
 	private Tower tower;
 	private Stage stage;
-	private GameButton upgradeRadius;
-	private GameButton upgradeDamage;
-	private GameButton upgradeFireRateCooldown;
-	private GameButton close;
+	private GameButton upgradeRadius, upgradeDamage, upgradeFireRateCooldown, close;
 
-	public TowerController(Tower tower, Stage stage, float towerX, float towerY)
+	public TowerController(Tower tower, Stage stage)
 	{
-		this.X = (int) towerX;
-		this.Y = (int) towerY;
-		this.tower = tower;
 		this.stage = stage;
+		this.tower = tower;
 		init();
 	}
 
 	private void init()
 	{
+		this.towerX = tower.getTowerX();
+		this.towerY = 100 + tower.getTowerY();
 		menuOpened = false;
-		this.height = 50;
-		this.width = 50;
+		this.buttonHeight = 58;
+		this.buttonWidth = 120;
 	}
 
 	public void showMenu()
-	{		
+	{
 		if (menuOpened)
 			return;
 		menuOpened = true;
-		
+
 		initUpgradeRadius();
 		initUpgradeDamage();
 		initUpgradeFireRateCooldown();
@@ -61,15 +58,10 @@ public class TowerController
 		{
 			public void onClick()
 			{
-				closeMenu();						
+				closeMenu();
 			}
-		})
-		.position(X,Y-height)
-		.height(height)
-		.width(width)
-		.debug(true)
-		.build();
-		
+		}).position(towerX, towerY - buttonHeight).height(buttonHeight).width(buttonWidth).image("close.png").build();
+
 	}
 
 	private void initUpgradeFireRateCooldown()
@@ -78,16 +70,11 @@ public class TowerController
 		{
 			public void onClick()
 			{
-				tower.upgradeFireRateCooldown();						
+				tower.upgradeFireRateCooldown();
 			}
-		})
-		.position(X-width,Y-height)
-		.height(height)
-		.width(width)
-		.debug(true)
-		.build();
-		
-		
+		}).position(towerX - buttonWidth, towerY - buttonHeight).height(buttonHeight).width(buttonWidth)
+				.image("firerate.png").build();
+
 	}
 
 	private void initUpgradeDamage()
@@ -96,15 +83,10 @@ public class TowerController
 		{
 			public void onClick()
 			{
-				tower.upgradeDamage();						
+				tower.upgradeDamage();
 			}
-		})
-		.position(X,Y)
-		.height(height)
-		.width(width)
-		.debug(true)
-		.build();
-		
+		}).position(towerX, towerY).height(buttonHeight).width(buttonWidth).image("damage.png").build();
+
 	}
 
 	private void initUpgradeRadius()
@@ -115,13 +97,8 @@ public class TowerController
 			{
 				tower.upgradeRadius();
 			}
-		})
-		.position(X-width,Y)
-		.height(height)
-		.width(width)
-		.debug(true)
-		.build();
-		
+		}).position(towerX - buttonWidth, towerY).height(buttonHeight).width(buttonWidth).image("range.png").build();
+
 	}
 
 	protected void closeMenu()

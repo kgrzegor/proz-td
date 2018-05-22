@@ -4,7 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.mygdx.game.entities.Mob;
 
-
 public class EnemyDamageListener implements EventListener
 {
 
@@ -18,14 +17,13 @@ public class EnemyDamageListener implements EventListener
 	@Override
 	public boolean handle(Event event)
 	{
-		if (!(event instanceof DamageEvent)) 
+		if (!(event instanceof DamageEvent))
 			return false;
-		 
+
 		DamageEvent damageEvent = (DamageEvent) event;
-		
+
 		mob.takeDamage(damageEvent.getDamage());
-		
-		
+
 		return true;
 	}
 

@@ -5,24 +5,25 @@ import java.util.ArrayList;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
+import com.mygdx.game.entities.Entities;
 import com.mygdx.game.entities.Mob;
 import com.mygdx.game.entities.MobInterface;
 import com.mygdx.game.services.GoldService;
 import com.mygdx.game.services.PlayerLivesService;
 import com.mygdx.game.services.PointsService;
 
-public class MobController
+public class MobController implements Entities
 {
-	private float spawnTime; // TODO: vectors for whole stage
+	private float spawnTime;
 	private int spawnCount;
 	private Stage stage;
 	private PlayerLivesService playerLivesService;
 	private ArrayList<Mob> mobsList;
-	private Mob newMob;
 	private GoldService goldService;
 	private PointsService pointsService;
 
-	public MobController(Stage stage, PlayerLivesService playerLivesService, GoldService goldService, PointsService pointsService)
+	public MobController(Stage stage, PlayerLivesService playerLivesService, GoldService goldService,
+			PointsService pointsService)
 	{
 		spawnTime = 3f;
 		spawnCount = 15;
@@ -31,10 +32,9 @@ public class MobController
 		this.goldService = goldService;
 		this.pointsService = pointsService;
 		mobsList = new ArrayList<Mob>();
-
 	}
 
-	public void startWave()
+	public void startWave(int id)
 	{
 		Timer.schedule(new Task()
 		{
@@ -43,18 +43,18 @@ public class MobController
 				addMobToStage();
 			}
 
-		}, spawnTime / 10, spawnTime, spawnCount - 1);
+		}, 0, spawnTime, spawnCount - 1);
 	}
 
 	private void addMobToStage()
 	{
-		newMob = new Mob(new MobInterface()
+		Mob newMob = new Mob(new MobInterface()
 		{
 			@Override
 			public void die(Mob mob)
 			{
-				goldService.addGold(50); // magic numbers
-				pointsService.addPoints(10);
+				goldService.addGold(mob.getGold()); // magic numbers
+				pointsService.addPoints(mob.getPoints());
 			}
 
 			@Override
@@ -78,5 +78,12 @@ public class MobController
 	public ArrayList<Mob> getMobsList()
 	{
 		return mobsList;
+	}
+
+	public void popoutEffect(float time)
+	{
+		time /= 10;
+		for (Mob m : mobsList)
+			m.freeze(time);
 	}
 }

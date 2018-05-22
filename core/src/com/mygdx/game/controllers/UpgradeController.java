@@ -5,7 +5,7 @@ import com.mygdx.game.entities.Tower;
 import com.mygdx.game.screens.ui.GameButton;
 import com.mygdx.game.screens.ui.IClickCallback;
 
-public class TowerController
+public class UpgradeController
 {
 	private boolean menuOpened;
 	private int towerX, towerY;
@@ -14,7 +14,7 @@ public class TowerController
 	private Stage stage;
 	private GameButton upgradeRadius, upgradeDamage, upgradeFireRateCooldown, close;
 
-	public TowerController(Tower tower, Stage stage)
+	public UpgradeController(Tower tower, Stage stage)
 	{
 		this.stage = stage;
 		this.tower = tower;

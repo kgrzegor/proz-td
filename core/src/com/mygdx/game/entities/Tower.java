@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.controllers.ProjectileController;
-import com.mygdx.game.controllers.TowerController;
+import com.mygdx.game.controllers.UpgradeController;
 
 public class Tower extends Entity
 {
@@ -27,7 +27,7 @@ public class Tower extends Entity
 	private int towerRadius;
 	private ArrayList<Mob> targets;
 	private Stage stage;
-	private TowerController towerController;
+	private UpgradeController towerController;
 
 	public Tower(int xCord, int yCord, Stage stage, ArrayList<Mob> mobsList)
 	{
@@ -50,7 +50,7 @@ public class Tower extends Entity
 		this.projectileSpeed = 450f;
 		this.fireRateCooldown = 0.8f;
 		this.damage = 10;
-		this.towerController = new TowerController(this, stage);
+		this.towerController = new UpgradeController(this, stage);
 
 		this.addListener(new ClickListener()
 		{

@@ -6,20 +6,20 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.entities.Entities;
+import com.mygdx.game.entities.PowerUps;
 import com.mygdx.game.screens.ui.GameButton;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.services.StageService;
 
-public class PopoutController
+public class PowerUpController
 {
 	private StageService stageService;
 	private GameButton gameButton;
 	private Stage stage;
-	private final Entities[] popout;
+	private final PowerUps[] popout;
 	private Random rand;
 
-	public PopoutController(Stage stage, final Entities[] popout, StageService stageService)
+	public PowerUpController(Stage stage, final PowerUps[] popout, StageService stageService)
 	{
 		this.stage = stage;
 		this.popout = popout;
@@ -27,7 +27,7 @@ public class PopoutController
 		this.stageService = stageService;
 	}
 
-	public void startPopouts()
+	public void startPowerUps()
 	{
 		Timer.schedule(new Task()
 		{

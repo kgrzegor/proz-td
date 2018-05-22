@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import com.mygdx.game.entities.Entities;
+import com.mygdx.game.entities.PowerUps;
 import com.mygdx.game.entities.Mob;
 import com.mygdx.game.entities.Tower;
 import com.mygdx.game.screens.ui.GameButton;
@@ -12,7 +12,7 @@ import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.InfoLabel;
 import com.mygdx.game.services.GoldService;
 
-public class FieldController implements Entities
+public class FieldController implements PowerUps
 {
 	private final int[] xCords = { 210, 115, 525, 335, 525, 850, 740, 975 };
 	private final int[] yCords = { 160, 320, 245, 320, 440, 405, 185, 185 };

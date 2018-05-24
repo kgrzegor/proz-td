@@ -1,38 +1,36 @@
-package com.mygdx.game.entities;
+package com.mygdx.game.entities.enemies;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
+import com.mygdx.game.controllers.MobController;
+import com.mygdx.game.entities.AbstractEntity;
 import com.mygdx.game.events.EnemyDamageListener;
 
-public class Mob extends AbstractEntity
+public abstract class Mob extends AbstractEntity
 {
 	private final static int[] xCords = { 145, 470, 470, 1000, 1000, 670, 670, 1380 };
-	private final static int[] yCords = { 455, 455, 180, 180, 400, 400, 580, 580 };
+	private final static int[] yCords = { 265, 265, 540, 540, 320, 320, 140, 140 };
 	private final static int WIDHT = 39;
 	private final static int HEIGHT = 56;
-
 	private final static int STARTING_X = 145;
 	private final static int STARTING_Y = -100;
 
-	private MobInterface mobInterface;
-	private int health;
+	private MobController mobController;
 	private int currentPath;
-	private int gold;
-	private int points;
+	protected int health;
+	protected int gold;
+	protected int points;
+	protected int speed;
 
-	public Mob(MobInterface mobInterface)
+	public Mob(MobController mobController, String name)
 	{
-		super("mob.png", STARTING_X, STARTING_Y, WIDHT, HEIGHT);
-		this.mobInterface = mobInterface;
-
-		this.health = 35;
-		this.gold = 50;
-		this.points = 10;
+		super(name, STARTING_X, STARTING_Y, WIDHT, HEIGHT);
+		this.mobController = mobController;
 		this.currentPath = 0;
 		this.addListener(new EnemyDamageListener(this));
-
+		this.followPath();
 	}
 
 	public void followPath()
@@ -41,8 +39,8 @@ public class Mob extends AbstractEntity
 		int currentCords = currentPath;
 		for (int i = 0; i < actions.length - 1; ++i, ++currentCords)
 		{
-			Action move = Actions.moveTo(xCords[currentCords], 720 - yCords[currentCords],
-					caculateDistance(currentCords) / 100);
+			Action move = Actions.moveTo(xCords[currentCords], yCords[currentCords],
+					caculateDistance(currentCords) / speed);
 			Action pathNumber = Actions.run(new Runnable()
 			{
 				public void run()
@@ -57,8 +55,7 @@ public class Mob extends AbstractEntity
 		{
 			public void run()
 			{
-				mobInterface.removeFromStage(Mob.this);
-				mobInterface.makeDamage();
+				mobController.damagePlayer(Mob.this);
 			}
 		});
 		this.addAction(Actions.sequence(actions));
@@ -70,8 +67,7 @@ public class Mob extends AbstractEntity
 
 		if (health <= 0)
 		{
-			mobInterface.die(this);
-			mobInterface.removeFromStage(this);
+			mobController.mobDied(this);
 		} else
 		{
 			Action a = Actions.parallel(Actions.rotateBy(15, 0.1f), Actions.sizeBy(-4, -4, 0.1f));

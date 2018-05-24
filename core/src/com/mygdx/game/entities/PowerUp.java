@@ -1,6 +1,6 @@
 package com.mygdx.game.entities;
 
-public interface PowerUps
+public interface PowerUp
 {
 	public void popoutEffect(float strength);
 }

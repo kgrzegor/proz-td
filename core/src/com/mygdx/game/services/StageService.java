@@ -11,7 +11,7 @@ public class StageService
 	public StageService(MobController mobController)
 	{
 		this.currentStage = 0;
-		this.lastStage = 10;
+		this.lastStage = 4;
 		this.mobController = mobController;
 	}
 

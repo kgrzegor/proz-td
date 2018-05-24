@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.controllers.ProjectileController;
 import com.mygdx.game.controllers.UpgradeController;
+import com.mygdx.game.entities.enemies.Mob;
 import com.mygdx.game.services.GoldService;
 
 public class Tower extends AbstractEntity
@@ -23,13 +24,13 @@ public class Tower extends AbstractEntity
 
 	private ProjectileController projectileController;
 	private float projectileSpeed;
-	private float fireRateCooldown; // smaller = better
+	private float fireRateCooldown;// smaller = better
 	private int damage;
 	private int range;
 	private boolean shooting;
 	private ArrayList<Mob> targets;
 	private Stage stage;
-	private UpgradeController towerController;
+	private UpgradeController upgradeController;
 	private GoldService goldService;
 
 	public Tower(int xCord, int yCord, Stage stage, ArrayList<Mob> mobsList, GoldService goldService)
@@ -54,13 +55,13 @@ public class Tower extends AbstractEntity
 		this.projectileSpeed = 300f;
 		this.fireRateCooldown = 1.5f;
 		this.damage = 10;
-		this.towerController = new UpgradeController(this, stage, goldService);
+		this.upgradeController = new UpgradeController(this, stage, goldService);
 
 		this.addListener(new ClickListener()
 		{
 			public void clicked(InputEvent event, float x, float y)
 			{
-				towerController.showMenu();
+				upgradeController.showMenu();
 			}
 		});
 
@@ -129,13 +130,11 @@ public class Tower extends AbstractEntity
 	public void bonusDamage(final float percent)
 	{
 		damage *= 1 + percent / 100;
-		System.out.println("My damage: " + damage);
 		Timer.schedule(new Task()
 		{
 			public void run()
 			{
 				damage /= 1 + percent / 100;
-				System.out.println("My damage: " + damage);
 			}
 
 		}, 15);

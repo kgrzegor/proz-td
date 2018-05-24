@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.mygdx.game.entities.PowerUp;
-import com.mygdx.game.entities.Mob;
 import com.mygdx.game.entities.Tower;
+import com.mygdx.game.entities.enemies.Mob;
 import com.mygdx.game.screens.ui.GameButton;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.InfoLabel;
@@ -53,7 +53,6 @@ public class FieldController implements PowerUp
 
 	protected void buildTower(int id)
 	{
-
 		try
 		{
 			goldService.spendGold(500);
@@ -64,7 +63,6 @@ public class FieldController implements PowerUp
 		{
 			new InfoLabel(stage, xCords[id], yCords[id] + 20, e.getMessage());
 		}
-
 	}
 
 	public Tower[] getTowers()
@@ -73,7 +71,7 @@ public class FieldController implements PowerUp
 	}
 
 	@Override
-	public void popoutEffect(float strength)
+	public void powerUpEffect(float strength)
 	{
 		for (Tower t : towers)
 			if (t != null)

@@ -19,7 +19,6 @@ public class TimeService
 	{
 		Timer.schedule(new Task()
 		{
-
 			@Override
 			public void run()
 			{
@@ -28,12 +27,10 @@ public class TimeService
 					start();
 					nextSecond();
 				}
-
 				else
 				{
 					time = 0;
 				}
-
 			}
 		}, 1);
 	}

@@ -3,7 +3,7 @@ package com.mygdx.game.controllers;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
-
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.mygdx.game.entities.PowerUp;
 import com.mygdx.game.entities.Mob;
 import com.mygdx.game.entities.Tower;
@@ -53,18 +53,18 @@ public class FieldController implements PowerUp
 
 	protected void buildTower(int id)
 	{
-		if (towers[id] == null)
+
+		try
 		{
-			try
-			{
-				goldService.spendGold(500);
-				towers[id] = new Tower(xCords[id], yCords[id], stage, mobsList, goldService);
-				stage.addActor(towers[id]);
-			} catch (Exception e)
-			{
-				new InfoLabel(stage, xCords[id], yCords[id] + 20, e.getMessage());
-			}
+			goldService.spendGold(500);
+			towers[id] = new Tower(xCords[id], yCords[id], stage, mobsList, goldService);
+			fieldButtons[id].setTouchable(Touchable.disabled);
+			stage.addActor(towers[id]);
+		} catch (Exception e)
+		{
+			new InfoLabel(stage, xCords[id], yCords[id] + 20, e.getMessage());
 		}
+
 	}
 
 	public Tower[] getTowers()

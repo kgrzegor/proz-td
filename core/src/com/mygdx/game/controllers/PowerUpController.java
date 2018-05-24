@@ -54,13 +54,13 @@ public class PowerUpController
 	protected void initGameButton()
 	{
 		int X = rand.nextInt(MyGdxGame.WIDTH - 200) + 100;
-		int Y = rand.nextInt(MyGdxGame.HEIGHT) + 100;
+		int Y = rand.nextInt(MyGdxGame.HEIGHT - 200) + 100;
 		gameButton = new GameButton.Builder(new IClickCallback()
 		{
 			@Override
 			public void onClick()
 			{
-				popout[rand.nextInt(popout.length)].popoutEffect(stageService.getCurrentStage() * 10);
+				popout[rand.nextInt(popout.length)].powerUpEffect(stageService.getCurrentStage() * 10);
 				gameButton.remove();
 			}
 		}).position(X, Y).height(25).width(28).image("popout.png").build();

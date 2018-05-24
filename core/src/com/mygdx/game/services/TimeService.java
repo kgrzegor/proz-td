@@ -47,7 +47,6 @@ public class TimeService
 			stageService.nextStage();
 			resetTime();
 		}
-
 	}
 
 	public void resetTime()

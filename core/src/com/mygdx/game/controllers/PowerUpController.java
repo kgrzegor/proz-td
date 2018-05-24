@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.entities.PowerUps;
+import com.mygdx.game.entities.PowerUp;
 import com.mygdx.game.screens.ui.GameButton;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.services.StageService;
@@ -16,10 +16,10 @@ public class PowerUpController
 	private StageService stageService;
 	private GameButton gameButton;
 	private Stage stage;
-	private final PowerUps[] popout;
+	private final PowerUp[] popout;
 	private Random rand;
 
-	public PowerUpController(Stage stage, final PowerUps[] popout, StageService stageService)
+	public PowerUpController(Stage stage, final PowerUp[] popout, StageService stageService)
 	{
 		this.stage = stage;
 		this.popout = popout;
@@ -33,28 +33,38 @@ public class PowerUpController
 		{
 			public void run()
 			{
-
-				gameButton = new GameButton.Builder(new IClickCallback()
-				{
-					@Override
-					public void onClick()
-					{
-						popout[rand.nextInt(popout.length)].popoutEffect(stageService.getCurrentStage() * 10);
-						gameButton.remove();
-					}
-				}).position(rand.nextInt(MyGdxGame.WIDTH - 200) + 100, rand.nextInt(MyGdxGame.HEIGHT) + 100).height(25)
-						.width(28).image("popout.png").build();
+				initGameButton();
 
 				stage.addActor(gameButton);
 
-				Timer.schedule(new Task()
-				{
-					public void run()
-					{
-						gameButton.remove();
-					}
-				}, 3);
+				initRemoveTimer();
+				
 			}
 		}, 5, 5);
+	}
+
+	protected void initRemoveTimer()
+	{
+		Timer.schedule(new Task()
+		{
+			public void run()
+			{
+				gameButton.remove();
+			}
+		}, 3);		
+	}
+
+	protected void initGameButton()
+	{
+		gameButton = new GameButton.Builder(new IClickCallback()
+		{
+			@Override
+			public void onClick()
+			{
+				popout[rand.nextInt(popout.length)].popoutEffect(stageService.getCurrentStage() * 10);
+				gameButton.remove();
+			}
+		}).position(rand.nextInt(MyGdxGame.WIDTH - 200) + 100, rand.nextInt(MyGdxGame.HEIGHT) + 100).height(25)
+				.width(28).image("popout.png").build();
 	}
 }

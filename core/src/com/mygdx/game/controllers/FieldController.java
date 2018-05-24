@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import com.mygdx.game.entities.PowerUps;
+import com.mygdx.game.entities.PowerUp;
 import com.mygdx.game.entities.Mob;
 import com.mygdx.game.entities.Tower;
 import com.mygdx.game.screens.ui.GameButton;
@@ -12,7 +12,7 @@ import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.InfoLabel;
 import com.mygdx.game.services.GoldService;
 
-public class FieldController implements PowerUps
+public class FieldController implements PowerUp
 {
 	private final int[] xCords = { 210, 115, 525, 335, 525, 850, 740, 975 };
 	private final int[] yCords = { 160, 320, 245, 320, 440, 405, 185, 185 };
@@ -58,7 +58,7 @@ public class FieldController implements PowerUps
 			try
 			{
 				goldService.spendGold(500);
-				towers[id] = new Tower(xCords[id], yCords[id], stage, mobsList);
+				towers[id] = new Tower(xCords[id], yCords[id], stage, mobsList, goldService);
 				stage.addActor(towers[id]);
 			} catch (Exception e)
 			{

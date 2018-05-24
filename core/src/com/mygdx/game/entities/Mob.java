@@ -107,11 +107,6 @@ public class Mob extends Entity
 		return gold;
 	}
 
-	public void setGold(int gold)
-	{
-		this.gold = gold;
-	}
-
 	public int getPoints()
 	{
 		return points;

@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-import com.mygdx.game.entities.PowerUps;
+import com.mygdx.game.entities.PowerUp;
 import com.mygdx.game.entities.Mob;
 import com.mygdx.game.entities.MobInterface;
 import com.mygdx.game.services.GoldService;
 import com.mygdx.game.services.PlayerLivesService;
 import com.mygdx.game.services.PointsService;
 
-public class MobController implements PowerUps
+public class MobController implements PowerUp
 {
 	private float spawnTime;
 	private int spawnCount;
@@ -36,13 +36,13 @@ public class MobController implements PowerUps
 
 	public void startWave(int id)
 	{
+		
 		Timer.schedule(new Task()
 		{
 			public void run()
 			{
 				addMobToStage();
 			}
-
 		}, 0, spawnTime, spawnCount - 1);
 	}
 

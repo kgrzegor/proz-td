@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controllers.MobController;
 import com.mygdx.game.controllers.PowerUpController;
-import com.mygdx.game.entities.PowerUps;
+import com.mygdx.game.entities.PowerUp;
 import com.mygdx.game.entities.Tower;
 import com.mygdx.game.controllers.FieldController;
 import com.mygdx.game.screens.ui.GameLabel;
@@ -19,14 +19,13 @@ import com.mygdx.game.services.TimeService;
 
 public class GameplayScreen extends AbstractScreen
 {
-
-	private PlayerLivesService playerLivesService;
-	private GoldService goldService;
-
 	private Image mapImg;
 	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel, goldLabel;
 	private NextStageButton nextStageButton;
-	private PowerUpController popoutController;
+
+	private PlayerLivesService playerLivesService;
+	private GoldService goldService;
+	private PowerUpController powerupController;
 	private MobController mobController;
 	private StageService stageService;
 	private FieldController fieldController;
@@ -54,8 +53,8 @@ public class GameplayScreen extends AbstractScreen
 		fieldController = new FieldController(stage, goldService, mobController.getMobsList());
 		towers = fieldController.getTowers();
 
-		final PowerUps[] popout = { mobController, fieldController };
-		popoutController = new PowerUpController(stage, popout, stageService);
+		final PowerUp[] powerupList = { mobController, fieldController };
+		powerupController = new PowerUpController(stage, powerupList, stageService);
 	}
 
 	private void initMapTexture()
@@ -81,11 +80,9 @@ public class GameplayScreen extends AbstractScreen
 			{
 				if (stageService.getCurrentStage() == 0)
 				{
-					popoutController.startPowerUps();
+					powerupController.startPowerUps();
 					timeService.start();
-
 				}
-
 				stageService.nextStage();
 				timeService.resetTime();
 

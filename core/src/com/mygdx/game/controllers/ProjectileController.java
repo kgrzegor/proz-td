@@ -14,15 +14,15 @@ public class ProjectileController
 	private float towerX, towerY;
 	private ArrayList<Projectile> ProjectilesList;
 	private Projectile newProjectile;
-	private int towerRadius;
+	private int range;
 	private Stage stage;
 	private ArrayList<Mob> targets;
 
-	public ProjectileController(float X, float Y, int towerRadius, Stage stage, ArrayList<Mob> targets)
+	public ProjectileController(float X, float Y, int range, Stage stage, ArrayList<Mob> targets)
 	{
 		this.towerX = X;
 		this.towerY = Y;
-		this.towerRadius = towerRadius;
+		this.range = range;
 		ProjectilesList = new ArrayList<Projectile>();
 		this.stage = stage;
 		this.targets = targets;
@@ -38,7 +38,7 @@ public class ProjectileController
 			{
 				ProjectilesList.remove(projectile);
 			}
-		}, towerRadius, towerX, towerY, targetX, targetY, damage);
+		}, range, towerX, towerY, targetX, targetY, damage);
 
 		stage.addActor(newProjectile);
 		newProjectile.fire(projectileSpeed);
@@ -60,8 +60,8 @@ public class ProjectileController
 			}
 	}
 
-	public void setTowerRadius(int towerRadius)
+	public void setRange(int range)
 	{
-		this.towerRadius = towerRadius;
+		this.range = range;
 	}
 }

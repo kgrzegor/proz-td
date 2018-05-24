@@ -30,7 +30,6 @@ public abstract class Mob extends AbstractEntity
 		this.mobController = mobController;
 		this.currentPath = 0;
 		this.addListener(new EnemyDamageListener(this));
-		this.followPath();
 	}
 
 	public void followPath()

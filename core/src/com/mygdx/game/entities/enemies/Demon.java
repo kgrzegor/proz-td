@@ -12,5 +12,7 @@ public class Demon extends Mob
 		this.health = 30;
 		this.points = 100;
 		this.speed = 100;
+		
+		this.followPath();
 	}
 }

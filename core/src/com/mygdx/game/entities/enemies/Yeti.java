@@ -12,6 +12,8 @@ public class Yeti extends Mob
 		this.health = 30;
 		this.points = 100;
 		this.speed = 70;
+		
+		this.followPath();
 	}
 
 	@Override

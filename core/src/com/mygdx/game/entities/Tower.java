@@ -11,11 +11,12 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.controllers.ProjectileController;
 import com.mygdx.game.controllers.UpgradeController;
+import com.mygdx.game.services.GoldService;
 
 public class Tower extends Entity
 {
-	private final static int WIDHT = 74;
-	private final static int HEIGHT = 120;
+	public final static int WIDHT = 74;
+	public final static int HEIGHT = 120;
 
 	private float X;
 	private float Y;
@@ -24,17 +25,19 @@ public class Tower extends Entity
 	private float projectileSpeed;
 	private float fireRateCooldown; // smaller = better
 	private int damage;
-	private int towerRadius;
+	private int range;
 	private ArrayList<Mob> targets;
 	private Stage stage;
 	private UpgradeController towerController;
+	private GoldService goldService;
 
-	public Tower(int xCord, int yCord, Stage stage, ArrayList<Mob> mobsList)
+	public Tower(int xCord, int yCord, Stage stage, ArrayList<Mob> mobsList, GoldService goldService)
 	{
 		super("tower.png", xCord, yCord, WIDHT, HEIGHT);
 
 		this.stage = stage;
 		this.targets = mobsList;
+		this.goldService = goldService;
 		this.setPosition(15 + xCord, yCord + 7);
 		init();
 
@@ -45,12 +48,12 @@ public class Tower extends Entity
 	{
 		this.X = this.getX(Align.center);
 		this.Y = this.getY(Align.center);
-		this.towerRadius = 500;
-		this.projectileController = new ProjectileController(X, Y, towerRadius, stage, targets);
+		this.range = 500;
+		this.projectileController = new ProjectileController(X, Y, range, stage, targets);
 		this.projectileSpeed = 450f;
 		this.fireRateCooldown = 0.8f;
 		this.damage = 10;
-		this.towerController = new UpgradeController(this, stage);
+		this.towerController = new UpgradeController(this, stage, goldService);
 
 		this.addListener(new ClickListener()
 		{
@@ -86,7 +89,7 @@ public class Tower extends Entity
 			targetX = target.getX(Align.center);
 			targetY = target.getY(Align.center);
 
-			if (Math.hypot(targetX - X, targetY - Y) <= towerRadius)
+			if (Math.hypot(targetX - X, targetY - Y) <= range)
 			{
 				projectileController.add(projectileSpeed, damage, targetX, targetY);
 				break;
@@ -100,22 +103,20 @@ public class Tower extends Entity
 		return projectileController;
 	}
 
-	public void upgradeRadius()
+	public void biggerRange()
 	{
-		towerRadius *= 1.1;
-		projectileController.setTowerRadius(towerRadius);
-		System.out.println("radius = " + towerRadius);
+		range += 50;
+		projectileController.setRange(range);
 	}
 
-	public void upgradeDamage()
+	public void addDamage()
 	{
 		damage *= 1.5;
 	}
 
-	public void upgradeFireRateCooldown()
+	public void lowerFireRateCooldown()
 	{
-
-		fireRateCooldown *= 0.8;
+		fireRateCooldown *= 0.9;
 	}
 
 	public void bonusDamage(final float percent)
@@ -142,4 +143,20 @@ public class Tower extends Entity
 	{
 		return (int) X;
 	}
+
+	public int getRange()
+	{
+		return range;
+	}
+
+	public int getDamage()
+	{
+		return damage;
+	}
+
+	public float getFireRateCooldown()
+	{
+		return fireRateCooldown;
+	}
+
 }

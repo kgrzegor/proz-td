@@ -51,7 +51,7 @@ public class TimeService
 
 	public void resetTime()
 	{
-		time = 5;
+		time = 60;
 	}
 
 	public int getTime()

@@ -34,11 +34,8 @@ public class PowerUpController
 			public void run()
 			{
 				initGameButton();
-
 				stage.addActor(gameButton);
-
 				initRemoveTimer();
-				
 			}
 		}, 5, 5);
 	}
@@ -51,11 +48,13 @@ public class PowerUpController
 			{
 				gameButton.remove();
 			}
-		}, 3);		
+		}, 3);
 	}
 
 	protected void initGameButton()
 	{
+		int X = rand.nextInt(MyGdxGame.WIDTH - 200) + 100;
+		int Y = rand.nextInt(MyGdxGame.HEIGHT) + 100;
 		gameButton = new GameButton.Builder(new IClickCallback()
 		{
 			@Override
@@ -64,7 +63,6 @@ public class PowerUpController
 				popout[rand.nextInt(popout.length)].popoutEffect(stageService.getCurrentStage() * 10);
 				gameButton.remove();
 			}
-		}).position(rand.nextInt(MyGdxGame.WIDTH - 200) + 100, rand.nextInt(MyGdxGame.HEIGHT) + 100).height(25)
-				.width(28).image("popout.png").build();
+		}).position(X, Y).height(25).width(28).image("popout.png").build();
 	}
 }

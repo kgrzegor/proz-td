@@ -36,7 +36,6 @@ public class MobController implements PowerUp
 
 	public void startWave(int id)
 	{
-		
 		Timer.schedule(new Task()
 		{
 			public void run()

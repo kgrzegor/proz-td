@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.events.EnemyDamageListener;
 
-public class Mob extends Entity
+public class Mob extends AbstractEntity
 {
 	private final static int[] xCords = { 145, 470, 470, 1000, 1000, 670, 670, 1380 };
 	private final static int[] yCords = { 455, 455, 180, 180, 400, 400, 580, 580 };

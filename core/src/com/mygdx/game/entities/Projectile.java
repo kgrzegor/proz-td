@@ -3,7 +3,7 @@ package com.mygdx.game.entities;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
-public class Projectile extends Entity
+public class Projectile extends AbstractEntity
 {
 	private final static int WIDHT = 10;
 	private final static int HEIGHT = 10;

@@ -13,7 +13,7 @@ import com.mygdx.game.controllers.ProjectileController;
 import com.mygdx.game.controllers.UpgradeController;
 import com.mygdx.game.services.GoldService;
 
-public class Tower extends Entity
+public class Tower extends AbstractEntity
 {
 	public final static int WIDHT = 74;
 	public final static int HEIGHT = 120;

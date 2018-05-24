@@ -2,6 +2,7 @@ package com.mygdx.game.controllers;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.entities.Tower;
@@ -77,6 +78,7 @@ public class UpgradeController
 	private void initRangeIndicator()
 	{
 		rangeIndicator = new Image(new Texture("rangeindicator.png"));
+		rangeIndicator.setTouchable(Touchable.disabled);
 		updateRangeIndicator();
 	}
 
@@ -121,10 +123,11 @@ public class UpgradeController
 				goldService.spendGold(fireRateCooldownCost);
 				fireRateCooldownCost += 100;
 				tower.lowerFireRateCooldown();
-				return ("Fire rate: " + tower.getFireRateCooldown());
+				return String.format("Fire rate: %.2f", tower.getFireRateCooldown());
+				
 			} else
 			{
-				return "Tower fire rate at max level";
+				return "Tower fire rate at max level!";
 			}
 		} catch (Exception e)
 		{
@@ -157,7 +160,7 @@ public class UpgradeController
 				return ("Damage: " + tower.getDamage());
 			} else
 			{
-				return "Tower damage at max level";
+				return "Tower damage at max level!";
 			}
 		} catch (Exception e)
 		{
@@ -191,7 +194,7 @@ public class UpgradeController
 				return ("Range: " + tower.getRange());
 			} else
 			{
-				return "Tower range at max level";
+				return "Tower range at max level!";
 			}
 		} catch (Exception e)
 		{

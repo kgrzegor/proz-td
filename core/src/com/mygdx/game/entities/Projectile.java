@@ -24,6 +24,7 @@ public class Projectile extends Entity
 		this.damage = damage;
 
 		this.distance = Math.hypot(targetX - towerX, targetY - towerY);
+
 		directionX = (float) Math.sin((targetX - towerX) / distance) * towerRadius;
 		directionY = (float) Math.sin((targetY - towerY) / distance) * towerRadius;
 

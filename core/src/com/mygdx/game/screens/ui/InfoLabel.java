@@ -10,9 +10,7 @@ public class InfoLabel extends GameLabel
 	public InfoLabel(Stage stage, int x, int y, String text)
 	{
 		super(stage, x, y);
-
 		this.setText(text);
-
 		moveUp();
 	}
 

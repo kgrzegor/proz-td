@@ -32,7 +32,6 @@ public class ProjectileController
 	{
 		newProjectile = new Projectile(new ProjectileInterface()
 		{
-
 			@Override
 			public void removeFromList(Projectile projectile)
 			{

@@ -71,10 +71,11 @@ public class FieldController implements PowerUp
 	}
 
 	@Override
-	public void powerUpEffect(float strength)
+	public String powerUpEffect(float strength)
 	{
 		for (Tower t : towers)
 			if (t != null)
 				t.bonusDamage(strength);
+		return "Towers have bonus damage";
 	}
 }

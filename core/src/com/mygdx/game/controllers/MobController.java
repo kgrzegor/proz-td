@@ -75,10 +75,11 @@ public class MobController implements PowerUp
 		mob.remove();
 	}
 
-	public void powerUpEffect(float time)
+	public String powerUpEffect(float time)
 	{
 		for (Mob m : mobsList)
 			m.freeze(time / 10);
+		return "Mobs have been frozen";
 	}
 
 	public ArrayList<Mob> getMobsList()

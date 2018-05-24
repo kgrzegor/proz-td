@@ -9,6 +9,7 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.entities.PowerUp;
 import com.mygdx.game.screens.ui.GameButton;
 import com.mygdx.game.screens.ui.IClickCallback;
+import com.mygdx.game.screens.ui.InfoLabel;
 import com.mygdx.game.services.StageService;
 
 public class PowerUpController
@@ -40,7 +41,7 @@ public class PowerUpController
 		}, 5, 5);
 	}
 
-	protected void initRemoveTimer()
+	private void initRemoveTimer()
 	{
 		Timer.schedule(new Task()
 		{
@@ -51,18 +52,27 @@ public class PowerUpController
 		}, 3);
 	}
 
-	protected void initGameButton()
+	private void initGameButton()
 	{
-		int X = rand.nextInt(MyGdxGame.WIDTH - 200) + 100;
-		int Y = rand.nextInt(MyGdxGame.HEIGHT - 200) + 100;
+		final int X = rand.nextInt(MyGdxGame.WIDTH - 200) + 100;
+		final int Y = rand.nextInt(MyGdxGame.HEIGHT - 200) + 100;
 		gameButton = new GameButton.Builder(new IClickCallback()
 		{
 			@Override
 			public void onClick()
 			{
-				popout[rand.nextInt(popout.length)].powerUpEffect(stageService.getCurrentStage() * 10);
-				gameButton.remove();
+				clicked(X, Y);
+				
 			}
 		}).position(X, Y).height(25).width(28).image("popout.png").build();
 	}
+
+	protected void clicked(int x, int y)
+	{
+		String info = popout[rand.nextInt(popout.length)].powerUpEffect(stageService.getCurrentStage() * 10);
+		gameButton.remove();
+		new InfoLabel(stage, x-50, y, info);
+		
+	}
+	
 }

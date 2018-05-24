@@ -26,6 +26,7 @@ public class Tower extends Entity
 	private float fireRateCooldown; // smaller = better
 	private int damage;
 	private int range;
+	private boolean shooting;
 	private ArrayList<Mob> targets;
 	private Stage stage;
 	private UpgradeController towerController;
@@ -48,10 +49,10 @@ public class Tower extends Entity
 	{
 		this.X = this.getX(Align.center);
 		this.Y = this.getY(Align.center);
-		this.range = 500;
+		this.range = 200;
 		this.projectileController = new ProjectileController(X, Y, range, stage, targets);
-		this.projectileSpeed = 450f;
-		this.fireRateCooldown = 0.8f;
+		this.projectileSpeed = 300f;
+		this.fireRateCooldown = 1.5f;
 		this.damage = 10;
 		this.towerController = new UpgradeController(this, stage, goldService);
 
@@ -67,35 +68,40 @@ public class Tower extends Entity
 
 	private void startShooting()
 	{
+		float fireRate;
+		if (shooting)
+			fireRate = fireRateCooldown;
+		else
+			fireRate = 0.05f;
+
 		Timer.schedule(new Task()
 		{
 			public void run()
 			{
-				shoot();
+				shooting = shoot();
 				startShooting();
 			}
 
-		}, fireRateCooldown);
+		}, fireRate);
 
 	}
 
-	private void shoot()
+	private boolean shoot()
 	{
 		float targetX;
 		float targetY;
 		for (Mob target : targets)
 		{
-
 			targetX = target.getX(Align.center);
 			targetY = target.getY(Align.center);
 
 			if (Math.hypot(targetX - X, targetY - Y) <= range)
 			{
 				projectileController.add(projectileSpeed, damage, targetX, targetY);
-				break;
+				return true;
 			}
-
 		}
+		return false;
 	}
 
 	public ProjectileController getProjectileController()
@@ -106,6 +112,7 @@ public class Tower extends Entity
 	public void biggerRange()
 	{
 		range += 50;
+		projectileSpeed += 100;
 		projectileController.setRange(range);
 	}
 
@@ -158,5 +165,4 @@ public class Tower extends Entity
 	{
 		return fireRateCooldown;
 	}
-
 }

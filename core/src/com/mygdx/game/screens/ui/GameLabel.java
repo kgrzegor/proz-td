@@ -13,6 +13,12 @@ public class GameLabel extends Label
 		this.setY(Y);
 		stage.addActor(this);
 	}
+	public GameLabel(int X, int Y)
+	{
+		super("", prepareLabelStyle());
+		this.setX(X);
+		this.setY(Y);
+	}
 
 	private static LabelStyle prepareLabelStyle()
 	{

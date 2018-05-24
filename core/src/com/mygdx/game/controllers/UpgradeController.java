@@ -1,6 +1,9 @@
 package com.mygdx.game.controllers;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.entities.Tower;
 import com.mygdx.game.screens.ui.GameButton;
 import com.mygdx.game.screens.ui.GameLabel;
@@ -14,13 +17,14 @@ public class UpgradeController
 	private final static int WIDTH = 120;
 
 	private boolean menuOpened;
-	private int towerX, towerY;
+	private int menuX, menuY;
 	private int rangeCost, damageCost, fireRateCooldownCost;
 	private Tower tower;
 	private Stage stage;
 	private GameButton upgradeRange, upgradeDamage, upgradeFireRateCooldown, close;
 	private GameLabel rangeCostLabel, damageCostLabel, fireRateCooldownCostLabel;
 	private GoldService goldService;
+	private Image rangeIndicator;
 
 	public UpgradeController(Tower tower, Stage stage, GoldService goldService)
 	{
@@ -31,13 +35,19 @@ public class UpgradeController
 		this.damageCost = 100;
 		this.fireRateCooldownCost = 100;
 		init();
+
 	}
 
 	private void init()
 	{
-		this.towerX = tower.getTowerX();
-		this.towerY = 100 + tower.getTowerY();
+		this.menuX = tower.getTowerX();
+		this.menuY = 100 + tower.getTowerY();
 		menuOpened = false;
+		initUpgradeRange();
+		initUpgradeDamage();
+		initUpgradeFireRateCooldown();
+		initClose();
+		initRangeIndicator();
 	}
 
 	public void showMenu()
@@ -46,20 +56,36 @@ public class UpgradeController
 			return;
 		menuOpened = true;
 
-		initUpgradeRange();
-		initUpgradeDamage();
-		initUpgradeFireRateCooldown();
-		initClose();
-		initStageActors();
+		addStageActors();
 		updateLabels();
 	}
 
-	private void initStageActors()
+	private void addStageActors()
 	{
+		stage.addActor(rangeIndicator);
+
 		stage.addActor(upgradeDamage);
 		stage.addActor(upgradeFireRateCooldown);
 		stage.addActor(upgradeRange);
 		stage.addActor(close);
+
+		stage.addActor(damageCostLabel);
+		stage.addActor(rangeCostLabel);
+		stage.addActor(fireRateCooldownCostLabel);
+	}
+
+	private void initRangeIndicator()
+	{
+		rangeIndicator = new Image(new Texture("rangeindicator.png"));
+		updateRangeIndicator();
+	}
+
+	private void updateRangeIndicator()
+	{
+		rangeIndicator.setHeight(tower.getRange() * 2);
+		rangeIndicator.setWidth(tower.getRange() * 2);
+		rangeIndicator.setX(tower.getTowerX(), Align.center);
+		rangeIndicator.setY(tower.getTowerY(), Align.center);
 	}
 
 	private void initClose()
@@ -70,7 +96,7 @@ public class UpgradeController
 			{
 				closeMenu();
 			}
-		}).position(towerX, towerY - HEIGHT).height(HEIGHT).width(WIDTH).image("close.png").build();
+		}).position(menuX, menuY - HEIGHT).height(HEIGHT).width(WIDTH).image("close.png").build();
 	}
 
 	private void initUpgradeFireRateCooldown()
@@ -81,9 +107,9 @@ public class UpgradeController
 			{
 				showInfoLabel(upgradeFireRateCooldown());
 			}
-		}).position(towerX - WIDTH, towerY - HEIGHT).height(HEIGHT).width(WIDTH).image("firerate.png").build();
+		}).position(menuX - WIDTH, menuY - HEIGHT).height(HEIGHT).width(WIDTH).image("firerate.png").build();
 
-		fireRateCooldownCostLabel = new GameLabel(stage, towerX - WIDTH - 35, towerY - HEIGHT / 2);
+		fireRateCooldownCostLabel = new GameLabel(menuX - WIDTH - 35, menuY - HEIGHT / 2);
 	}
 
 	protected String upgradeFireRateCooldown()
@@ -114,9 +140,9 @@ public class UpgradeController
 			{
 				showInfoLabel(upgradeDamage());
 			}
-		}).position(towerX, towerY).height(HEIGHT).width(WIDTH).image("damage.png").build();
+		}).position(menuX, menuY).height(HEIGHT).width(WIDTH).image("damage.png").build();
 
-		damageCostLabel = new GameLabel(stage, towerX + WIDTH, towerY + HEIGHT / 2);
+		damageCostLabel = new GameLabel(menuX + WIDTH, menuY + HEIGHT / 2);
 	}
 
 	protected String upgradeDamage()
@@ -147,9 +173,9 @@ public class UpgradeController
 			{
 				showInfoLabel(upgradeRange());
 			}
-		}).position(towerX - WIDTH, towerY).height(HEIGHT).width(WIDTH).image("range.png").build();
+		}).position(menuX - WIDTH, menuY).height(HEIGHT).width(WIDTH).image("range.png").build();
 
-		rangeCostLabel = new GameLabel(stage, towerX - WIDTH - 35, towerY + HEIGHT / 2);
+		rangeCostLabel = new GameLabel(menuX - WIDTH - 35, menuY + HEIGHT / 2);
 	}
 
 	protected String upgradeRange()
@@ -161,6 +187,7 @@ public class UpgradeController
 				goldService.spendGold(rangeCost);
 				rangeCost += 100;
 				tower.biggerRange();
+				updateRangeIndicator();
 				return ("Range: " + tower.getRange());
 			} else
 			{
@@ -174,7 +201,7 @@ public class UpgradeController
 
 	protected void showInfoLabel(String info)
 	{
-		new InfoLabel(stage, towerX - Tower.WIDHT / 2, towerY - 100, info);
+		new InfoLabel(stage, menuX - Tower.WIDHT / 2, menuY - 100, info);
 		updateLabels();
 	}
 
@@ -187,6 +214,7 @@ public class UpgradeController
 
 	protected void closeMenu()
 	{
+		rangeIndicator.remove();
 		upgradeRange.remove();
 		upgradeDamage.remove();
 		upgradeFireRateCooldown.remove();

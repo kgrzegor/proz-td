@@ -17,19 +17,22 @@ public class PowerUpController
 	private StageService stageService;
 	private GameButton gameButton;
 	private Stage stage;
+	private boolean started;
 	private final PowerUp[] popout;
 	private Random rand;
 
-	public PowerUpController(Stage stage, final PowerUp[] popout, StageService stageService)
+	public PowerUpController(Stage stage, MyGdxGame game, final PowerUp[] popout)
 	{
 		this.stage = stage;
 		this.popout = popout;
+		this.started = false;
 		this.rand = new Random();
-		this.stageService = stageService;
+		this.stageService = game.getStageService();
 	}
 
 	public void startPowerUps()
 	{
+		if (!started)
 		Timer.schedule(new Task()
 		{
 			public void run()
@@ -39,6 +42,8 @@ public class PowerUpController
 				initRemoveTimer();
 			}
 		}, 5, 5);
+		
+		started = true;
 	}
 
 	private void initRemoveTimer()

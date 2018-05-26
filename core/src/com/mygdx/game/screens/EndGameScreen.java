@@ -3,16 +3,20 @@ package com.mygdx.game.screens;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.screens.ui.GameLabel;
 
 public class EndGameScreen extends AbstractScreen
 {
 
 	private Image endImg;
 
-	public EndGameScreen(MyGdxGame game)
+	public EndGameScreen(MyGdxGame game, String text)
 	{
 		super(game);
-		// TODO Auto-generated constructor stub
+		
+		GameLabel gameoverLabel = new GameLabel(stage, 200, 500, "fontbig.fnt");
+		gameoverLabel.setText(text);
+
 	}
 
 	@Override

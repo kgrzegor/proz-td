@@ -1,6 +1,11 @@
 package com.mygdx.game;
 
 import com.mygdx.game.screens.MenuScreen;
+import com.mygdx.game.services.GoldService;
+import com.mygdx.game.services.PlayerLivesService;
+import com.mygdx.game.services.PointsService;
+import com.mygdx.game.services.StageService;
+import com.mygdx.game.services.TimeService;
 import com.badlogic.gdx.Game;
 
 public class MyGdxGame extends Game
@@ -11,11 +16,22 @@ public class MyGdxGame extends Game
 	public final static int WIDTH = 1280;
 	public final static int HEIGHT = 720;
 
+	private PlayerLivesService playerLivesService;
+	private GoldService goldService;
+	private StageService stageService;
+	private PointsService pointsService;
+	private TimeService timeService;
+
 	private boolean paused;
 
 	@Override
 	public void create()
 	{
+		playerLivesService = new PlayerLivesService();
+		goldService = new GoldService();
+		pointsService = new PointsService();
+		timeService = new TimeService();
+		stageService = new StageService();
 		this.setScreen(new MenuScreen(this));
 	}
 
@@ -27,5 +43,33 @@ public class MyGdxGame extends Game
 	public void setPaused(boolean paused)
 	{
 		this.paused = paused;
+	}
+
+	/******
+	 * GETTERS
+	 *******/
+	public PlayerLivesService getPlayerLivesService()
+	{
+		return playerLivesService;
+	}
+
+	public GoldService getGoldService()
+	{
+		return goldService;
+	}
+
+	public StageService getStageService()
+	{
+		return stageService;
+	}
+
+	public PointsService getPointsService()
+	{
+		return pointsService;
+	}
+
+	public TimeService getTimeService()
+	{
+		return timeService;
 	}
 }

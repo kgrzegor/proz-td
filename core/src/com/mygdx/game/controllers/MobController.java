@@ -1,7 +1,6 @@
 package com.mygdx.game.controllers;
 
 import java.util.ArrayList;
-
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
@@ -12,28 +11,33 @@ import com.mygdx.game.entities.enemies.MobType;
 import com.mygdx.game.services.GoldService;
 import com.mygdx.game.services.PlayerLivesService;
 import com.mygdx.game.services.PointsService;
+import com.mygdx.game.services.StageService;
 
 public class MobController implements PowerUp
 {
-	private MobType[] waveType = {MobType.Yeti, MobType.Demon};
+	private MobType[] waveType = { MobType.Yeti, MobType.Demon };
 	private float spawnTime;
 	private int spawnCount;
+	private int mobsCreated;
 	private Stage stage;
 	private PlayerLivesService playerLivesService;
 	private ArrayList<Mob> mobsList;
 	private GoldService goldService;
 	private PointsService pointsService;
 	private EnemyFactory enemyFactory;
+	private StageService stageService;
 
 	public MobController(Stage stage, PlayerLivesService playerLivesService, GoldService goldService,
-			PointsService pointsService)
+			PointsService pointsService, StageService stageService)
 	{
 		this.spawnTime = 3f;
-		this.spawnCount = 15;
+		this.spawnCount = 3;
+		this.mobsCreated = 0;
 		this.stage = stage;
 		this.playerLivesService = playerLivesService;
 		this.goldService = goldService;
 		this.pointsService = pointsService;
+		this.stageService = stageService;
 		this.mobsList = new ArrayList<Mob>();
 		this.enemyFactory = new EnemyFactory(this);
 	}
@@ -54,6 +58,9 @@ public class MobController implements PowerUp
 		Mob newMob = enemyFactory.createMob(waveType[waveNumber - 1]);
 		stage.addActor(newMob);
 		mobsList.add(newMob);
+		
+		if (waveNumber == stageService.getLastStage())
+			++mobsCreated;
 	}
 
 	public void damagePlayer(Mob mob)
@@ -67,7 +74,6 @@ public class MobController implements PowerUp
 		goldService.addGold(mob.getGold());
 		pointsService.addPoints(mob.getPoints());
 		removeFromStage(mob);
-
 	}
 
 	private void removeFromStage(Mob mob)
@@ -86,6 +92,14 @@ public class MobController implements PowerUp
 	public ArrayList<Mob> getMobsList()
 	{
 		return mobsList;
+	}
+
+	public boolean allEnemyKilled()
+	{
+		if (!stageService.hasNextStage() && mobsList.isEmpty() && mobsCreated == spawnCount)
+			return true;
+		else
+			return false;
 	}
 
 }

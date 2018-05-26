@@ -1,27 +1,20 @@
 package com.mygdx.game.services;
 
-import com.mygdx.game.controllers.MobController;
 
 public class StageService
 {
 	private int currentStage;
 	private int lastStage;
-	private MobController mobController;
-
-	public StageService(MobController mobController)
+	public StageService()
 	{
 		this.currentStage = 0;
 		this.lastStage = 2;
-		this.mobController = mobController;
 	}
 
 	public void nextStage()
 	{
 		if (currentStage < lastStage)
-		{
 			++currentStage;
-			mobController.startWave(currentStage);
-		}
 	}
 
 	public int getCurrentStage()
@@ -38,5 +31,4 @@ public class StageService
 	{
 		return !(currentStage == lastStage);
 	}
-
 }

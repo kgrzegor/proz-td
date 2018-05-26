@@ -2,6 +2,8 @@ package com.mygdx.game.screens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controllers.MobController;
 import com.mygdx.game.controllers.PowerUpController;
@@ -48,8 +50,9 @@ public class GameplayScreen extends AbstractScreen
 		goldService = new GoldService();
 		pointsService = new PointsService();
 		timeService = new TimeService();
-		mobController = new MobController(stage, playerLivesService, goldService, pointsService);
-		stageService = new StageService(mobController);
+		stageService = new StageService();
+
+		mobController = new MobController(stage, playerLivesService, goldService, pointsService, stageService);
 		fieldController = new FieldController(stage, goldService, mobController.getMobsList());
 		towers = fieldController.getTowers();
 
@@ -99,7 +102,9 @@ public class GameplayScreen extends AbstractScreen
 			mobController.startWave(stageService.getCurrentStage());
 			timeService.resetTime();
 		} else
+		{
 			timeService.setStopped(true);
+		}
 
 	}
 
@@ -136,9 +141,22 @@ public class GameplayScreen extends AbstractScreen
 			newWave();
 		}
 
-		if (playerLivesService.gameOver())
-			game.setScreen(new EndGameScreen(game));
+		if (mobController.allEnemyKilled())
+		{
+			Timer.schedule(new Task()
+			{
+				public void run()
+				{
+					game.setScreen(new EndGameScreen(game));
+				}
+			}, 3);
 
+		}
+		
+		if (playerLivesService.gameOver())
+		{
+			game.setScreen(new EndGameScreen(game));
+		}
 		stage.act();
 	}
 

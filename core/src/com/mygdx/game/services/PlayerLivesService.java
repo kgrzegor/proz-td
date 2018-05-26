@@ -1,6 +1,5 @@
 package com.mygdx.game.services;
 
-import com.mygdx.game.MyGdxGame;
 
 public class PlayerLivesService
 {
@@ -13,6 +12,7 @@ public class PlayerLivesService
 
 	public void makeDamage()
 	{
+		if(livesLeft > 0)
 		--livesLeft;
 	}
 	

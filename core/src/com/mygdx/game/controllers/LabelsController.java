@@ -40,7 +40,6 @@ public class LabelsController
 
 	public void updateLabels()
 	{
-
 		scoreLabel.setText("Score: " + pointsService.getPoints());
 		heartLabel.setText("Lives: " + playerLivesService.getLivesLeft() + " / 3");
 		stageLabel.setText("Stage: " + stageService.getCurrentStage() + " / " + stageService.getLastStage());

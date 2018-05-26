@@ -15,6 +15,7 @@ import com.mygdx.game.services.PointsService;
 
 public class MobController implements PowerUp
 {
+	private MobType[] waveType = {MobType.Yeti, MobType.Demon};
 	private float spawnTime;
 	private int spawnCount;
 	private Stage stage;
@@ -37,20 +38,20 @@ public class MobController implements PowerUp
 		this.enemyFactory = new EnemyFactory(this);
 	}
 
-	public void startWave(int id)
+	public void startWave(final int waveNumber)
 	{
 		Timer.schedule(new Task()
 		{
 			public void run()
 			{
-				addMobToStage();
+				addMobToStage(waveNumber);
 			}
 		}, 0, spawnTime, spawnCount - 1);
 	}
 
-	private void addMobToStage()
+	private void addMobToStage(int waveNumber)
 	{
-		Mob newMob = enemyFactory.createMob(MobType.Yeti);
+		Mob newMob = enemyFactory.createMob(waveType[waveNumber - 1]);
 		stage.addActor(newMob);
 		mobsList.add(newMob);
 	}

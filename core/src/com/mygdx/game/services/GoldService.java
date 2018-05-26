@@ -6,7 +6,7 @@ public class GoldService
 
 	public GoldService()
 	{
-		gold = 1000;
+		gold = 5000;
 	}
 
 	public int getGold()

@@ -99,7 +99,7 @@ public class GameplayScreen extends AbstractScreen
 		if (stageService.hasNextStage())
 		{
 			stageService.nextStage();
-			mobController.startWave(stageService.getCurrentStage());
+			mobController.startWave();
 			timeService.resetTime();
 		} else
 		{

@@ -41,4 +41,8 @@ public class StageService
 	{
 		return spawnCount[currentStage - 1];
 	}
+	public int getSpawnCountLastStage()
+	{
+		return spawnCount[spawnCount.length - 1];
+	}
 }

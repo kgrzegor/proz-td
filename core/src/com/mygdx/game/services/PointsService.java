@@ -7,21 +7,16 @@ public class PointsService
 {
 	public final static String GAME_PREFS = "com.mygdx.game.prefs";
 	public final static String GAME_HIGHSCORE = "com.mygdx.game.prefs.highscore";
-	
+
 	private Preferences prefs;
 	private int points;
 	private int highscore;
 
 	public PointsService()
 	{
-		points = 0;
-		
-		prefs =  Gdx.app.getPreferences(GAME_PREFS);
-		loadHighscore();
-	}
+		this.points = 0;
 
-	private void loadHighscore()
-	{
+		this.prefs = Gdx.app.getPreferences(GAME_PREFS);
 		highscore = prefs.getInteger(GAME_HIGHSCORE);
 	}
 
@@ -37,16 +32,14 @@ public class PointsService
 
 	public int getHighscore()
 	{
-		if (points >= highscore)
+		if (points > highscore)
 		{
 			highscore = points;
 			prefs.putInteger(GAME_HIGHSCORE, highscore);
+			prefs.flush();
 		}
-		
+
 		return highscore;
 	}
 
-	
-	
-	
 }

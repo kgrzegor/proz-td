@@ -1,12 +1,23 @@
 package com.mygdx.game.services;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
+
 public class PointsService
 {
+	public final static String GAME_PREFS = "com.mygdx.game.prefs";
+	public final static String GAME_HIGHSCORE = "com.mygdx.game.prefs.highscore";
+
+	private Preferences prefs;
 	private int points;
+	private int highscore;
 
 	public PointsService()
 	{
-		points = 0;
+		this.points = 0;
+
+		this.prefs = Gdx.app.getPreferences(GAME_PREFS);
+		highscore = prefs.getInteger(GAME_HIGHSCORE);
 	}
 
 	public int getPoints()
@@ -18,4 +29,17 @@ public class PointsService
 	{
 		this.points += points;
 	}
+
+	public int getHighscore()
+	{
+		if (points > highscore)
+		{
+			highscore = points;
+			prefs.putInteger(GAME_HIGHSCORE, highscore);
+			prefs.flush();
+		}
+
+		return highscore;
+	}
+
 }

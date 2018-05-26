@@ -2,46 +2,50 @@ package com.mygdx.game.controllers;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
-import com.mygdx.game.entities.Mob;
 import com.mygdx.game.entities.Projectile;
-import com.mygdx.game.entities.ProjectileInterface;
-import com.mygdx.game.events.DamageEvent;
+import com.mygdx.game.entities.enemies.Mob;
 
 public class ProjectileController
 {
 	private float towerX, towerY;
 	private ArrayList<Projectile> ProjectilesList;
-	private Projectile newProjectile;
-	private int towerRadius;
+	private int range;
 	private Stage stage;
 	private ArrayList<Mob> targets;
 
-	public ProjectileController(float X, float Y, int towerRadius, Stage stage, ArrayList<Mob> targets)
+	public ProjectileController(float X, float Y, int range, Stage stage, ArrayList<Mob> targets)
 	{
 		this.towerX = X;
 		this.towerY = Y;
-		this.towerRadius = towerRadius;
-		ProjectilesList = new ArrayList<Projectile>();
+		this.range = range;
 		this.stage = stage;
 		this.targets = targets;
+		ProjectilesList = new ArrayList<Projectile>();
 	}
 
 	public void add(float projectileSpeed, int damage, float targetX, float targetY)
 	{
-		newProjectile = new Projectile(new ProjectileInterface()
+		final Projectile newProjectile = new Projectile(towerX, towerY, damage);
+		double distance = Math.hypot(targetX - towerX, targetY - towerY);
+		float directionX = (float) Math.sin((targetX - towerX) / distance) * range;
+		float directionY = (float) Math.sin((targetY - towerY) / distance) * range;
+
+		Action move = Actions.parallel(Actions.moveBy(directionX, directionY, (float) (distance / projectileSpeed)));
+		Action outOfRange = Actions.run(new Runnable()
 		{
-
-			@Override
-			public void removeFromList(Projectile projectile)
+			public void run()
 			{
-				ProjectilesList.remove(projectile);
+				removeProjectile(newProjectile);
 			}
-		}, towerRadius, towerX, towerY, targetX, targetY, damage);
-
+		});
+		
 		stage.addActor(newProjectile);
-		newProjectile.fire(projectileSpeed);
+		newProjectile.addAction(Actions.sequence(move, outOfRange));
+
 		ProjectilesList.add(newProjectile);
 	}
 
@@ -53,15 +57,21 @@ public class ProjectileController
 				if ((Math.abs(m.getX(Align.center) - p.getX(Align.center))) <= m.getWidth() / 2
 						&& (Math.abs(m.getY(Align.center) - p.getY(Align.center))) <= m.getHeight() / 2)
 				{
-					m.fire(new DamageEvent(p.getDamage()));
-					p.hit();
+					m.fire(p.getDamageEvent());
+					removeProjectile(p);
 					return;
 				}
 			}
 	}
 
-	public void setTowerRadius(int towerRadius)
+	private void removeProjectile(Projectile p)
 	{
-		this.towerRadius = towerRadius;
+		ProjectilesList.remove(p);
+		p.remove(); // from stage
+	}
+
+	public void setRange(int range)
+	{
+		this.range = range;
 	}
 }

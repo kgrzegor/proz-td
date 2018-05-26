@@ -2,37 +2,31 @@ package com.mygdx.game.screens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controllers.MobController;
-import com.mygdx.game.controllers.PopoutController;
-import com.mygdx.game.entities.Entities;
-import com.mygdx.game.entities.Tower;
-import com.mygdx.game.controllers.FieldController;
-import com.mygdx.game.screens.ui.GameLabel;
+import com.mygdx.game.controllers.PowerUpController;
+import com.mygdx.game.entities.PowerUp;
+import com.mygdx.game.controllers.TowerController;
+import com.mygdx.game.controllers.LabelsController;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.NextStageButton;
-import com.mygdx.game.services.GoldService;
 import com.mygdx.game.services.PlayerLivesService;
-import com.mygdx.game.services.PointsService;
-import com.mygdx.game.services.StageService;
 import com.mygdx.game.services.TimeService;
 
 public class GameplayScreen extends AbstractScreen
 {
-
-	private PlayerLivesService playerLivesService;
-	private GoldService goldService;
-
 	private Image mapImg;
-	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel, goldLabel;
 	private NextStageButton nextStageButton;
-	private PopoutController popoutController;
+
+	private PowerUpController powerupController;
 	private MobController mobController;
-	private StageService stageService;
-	private FieldController fieldController;
-	private PointsService pointsService;
-	private Tower[] towers;
+	private TowerController towerController;
+	private LabelsController labelsController;
+
 	private TimeService timeService;
+	private PlayerLivesService playerLivesService;
 
 	public GameplayScreen(MyGdxGame game)
 	{
@@ -41,21 +35,18 @@ public class GameplayScreen extends AbstractScreen
 
 	protected void init()
 	{
-
 		initMapTexture();
-		initLabels();
 		initNextStageButton();
-		playerLivesService = new PlayerLivesService(game);
-		goldService = new GoldService();
-		pointsService = new PointsService();
-		mobController = new MobController(stage, playerLivesService, goldService, pointsService);
-		stageService = new StageService(mobController);
-		timeService = new TimeService(stageService);
-		fieldController = new FieldController(stage, goldService, mobController.getMobsList());
-		towers = fieldController.getTowers();
+		
+		timeService = game.getTimeService();
+		playerLivesService = game.getPlayerLivesService();
+		
+		labelsController = new LabelsController(stage, game);
+		mobController = new MobController(stage, game);
+		towerController = new TowerController(stage, game, mobController.getMobsList());
 
-		final Entities[] popout = { mobController, fieldController };
-		popoutController = new PopoutController(stage, popout, stageService);
+		final PowerUp[] powerupList = { mobController, towerController };
+		powerupController = new PowerUpController(stage, game, powerupList);
 	}
 
 	private void initMapTexture()
@@ -64,31 +55,14 @@ public class GameplayScreen extends AbstractScreen
 		stage.addActor(mapImg);
 	}
 
-	private void initLabels()
-	{
-		scoreLabel = new GameLabel(stage, 20, MyGdxGame.HEIGHT - 20);
-		heartLabel = new GameLabel(stage, 150, MyGdxGame.HEIGHT - 20);
-		stageLabel = new GameLabel(stage, 300, MyGdxGame.HEIGHT - 20);
-		timerLabel = new GameLabel(stage, 400, MyGdxGame.HEIGHT - 20);
-		goldLabel = new GameLabel(stage, 550, MyGdxGame.HEIGHT - 20);
-	}
-
 	private void initNextStageButton()
 	{
 		nextStageButton = new NextStageButton(new IClickCallback()
 		{
 			public void onClick()
 			{
-				if (stageService.getCurrentStage() == 0)
-				{
-					popoutController.startPopouts();
-					timeService.start();
-
-				}
-
-				stageService.nextStage();
-				timeService.resetTime();
-
+				powerupController.startPowerUps();
+				mobController.startWave();
 			}
 		});
 
@@ -107,23 +81,29 @@ public class GameplayScreen extends AbstractScreen
 
 	private void update()
 	{
-		scoreLabel.setText("Score: " + pointsService.getPoints());
-		heartLabel.setText("Lives: " + playerLivesService.getLivesLeft() + " / 3");
-		stageLabel.setText("Stage: " + stageService.getCurrentStage() + " / " + stageService.getLastStage());
-		timerLabel.setText("Time: " + timeService.getTime() + " s");
-		goldLabel.setText("Gold: " + goldService.getGold() + " g");
+		towerController.checkHits();
+		labelsController.updateLabels();
+		
+		if (timeService.getTime() == 0)
+			mobController.startWave();
 
-		for (int i = 0; i < towers.length; ++i)
-		{
-			if (towers[i] != null)
-				towers[i].getProjectileController().checkHits();
-		}
+		if (mobController.allEnemyKilled())
+			endGame("You won");
+
+		if (playerLivesService.gameOver())
+			endGame("Game over!");
+
 		stage.act();
 	}
 
-	public PlayerLivesService getPlayerLivesService()
+	private void endGame(final String text)
 	{
-		return playerLivesService;
+		Timer.schedule(new Task()
+		{
+			public void run()
+			{
+				game.setScreen(new EndGameScreen(game, text));
+			}
+		}, 3);
 	}
-
 }

@@ -1,4 +1,4 @@
-wpackage com.mygdx.game.screens.ui;
+package com.mygdx.game.screens.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -10,16 +10,14 @@ public class InfoLabel extends GameLabel
 	public InfoLabel(Stage stage, int x, int y, String text)
 	{
 		super(stage, x, y);
-
 		this.setText(text);
-
 		moveUp();
 	}
 
 	private void moveUp()
 	{
-		Action move = Actions.moveBy(0, 150, 2.5f);
-		Action disappear = Actions.color(new Color(255, 255, 255, 0), 2.5f);
+		Action move = Actions.moveBy(0, 100, 2f);
+		Action disappear = Actions.color(new Color(255, 255, 255, 0), 2f);
 
 		Action both = Actions.parallel(move, disappear);
 

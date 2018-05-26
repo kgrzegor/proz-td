@@ -1,24 +1,24 @@
 package com.mygdx.game.services;
 
-import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.screens.EndGameScreen;
 
 public class PlayerLivesService
 {
 	private int livesLeft;
-	MyGdxGame game;
 
-	public PlayerLivesService(MyGdxGame game)
+	public PlayerLivesService()
 	{
 		this.livesLeft = 3;
-		this.game = game;
 	}
 
 	public void makeDamage()
 	{
+		if(livesLeft > 0)
 		--livesLeft;
-		if (livesLeft == 0)
-			game.setScreen(new EndGameScreen(game));
+	}
+	
+	public boolean gameOver()
+	{
+		return livesLeft == 0;
 	}
 
 	public int getLivesLeft()

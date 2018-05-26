@@ -1,112 +1,87 @@
 package com.mygdx.game.controllers;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.entities.PowerUp;
 import com.mygdx.game.entities.Tower;
+import com.mygdx.game.entities.enemies.Mob;
 import com.mygdx.game.screens.ui.GameButton;
 import com.mygdx.game.screens.ui.IClickCallback;
+import com.mygdx.game.screens.ui.InfoLabel;
+import com.mygdx.game.services.GoldService;
 
-public class TowerController
+public class TowerController implements PowerUp
 {
-	private boolean menuOpened;
-	private int towerX, towerY;
-	private int buttonHeight, buttonWidth;
-	private Tower tower;
+	private final int[] xCords = { 210, 115, 525, 335, 525, 850, 740, 975 };
+	private final int[] yCords = { 160, 320, 245, 320, 440, 405, 185, 185 };
+	private final int nFields = 8;
+	
+	private GameButton[] fieldButtons;
+	private Tower[] towers;
 	private Stage stage;
-	private GameButton upgradeRadius, upgradeDamage, upgradeFireRateCooldown, close;
+	private GoldService goldService;
+	private ArrayList<Mob> mobsList;
 
-	public TowerController(Tower tower, Stage stage)
+	public TowerController(Stage stage, MyGdxGame game, ArrayList<Mob> mobsList)
 	{
 		this.stage = stage;
-		this.tower = tower;
-		init();
+		this.goldService = game.getGoldService();
+		this.mobsList = mobsList;
+		towers = new Tower[nFields];
+		initFieldButtons();
 	}
 
-	private void init()
+	private void initFieldButtons()
 	{
-		this.towerX = tower.getTowerX();
-		this.towerY = 100 + tower.getTowerY();
-		menuOpened = false;
-		this.buttonHeight = 58;
-		this.buttonWidth = 120;
-	}
-
-	public void showMenu()
-	{
-		if (menuOpened)
-			return;
-		menuOpened = true;
-
-		initUpgradeRadius();
-		initUpgradeDamage();
-		initUpgradeFireRateCooldown();
-		initClose();
-		initStageActors();
-	}
-
-	private void initStageActors()
-	{
-		stage.addActor(upgradeDamage);
-		stage.addActor(upgradeFireRateCooldown);
-		stage.addActor(upgradeRadius);
-		stage.addActor(close);
-	}
-
-	private void initClose()
-	{
-
-		close = new GameButton.Builder(new IClickCallback()
+		fieldButtons = new GameButton[nFields];
+		for (int i = 0; i < nFields; ++i)
 		{
-			public void onClick()
+			final int id = i;
+			fieldButtons[id] = new GameButton.Builder(new IClickCallback()
 			{
-				closeMenu();
-			}
-		}).position(towerX, towerY - buttonHeight).height(buttonHeight).width(buttonWidth).image("close.png").build();
+				public void onClick()
+				{
+					buildTower(id);
+				}
+			}).position(xCords[id], yCords[id]).height(60).width(100).image("field.png").build();
+		}
 
+		for (int i = 0; i < fieldButtons.length; ++i)
+			stage.addActor(fieldButtons[i]);
 	}
 
-	private void initUpgradeFireRateCooldown()
+	protected void buildTower(int id)
 	{
-		upgradeFireRateCooldown = new GameButton.Builder(new IClickCallback()
+		try
 		{
-			public void onClick()
-			{
-				tower.upgradeFireRateCooldown();
-			}
-		}).position(towerX - buttonWidth, towerY - buttonHeight).height(buttonHeight).width(buttonWidth)
-				.image("firerate.png").build();
-
-	}
-
-	private void initUpgradeDamage()
-	{
-		upgradeDamage = new GameButton.Builder(new IClickCallback()
+			goldService.spendGold(500);
+			towers[id] = new Tower(xCords[id], yCords[id], stage, mobsList, goldService);
+			fieldButtons[id].setTouchable(Touchable.disabled);
+			stage.addActor(towers[id]);
+		} catch (Exception e)
 		{
-			public void onClick()
-			{
-				tower.upgradeDamage();
-			}
-		}).position(towerX, towerY).height(buttonHeight).width(buttonWidth).image("damage.png").build();
-
+			new InfoLabel(stage, xCords[id], yCords[id] + 20, e.getMessage());
+		}
 	}
 
-	private void initUpgradeRadius()
+	public void checkHits()
 	{
-		upgradeRadius = new GameButton.Builder(new IClickCallback()
+		for (int i = 0; i < towers.length; ++i)
 		{
-			public void onClick()
-			{
-				tower.upgradeRadius();
-			}
-		}).position(towerX - buttonWidth, towerY).height(buttonHeight).width(buttonWidth).image("range.png").build();
-
+			if (towers[i] != null)
+				towers[i].getProjectileController().checkHits();
+		}
 	}
 
-	protected void closeMenu()
+	@Override
+	public String powerUpEffect(float strength)
 	{
-		upgradeRadius.remove();
-		upgradeDamage.remove();
-		upgradeFireRateCooldown.remove();
-		close.remove();
-		menuOpened = false;
+		for (Tower t : towers)
+			if (t != null)
+				t.bonusDamage(strength);
+		return "Towers have bonus damage";
 	}
 }

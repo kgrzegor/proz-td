@@ -7,33 +7,26 @@ public class TimeService
 {
 
 	private int time;
-	StageService stageService;
+	private boolean stopped;
 
-	public TimeService(StageService stageService)
+	public TimeService()
 	{
-		this.time = 5;
-		this.stageService = stageService;
+		this.stopped = false;
+		resetTime();
 	}
 
 	public void start()
 	{
 		Timer.schedule(new Task()
 		{
-
 			@Override
 			public void run()
 			{
-				if (stageService.getCurrentStage() != stageService.getLastStage())
-				{
+				nextSecond();
+				if (!stopped)
 					start();
-					nextSecond();
-				}
-
 				else
-				{
-					time = 0;
-				}
-
+					resetTime();
 			}
 		}, 1);
 	}
@@ -42,12 +35,6 @@ public class TimeService
 	{
 		if (time > 0)
 			--time;
-		else
-		{
-			stageService.nextStage();
-			resetTime();
-		}
-
 	}
 
 	public void resetTime()
@@ -58,6 +45,11 @@ public class TimeService
 	public int getTime()
 	{
 		return time;
+	}
+
+	public void setStopped(boolean stopped)
+	{
+		this.stopped = stopped;
 	}
 
 }

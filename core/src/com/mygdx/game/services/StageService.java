@@ -1,28 +1,23 @@
 package com.mygdx.game.services;
 
-import com.mygdx.game.controllers.MobController;
-
 public class StageService
 {
 	private int currentStage;
 	private int lastStage;
-	private MobController mobController;
+	private final float spawnTime;
+	private final int[] spawnCount = { 4, 1 };
 
-	public StageService(MobController mobController)
+	public StageService()
 	{
 		this.currentStage = 0;
-		this.lastStage = 10;
-		this.mobController = mobController;
+		this.lastStage = 2;
+		this.spawnTime = 1f;
 	}
 
 	public void nextStage()
 	{
 		if (currentStage < lastStage)
-		{
 			++currentStage;
-			mobController.startWave(currentStage);
-		}
-
 	}
 
 	public int getCurrentStage()
@@ -35,4 +30,23 @@ public class StageService
 		return lastStage;
 	}
 
+	public boolean hasNextStage()
+	{
+	  return !(currentStage == lastStage);
+	}
+
+	public float getSpawnTime()
+	{
+		return spawnTime;
+	}
+
+	public int getSpawnCount()
+	{
+		return spawnCount[currentStage - 1];
+	}
+
+	public int getSpawnCountLastStage()
+	{
+		return spawnCount[spawnCount.length - 1];
+	}
 }

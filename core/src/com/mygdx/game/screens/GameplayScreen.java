@@ -22,7 +22,7 @@ public class GameplayScreen extends AbstractScreen
 
 	private PowerUpController powerupController;
 	private MobController mobController;
-	private TowerController fieldController;
+	private TowerController towerController;
 	private LabelsController labelsController;
 
 	private TimeService timeService;
@@ -43,9 +43,9 @@ public class GameplayScreen extends AbstractScreen
 		
 		labelsController = new LabelsController(stage, game);
 		mobController = new MobController(stage, game);
-		fieldController = new TowerController(stage, game, mobController.getMobsList());
+		towerController = new TowerController(stage, game, mobController.getMobsList());
 
-		final PowerUp[] powerupList = { mobController, fieldController };
+		final PowerUp[] powerupList = { mobController, towerController };
 		powerupController = new PowerUpController(stage, game, powerupList);
 	}
 
@@ -81,8 +81,9 @@ public class GameplayScreen extends AbstractScreen
 
 	private void update()
 	{
+		towerController.checkHits();
 		labelsController.updateLabels();
-
+		
 		if (timeService.getTime() == 0)
 			mobController.startWave();
 

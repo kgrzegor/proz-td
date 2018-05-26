@@ -36,7 +36,7 @@ public class MobController implements PowerUp
 		this.goldService = game.getGoldService();
 		this.pointsService = game.getPointsService();
 		this.stageService = game.getStageService();
-		this.timeService = new TimeService();
+		this.timeService = game.getTimeService();
 		this.mobsList = new ArrayList<Mob>();
 		this.enemyFactory = new EnemyFactory(this);
 

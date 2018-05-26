@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.entities.PowerUp;
 import com.mygdx.game.entities.Tower;
 import com.mygdx.game.entities.enemies.Mob;
@@ -12,21 +13,22 @@ import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.InfoLabel;
 import com.mygdx.game.services.GoldService;
 
-public class FieldController implements PowerUp
+public class TowerController implements PowerUp
 {
 	private final int[] xCords = { 210, 115, 525, 335, 525, 850, 740, 975 };
 	private final int[] yCords = { 160, 320, 245, 320, 440, 405, 185, 185 };
 	private final int nFields = 8;
+	
 	private GameButton[] fieldButtons;
 	private Tower[] towers;
 	private Stage stage;
 	private GoldService goldService;
 	private ArrayList<Mob> mobsList;
 
-	public FieldController(Stage stage, GoldService goldService, ArrayList<Mob> mobsList)
+	public TowerController(Stage stage, MyGdxGame game, ArrayList<Mob> mobsList)
 	{
 		this.stage = stage;
-		this.goldService = goldService;
+		this.goldService = game.getGoldService();
 		this.mobsList = mobsList;
 		towers = new Tower[nFields];
 		initFieldButtons();
@@ -65,9 +67,13 @@ public class FieldController implements PowerUp
 		}
 	}
 
-	public Tower[] getTowers()
+	public void checkHits()
 	{
-		return towers;
+		for (int i = 0; i < towers.length; ++i)
+		{
+			if (towers[i] != null)
+				towers[i].getProjectileController().checkHits();
+		}
 	}
 
 	@Override

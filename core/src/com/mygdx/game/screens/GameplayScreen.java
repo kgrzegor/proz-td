@@ -44,12 +44,12 @@ public class GameplayScreen extends AbstractScreen
 		initMapTexture();
 		initLabels();
 		initNextStageButton();
-		playerLivesService = new PlayerLivesService(game);
+		playerLivesService = new PlayerLivesService();
 		goldService = new GoldService();
 		pointsService = new PointsService();
+		timeService = new TimeService();
 		mobController = new MobController(stage, playerLivesService, goldService, pointsService);
 		stageService = new StageService(mobController);
-		timeService = new TimeService(stageService);
 		fieldController = new FieldController(stage, goldService, mobController.getMobsList());
 		towers = fieldController.getTowers();
 
@@ -83,13 +83,24 @@ public class GameplayScreen extends AbstractScreen
 					powerupController.startPowerUps();
 					timeService.start();
 				}
-				stageService.nextStage();
-				timeService.resetTime();
+				newWave();
 
 			}
 		});
 
 		stage.addActor(nextStageButton);
+	}
+
+	protected void newWave()
+	{
+		if (stageService.hasNextStage())
+		{
+			stageService.nextStage();
+			mobController.startWave(stageService.getCurrentStage());
+			timeService.resetTime();
+		} else
+			timeService.setStopped(true);
+
 	}
 
 	public void render(float delta)
@@ -107,14 +118,27 @@ public class GameplayScreen extends AbstractScreen
 		scoreLabel.setText("Score: " + pointsService.getPoints());
 		heartLabel.setText("Lives: " + playerLivesService.getLivesLeft() + " / 3");
 		stageLabel.setText("Stage: " + stageService.getCurrentStage() + " / " + stageService.getLastStage());
-		timerLabel.setText("Time: " + timeService.getTime() + " s");
 		goldLabel.setText("Gold: " + goldService.getGold() + " g");
+
+		if (stageService.hasNextStage())
+			timerLabel.setText("Time: " + timeService.getTime() + " s");
+		else
+			timerLabel.remove();
 
 		for (int i = 0; i < towers.length; ++i)
 		{
 			if (towers[i] != null)
 				towers[i].getProjectileController().checkHits();
 		}
+
+		if (timeService.getTime() == 0)
+		{
+			newWave();
+		}
+
+		if (playerLivesService.gameOver())
+			game.setScreen(new EndGameScreen(game));
+
 		stage.act();
 	}
 

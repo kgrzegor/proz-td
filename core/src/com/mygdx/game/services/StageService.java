@@ -11,7 +11,7 @@ public class StageService
 	public StageService(MobController mobController)
 	{
 		this.currentStage = 0;
-		this.lastStage = 4;
+		this.lastStage = 2;
 		this.mobController = mobController;
 	}
 
@@ -22,7 +22,6 @@ public class StageService
 			++currentStage;
 			mobController.startWave(currentStage);
 		}
-
 	}
 
 	public int getCurrentStage()
@@ -33,6 +32,11 @@ public class StageService
 	public int getLastStage()
 	{
 		return lastStage;
+	}
+
+	public boolean hasNextStage()
+	{
+		return !(currentStage == lastStage);
 	}
 
 }

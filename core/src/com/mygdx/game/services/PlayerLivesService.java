@@ -1,13 +1,16 @@
 package com.mygdx.game.services;
 
+/**
+ * Provides everything to deal with player lives
+ */
 public class PlayerLivesService
 {
 	private int livesLeft;
-	private final int startingLives = 3;
+	private final int startingLives;
 
-	public PlayerLivesService()
+	public PlayerLivesService(int startingLives)
 	{
-		this.livesLeft = startingLives;
+		this.livesLeft = this.startingLives = startingLives;
 	}
 
 	public void makeDamage()

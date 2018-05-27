@@ -1,5 +1,8 @@
 package com.mygdx.game.services;
 
+/**
+ * Provides adding points and saving highscore
+ */
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
@@ -20,6 +23,23 @@ public class PointsService
 		highscore = prefs.getInteger(GAME_HIGHSCORE);
 	}
 
+	private void updateHighscore()
+	{
+		if (points > highscore)
+		{
+			highscore = points;
+			prefs.putInteger(GAME_HIGHSCORE, highscore);
+			prefs.flush();
+		}
+	}
+	
+	public int getHighscore()
+	{
+		updateHighscore();
+
+		return highscore;
+	}
+
 	public int getPoints()
 	{
 		return points;
@@ -30,16 +50,6 @@ public class PointsService
 		this.points += points;
 	}
 
-	public int getHighscore()
-	{
-		if (points > highscore)
-		{
-			highscore = points;
-			prefs.putInteger(GAME_HIGHSCORE, highscore);
-			prefs.flush();
-		}
 
-		return highscore;
-	}
 
 }

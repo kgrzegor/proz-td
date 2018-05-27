@@ -1,5 +1,7 @@
 package com.mygdx.game.services;
-
+/**
+ * Provides spawn counts and times arrays, stage counter
+ */
 public class StageService
 {
 	private int currentStage;
@@ -14,6 +16,11 @@ public class StageService
 		this.spawnTime = 1f;
 	}
 
+	public boolean hasNextStage()
+	{
+	  return !(currentStage == lastStage);
+	}
+	
 	public void nextStage()
 	{
 		if (currentStage < lastStage)
@@ -28,11 +35,6 @@ public class StageService
 	public int getLastStage()
 	{
 		return lastStage;
-	}
-
-	public boolean hasNextStage()
-	{
-	  return !(currentStage == lastStage);
 	}
 
 	public float getSpawnTime()

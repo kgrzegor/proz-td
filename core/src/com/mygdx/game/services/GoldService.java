@@ -1,12 +1,15 @@
 package com.mygdx.game.services;
 
+/**
+ * Provides adding and spending gold
+ */
 public class GoldService
 {
 	private int gold;
 
-	public GoldService()
+	public GoldService(int gold)
 	{
-		gold = 5000;
+		this.gold = gold;
 	}
 
 	public int getGold()

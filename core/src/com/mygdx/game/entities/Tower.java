@@ -13,7 +13,9 @@ import com.mygdx.game.controllers.ProjectileController;
 import com.mygdx.game.controllers.UpgradeController;
 import com.mygdx.game.entities.enemies.Mob;
 import com.mygdx.game.services.GoldService;
-
+/**
+ * Some things should be in towercontroller some in projectille controller, this should simpler
+ */
 public class Tower extends AbstractEntity
 {
 	public final static int WIDHT = 74;
@@ -51,10 +53,11 @@ public class Tower extends AbstractEntity
 		this.X = this.getX(Align.center);
 		this.Y = this.getY(Align.center);
 		this.range = 200;
-		this.projectileController = new ProjectileController(X, Y, range, stage, targets);
 		this.projectileSpeed = 300f;
 		this.fireRateCooldown = 1.5f;
 		this.damage = 10;
+		
+		this.projectileController = new ProjectileController(X, Y, range, stage, targets);
 		this.upgradeController = new UpgradeController(this, stage, goldService);
 
 		this.addListener(new ClickListener()

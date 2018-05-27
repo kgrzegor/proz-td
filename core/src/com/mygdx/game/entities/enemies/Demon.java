@@ -1,7 +1,9 @@
 package com.mygdx.game.entities.enemies;
 
 import com.mygdx.game.controllers.MobController;
-
+/**
+ * Basic mob with medium speed and health 
+ */
 public class Demon extends Mob
 {
 	public Demon(MobController mobController)

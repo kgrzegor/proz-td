@@ -3,7 +3,9 @@ package com.mygdx.game.events;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.mygdx.game.entities.enemies.Mob;
-
+/**
+ * Listener used by mob. If fired by DamageEvent cause damage to mob
+ */
 public class EnemyDamageListener implements EventListener
 {
 

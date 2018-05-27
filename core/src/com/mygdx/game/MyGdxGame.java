@@ -9,7 +9,7 @@ import com.mygdx.game.services.TimeService;
 import com.badlogic.gdx.Game;
 
 /**
- * Main class in game
+ * Main class in game, creates all services
  **/
 public class MyGdxGame extends Game
 {
@@ -53,8 +53,7 @@ public class MyGdxGame extends Game
 	}
 
 	/******
-	 * GETTERS used whenever reference to any service is needed, every bigger class
-	 * should have game class reference
+	 * GETTERS
 	 *******/
 	public PlayerLivesService getPlayerLivesService()
 	{

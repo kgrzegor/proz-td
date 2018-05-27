@@ -17,6 +17,7 @@ import com.mygdx.game.services.StageService;
  */
 public class PowerupController
 {
+	private final static int respawnTime = 5;
 	private StageService stageService;
 	private GameButton powerup;
 	private Stage stage;
@@ -34,7 +35,7 @@ public class PowerupController
 	}
 
 	/**
-	 * Every x seconds new powerUp appears in random place on map
+	 * Every respawnTime seconds new powerUp appears in random place on map
 	 */
 	public void startPowerUps()
 	{
@@ -47,7 +48,7 @@ public class PowerupController
 					stage.addActor(powerup);
 					initRemoveTimer();
 				}
-			}, 5, 5);
+			}, respawnTime, respawnTime);
 
 		started = true;
 	}

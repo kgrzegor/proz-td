@@ -10,7 +10,7 @@ import com.mygdx.game.entities.Projectile;
 import com.mygdx.game.entities.enemies.Mob;
 
 /**
- * Every tower should have its own projectilleController, creates all
+ * Every tower have its own projectilleController, creates all
  * projectiles, aim them and tells how it should move. Can check if projectile
  * hit anyone.
  */
@@ -67,7 +67,7 @@ public class ProjectileController
 	/**
 	 * Iterates over every projectile and mobs checking if anything is hit.
 	 * Something is hit when distance between center of projectile and target is
-	 * less than height or width of target
+	 * less than half height or half width of target
 	 */
 	public void checkHits()
 	{
@@ -91,7 +91,7 @@ public class ProjectileController
 	}
 
 	/**
-	 * should be used when tower have range upgraded
+	 * Used when tower have range upgraded
 	 */
 	public void setRange(int range)
 	{

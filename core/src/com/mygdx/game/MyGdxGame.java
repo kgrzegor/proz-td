@@ -29,7 +29,7 @@ public class MyGdxGame extends Game
 	private boolean paused;
 
 	/**
-	 * create() is called when game is opened or when new game is played
+	 * Called when game is opened or when new game is played
 	 **/
 	@Override
 	public void create()

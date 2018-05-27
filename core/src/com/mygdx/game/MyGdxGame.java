@@ -34,8 +34,8 @@ public class MyGdxGame extends Game
 	@Override
 	public void create()
 	{
-		playerLivesService = new PlayerLivesService();
-		goldService = new GoldService();
+		playerLivesService = new PlayerLivesService(3);
+		goldService = new GoldService(1000);
 		pointsService = new PointsService();
 		timeService = new TimeService();
 		stageService = new StageService();

@@ -88,7 +88,7 @@ public class PowerupController
 
 	/**
 	 * After being clicked one of the powerup effects is chosen, infolabel with
-	 * effect is shown and popout is removed Needs to be change with observer
+	 * effect is shown and powerup is removed. Needs to be change with observer
 	 */
 	protected void clicked(int x, int y)
 	{

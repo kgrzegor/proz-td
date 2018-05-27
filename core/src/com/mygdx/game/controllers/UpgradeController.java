@@ -68,7 +68,7 @@ public class UpgradeController
 		menuOpened = true;
 
 		addStageActors();
-		updateLCostabels();
+		updateCostLabels();
 	}
 
 	private void addStageActors()
@@ -114,7 +114,6 @@ public class UpgradeController
 		}).position(menuX, menuY - HEIGHT).height(HEIGHT).width(WIDTH).image("close.png").build();
 	}
 
-	
 	private void initUpgradeFireRateCooldown()
 	{
 		upgradeFireRateCooldown = new GameButton.Builder(new IClickCallback()
@@ -219,10 +218,10 @@ public class UpgradeController
 	protected void showInfoLabel(String info)
 	{
 		new InfoLabel(stage, menuX - Tower.WIDHT / 2, menuY - 100, info);
-		updateLCostLabels();
+		updateCostLabels();
 	}
 
-	private void updateLCostLabels()
+	private void updateCostLabels()
 	{
 		damageCostLabel.setText(damageCost + "g");
 		rangeCostLabel.setText(rangeCost + "g");

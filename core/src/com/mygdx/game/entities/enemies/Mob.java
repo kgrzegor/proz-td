@@ -9,7 +9,7 @@ import com.mygdx.game.entities.AbstractEntity;
 import com.mygdx.game.events.EnemyDamageListener;
 
 /**
- * Entity that follows path. Pojectile controller aims for it. Can be damaged
+ * Entity that follows map path. Pojectile controller aims for it. Can be damaged
  * when hit by projectile. Removed from stage when have no health
  */
 public abstract class Mob extends AbstractEntity

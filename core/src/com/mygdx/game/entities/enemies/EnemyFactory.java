@@ -3,7 +3,7 @@ package com.mygdx.game.entities.enemies;
 import com.mygdx.game.controllers.MobController;
 
 /**
- * Creates every mob in game.
+ * Creates every mob used in game.
  */
 public class EnemyFactory
 {

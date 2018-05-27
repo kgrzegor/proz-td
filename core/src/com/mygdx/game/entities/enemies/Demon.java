@@ -1,8 +1,9 @@
 package com.mygdx.game.entities.enemies;
 
 import com.mygdx.game.controllers.MobController;
+
 /**
- * Basic mob with medium speed and health 
+ * Basic mob with medium speed and health
  */
 public class Demon extends Mob
 {
@@ -14,7 +15,7 @@ public class Demon extends Mob
 		this.health = 30;
 		this.points = 100;
 		this.speed = 100;
-		
+
 		this.followPath();
 	}
 }

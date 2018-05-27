@@ -1,4 +1,5 @@
 package com.mygdx.game.services;
+
 /**
  * Provides spawn counts and times arrays, stage counter
  */
@@ -18,9 +19,9 @@ public class StageService
 
 	public boolean hasNextStage()
 	{
-	  return !(currentStage == lastStage);
+		return !(currentStage == lastStage);
 	}
-	
+
 	public void nextStage()
 	{
 		if (currentStage < lastStage)

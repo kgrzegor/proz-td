@@ -32,7 +32,7 @@ public class MobController implements PowerUp
 	private EnemyFactory enemyFactory;
 	private StageService stageService;
 	private TimeService timeService;
-	
+
 	public MobController(Stage stage, MyGdxGame game)
 	{
 		this.stage = stage;

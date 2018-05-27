@@ -32,7 +32,7 @@ public class PointsService
 			prefs.flush();
 		}
 	}
-	
+
 	public int getHighscore()
 	{
 		updateHighscore();
@@ -49,7 +49,5 @@ public class PointsService
 	{
 		this.points += points;
 	}
-
-
 
 }

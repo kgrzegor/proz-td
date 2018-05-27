@@ -1,6 +1,7 @@
 package com.mygdx.game.entities.enemies;
 
 import com.mygdx.game.controllers.MobController;
+
 /**
  * Mob with different freeze effect, slower but have more health
  */
@@ -14,7 +15,7 @@ public class Yeti extends Mob
 		this.health = 30;
 		this.points = 100;
 		this.speed = 70;
-		
+
 		this.followPath();
 	}
 

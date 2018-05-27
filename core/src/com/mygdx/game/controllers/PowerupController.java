@@ -12,16 +12,19 @@ import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.InfoLabel;
 import com.mygdx.game.services.StageService;
 
-public class PowerUpController
+/**
+ * There should be observer somewhere
+ */
+public class PowerupController
 {
 	private StageService stageService;
-	private GameButton gameButton;
+	private GameButton powerup;
 	private Stage stage;
 	private boolean started;
 	private final PowerUp[] popout;
 	private Random rand;
 
-	public PowerUpController(Stage stage, MyGdxGame game, final PowerUp[] popout)
+	public PowerupController(Stage stage, MyGdxGame game, final PowerUp[] popout)
 	{
 		this.stage = stage;
 		this.popout = popout;
@@ -30,54 +33,69 @@ public class PowerUpController
 		this.stageService = game.getStageService();
 	}
 
+	/**
+	 * Every x seconds new powerUp appears in random place on map
+	 */
 	public void startPowerUps()
 	{
 		if (!started)
-		Timer.schedule(new Task()
-		{
-			public void run()
+			Timer.schedule(new Task()
 			{
-				initGameButton();
-				stage.addActor(gameButton);
-				initRemoveTimer();
-			}
-		}, 5, 5);
-		
+				public void run()
+				{
+					newPowerup();
+					stage.addActor(powerup);
+					initRemoveTimer();
+				}
+			}, 5, 5);
+
 		started = true;
 	}
 
+	/**
+	 * After some time powerup disappears
+	 */
 	private void initRemoveTimer()
 	{
 		Timer.schedule(new Task()
 		{
 			public void run()
 			{
-				gameButton.remove();
+				powerup.remove();
 			}
 		}, 3);
 	}
 
-	private void initGameButton()
+	/**
+	 * Choose random position for power up, needs to be added to stage. Position
+	 * will be allways choosen at least 100px from map edge
+	 */
+	private void newPowerup()
 	{
 		final int X = rand.nextInt(MyGdxGame.WIDTH - 200) + 100;
 		final int Y = rand.nextInt(MyGdxGame.HEIGHT - 200) + 100;
-		gameButton = new GameButton.Builder(new IClickCallback()
+
+		powerup = new GameButton.Builder(new IClickCallback()
 		{
 			@Override
 			public void onClick()
 			{
 				clicked(X, Y);
-				
+
 			}
 		}).position(X, Y).height(25).width(28).image("popout.png").build();
 	}
 
+	/**
+	 * After being clicked one of the powerup effects is chosen, infolabel with
+	 * effect is shown and popout is removed Needs to be change with observer
+	 */
 	protected void clicked(int x, int y)
 	{
 		String info = popout[rand.nextInt(popout.length)].powerUpEffect(stageService.getCurrentStage() * 10);
-		gameButton.remove();
-		new InfoLabel(stage, x-50, y, info);
-		
+		powerup.remove();
+		new InfoLabel(stage, x - 50, y, info);
+
 	}
-	
+
 }

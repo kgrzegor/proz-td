@@ -9,6 +9,11 @@ import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.entities.Projectile;
 import com.mygdx.game.entities.enemies.Mob;
 
+/**
+ * Every tower should have its own projectilleController, creates all
+ * projectiles, aim them and tells how it should move. Can check if projectile
+ * hit anyone.
+ */
 public class ProjectileController
 {
 	private float towerX, towerY;
@@ -27,14 +32,24 @@ public class ProjectileController
 		ProjectilesList = new ArrayList<Projectile>();
 	}
 
+	/**
+	 * Calculates projectile's path and add it to stage. Projetile is removed when
+	 * traveled tower range.
+	 * 
+	 * @param projectileSpeed
+	 *            Defines px traveled every second.
+	 * @param damage
+	 *            Defines damage done to whatever it hit.
+	 */
 	public void add(float projectileSpeed, int damage, float targetX, float targetY)
 	{
 		final Projectile newProjectile = new Projectile(towerX, towerY, damage);
+
 		double distance = Math.hypot(targetX - towerX, targetY - towerY);
 		float directionX = (float) Math.sin((targetX - towerX) / distance) * range;
 		float directionY = (float) Math.sin((targetY - towerY) / distance) * range;
 
-		Action move = Actions.parallel(Actions.moveBy(directionX, directionY, (float) (distance / projectileSpeed)));
+		Action move = Actions.moveBy(directionX, directionY, (float) (distance / projectileSpeed));
 		Action outOfRange = Actions.run(new Runnable()
 		{
 			public void run()
@@ -42,13 +57,18 @@ public class ProjectileController
 				removeProjectile(newProjectile);
 			}
 		});
-		
+
 		stage.addActor(newProjectile);
 		newProjectile.addAction(Actions.sequence(move, outOfRange));
 
 		ProjectilesList.add(newProjectile);
 	}
 
+	/**
+	 * Iterates over every projectile and mobs checking if anything is hit.
+	 * Something is hit when distance between center of projectile and target is
+	 * less than height or width of target
+	 */
 	public void checkHits()
 	{
 		for (Projectile p : ProjectilesList)
@@ -70,6 +90,9 @@ public class ProjectileController
 		p.remove(); // from stage
 	}
 
+	/**
+	 * should be used when tower have range upgraded
+	 */
 	public void setRange(int range)
 	{
 		this.range = range;

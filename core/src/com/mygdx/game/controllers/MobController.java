@@ -15,6 +15,10 @@ import com.mygdx.game.services.PointsService;
 import com.mygdx.game.services.StageService;
 import com.mygdx.game.services.TimeService;
 
+/**
+ * TODO: mob spawner should be added, next stage button could be create by this
+ * ones
+ **/
 public class MobController implements PowerUp
 {
 	private MobType[] waveType = { MobType.Demon, MobType.Yeti };
@@ -28,7 +32,7 @@ public class MobController implements PowerUp
 	private EnemyFactory enemyFactory;
 	private StageService stageService;
 	private TimeService timeService;
-
+	
 	public MobController(Stage stage, MyGdxGame game)
 	{
 		this.stage = stage;
@@ -43,13 +47,17 @@ public class MobController implements PowerUp
 		this.mobsCreated = 0;
 	}
 
+	/**
+	 * Starts timer in first stage, resets it in every new wave, stops in last wave.
+	 * Spawn mob type with time between and number of them in wave according to
+	 * stageService. Increment stage counter.
+	 **/
 	public void startWave()
 	{
-		
+
 		if (stageService.getCurrentStage() == 0)
 			timeService.start();
-		
-		
+
 		if (stageService.hasNextStage())
 		{
 			stageService.nextStage();
@@ -70,6 +78,9 @@ public class MobController implements PowerUp
 		}
 	}
 
+	/**
+	 * Uses factory to spawn different mob type
+	 **/
 	private void addMobToStage(int waveNumber)
 	{
 		Mob newMob = enemyFactory.createMob(waveType[waveNumber - 1]);
@@ -80,6 +91,10 @@ public class MobController implements PowerUp
 			++mobsCreated;
 	}
 
+	/**
+	 * Every mob makes one damage to player, with more mob types this could be
+	 * changed
+	 **/
 	public void damagePlayer(Mob mob)
 	{
 		playerLivesService.makeDamage();
@@ -111,6 +126,9 @@ public class MobController implements PowerUp
 		return mobsList;
 	}
 
+	/**
+	 * Checks if player killed all enemies in all stages so game can be ended
+	 **/
 	public boolean allEnemyKilled()
 	{
 		if (mobsList.isEmpty() && mobsCreated == stageService.getSpawnCountLastStage())

@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controllers.MobController;
-import com.mygdx.game.controllers.PowerUpController;
+import com.mygdx.game.controllers.PowerupController;
 import com.mygdx.game.entities.PowerUp;
 import com.mygdx.game.controllers.TowerController;
 import com.mygdx.game.controllers.LabelsController;
@@ -20,7 +20,7 @@ public class GameplayScreen extends AbstractScreen
 	private Image mapImg;
 	private NextStageButton nextStageButton;
 
-	private PowerUpController powerupController;
+	private PowerupController powerupController;
 	private MobController mobController;
 	private TowerController towerController;
 	private LabelsController labelsController;
@@ -46,7 +46,7 @@ public class GameplayScreen extends AbstractScreen
 		towerController = new TowerController(stage, game, mobController.getMobsList());
 
 		final PowerUp[] powerupList = { mobController, towerController };
-		powerupController = new PowerUpController(stage, game, powerupList);
+		powerupController = new PowerupController(stage, game, powerupList);
 	}
 
 	private void initMapTexture()

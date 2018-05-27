@@ -12,18 +12,26 @@ import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.InfoLabel;
 import com.mygdx.game.services.GoldService;
 
+/**
+ * Every tower have its own upgrade controller. Shows upgrades menu and range
+ * indicator when tower is clicked.
+ */
 public class UpgradeController
 {
+	/**
+	 * Width and height of buttons in upgrade menu
+	 */
 	private final static int HEIGHT = 58;
 	private final static int WIDTH = 120;
+
+	private GameButton upgradeRange, upgradeDamage, upgradeFireRateCooldown, close;
+	private GameLabel rangeCostLabel, damageCostLabel, fireRateCooldownCostLabel;
 
 	private boolean menuOpened;
 	private int menuX, menuY;
 	private int rangeCost, damageCost, fireRateCooldownCost;
 	private Tower tower;
 	private Stage stage;
-	private GameButton upgradeRange, upgradeDamage, upgradeFireRateCooldown, close;
-	private GameLabel rangeCostLabel, damageCostLabel, fireRateCooldownCostLabel;
 	private GoldService goldService;
 	private Image rangeIndicator;
 
@@ -44,10 +52,12 @@ public class UpgradeController
 		this.menuX = tower.getTowerX();
 		this.menuY = 100 + tower.getTowerY();
 		menuOpened = false;
+
 		initUpgradeRange();
 		initUpgradeDamage();
 		initUpgradeFireRateCooldown();
 		initClose();
+
 		initRangeIndicator();
 	}
 
@@ -58,7 +68,7 @@ public class UpgradeController
 		menuOpened = true;
 
 		addStageActors();
-		updateLabels();
+		updateLCostabels();
 	}
 
 	private void addStageActors()
@@ -82,6 +92,9 @@ public class UpgradeController
 		updateRangeIndicator();
 	}
 
+	/**
+	 * When range is upgraded, indicator needs to be updates to show new range
+	 */
 	private void updateRangeIndicator()
 	{
 		rangeIndicator.setHeight(tower.getRange() * 2);
@@ -101,6 +114,7 @@ public class UpgradeController
 		}).position(menuX, menuY - HEIGHT).height(HEIGHT).width(WIDTH).image("close.png").build();
 	}
 
+	
 	private void initUpgradeFireRateCooldown()
 	{
 		upgradeFireRateCooldown = new GameButton.Builder(new IClickCallback()
@@ -114,7 +128,7 @@ public class UpgradeController
 		fireRateCooldownCostLabel = new GameLabel(menuX - WIDTH - 35, menuY - HEIGHT / 2);
 	}
 
-	protected String upgradeFireRateCooldown()
+	private String upgradeFireRateCooldown()
 	{
 		try
 		{
@@ -124,7 +138,7 @@ public class UpgradeController
 				fireRateCooldownCost += 100;
 				tower.lowerFireRateCooldown();
 				return String.format("Fire rate: %.2f", tower.getFireRateCooldown());
-				
+
 			} else
 			{
 				return "Tower fire rate at max level!";
@@ -181,7 +195,7 @@ public class UpgradeController
 		rangeCostLabel = new GameLabel(menuX - WIDTH - 35, menuY + HEIGHT / 2);
 	}
 
-	protected String upgradeRange()
+	private String upgradeRange()
 	{
 		try
 		{
@@ -205,10 +219,10 @@ public class UpgradeController
 	protected void showInfoLabel(String info)
 	{
 		new InfoLabel(stage, menuX - Tower.WIDHT / 2, menuY - 100, info);
-		updateLabels();
+		updateLCostLabels();
 	}
 
-	private void updateLabels()
+	private void updateLCostLabels()
 	{
 		damageCostLabel.setText(damageCost + "g");
 		rangeCostLabel.setText(rangeCost + "g");

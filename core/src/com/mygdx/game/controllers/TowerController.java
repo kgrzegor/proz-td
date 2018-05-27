@@ -13,12 +13,21 @@ import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.InfoLabel;
 import com.mygdx.game.services.GoldService;
 
+/**
+ * Creates fields buttons where tower can be build. Can iterate over every tower
+ * and check hits
+ */
 public class TowerController implements PowerUp
 {
+	/**
+	 * Specify where towers can be build on map
+	 */
 	private final int[] xCords = { 210, 115, 525, 335, 525, 850, 740, 975 };
 	private final int[] yCords = { 160, 320, 245, 320, 440, 405, 185, 185 };
-	private final int nFields = 8;
-	
+	private final int nFields = xCords.length;
+
+	private final int towerCost = 500;
+
 	private GameButton[] fieldButtons;
 	private Tower[] towers;
 	private Stage stage;
@@ -34,6 +43,9 @@ public class TowerController implements PowerUp
 		initFieldButtons();
 	}
 
+	/**
+	 * Creates field buttons in specified places, adds them to stage
+	 */
 	private void initFieldButtons()
 	{
 		fieldButtons = new GameButton[nFields];
@@ -53,11 +65,19 @@ public class TowerController implements PowerUp
 			stage.addActor(fieldButtons[i]);
 	}
 
-	protected void buildTower(int id)
+	/**
+	 * Try to build tower if player have enough gold, otherwise shows info label
+	 * with error message. If managed to build, adds tower to stage and disable
+	 * field button
+	 * 
+	 * @param id
+	 *            Field id where tower will be build
+	 */
+	private void buildTower(int id)
 	{
 		try
 		{
-			goldService.spendGold(500);
+			goldService.spendGold(towerCost);
 			towers[id] = new Tower(xCords[id], yCords[id], stage, mobsList, goldService);
 			fieldButtons[id].setTouchable(Touchable.disabled);
 			stage.addActor(towers[id]);
@@ -67,6 +87,10 @@ public class TowerController implements PowerUp
 		}
 	}
 
+	/**
+	 * Iterates over every built tower and check hits with its projectiles. Detects
+	 * every possible collision
+	 */
 	public void checkHits()
 	{
 		for (int i = 0; i < towers.length; ++i)

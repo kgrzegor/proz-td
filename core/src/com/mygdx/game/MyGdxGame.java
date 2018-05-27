@@ -11,7 +11,8 @@ import com.badlogic.gdx.Game;
 /**
  * Main class in game
  **/
-public class MyGdxGame extends Game {
+public class MyGdxGame extends Game
+{
 	/**
 	 * Constants used by OS
 	 **/
@@ -31,7 +32,8 @@ public class MyGdxGame extends Game {
 	 * create() is called when game is opened or when new game is played
 	 **/
 	@Override
-	public void create() {
+	public void create()
+	{
 		playerLivesService = new PlayerLivesService();
 		goldService = new GoldService();
 		pointsService = new PointsService();
@@ -40,11 +42,13 @@ public class MyGdxGame extends Game {
 		this.setScreen(new MenuScreen(this));
 	}
 
-	public boolean isPaused() {
+	public boolean isPaused()
+	{
 		return paused;
 	}
 
-	public void setPaused(boolean paused) {
+	public void setPaused(boolean paused)
+	{
 		this.paused = paused;
 	}
 
@@ -52,23 +56,28 @@ public class MyGdxGame extends Game {
 	 * GETTERS used whenever reference to any service is needed, every bigger class
 	 * should have game class reference
 	 *******/
-	public PlayerLivesService getPlayerLivesService() {
+	public PlayerLivesService getPlayerLivesService()
+	{
 		return playerLivesService;
 	}
 
-	public GoldService getGoldService() {
+	public GoldService getGoldService()
+	{
 		return goldService;
 	}
 
-	public StageService getStageService() {
+	public StageService getStageService()
+	{
 		return stageService;
 	}
 
-	public PointsService getPointsService() {
+	public PointsService getPointsService()
+	{
 		return pointsService;
 	}
 
-	public TimeService getTimeService() {
+	public TimeService getTimeService()
+	{
 		return timeService;
 	}
 }

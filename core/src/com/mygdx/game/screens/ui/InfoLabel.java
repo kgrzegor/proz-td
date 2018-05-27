@@ -5,6 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
+/**
+ * GameLabel but with added animation. Text goes up and disappear slowly
+ */
 public class InfoLabel extends GameLabel
 {
 	public InfoLabel(Stage stage, int x, int y, String text)

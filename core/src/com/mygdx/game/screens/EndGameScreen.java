@@ -8,6 +8,9 @@ import com.mygdx.game.screens.ui.GameLabel;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.services.PointsService;
 
+/**
+ * Shown when game is ended. Shows current result and highscore
+ */
 public class EndGameScreen extends AbstractScreen
 {
 
@@ -27,17 +30,17 @@ public class EndGameScreen extends AbstractScreen
 	{
 		GameButton mainMenuButton = new GameButton.Builder(new IClickCallback()
 		{
-			
+
 			@Override
 			public void onClick()
 			{
 				game.create();
-				
+
 			}
 		}).debug(true).position(500, 200).width(50).height(50).build();
-		
+
 		stage.addActor(mainMenuButton);
-		
+
 	}
 
 	private void initLabels(String text)
@@ -46,7 +49,8 @@ public class EndGameScreen extends AbstractScreen
 		gameoverLabel.setText(text);
 
 		GameLabel scoreLabel = new GameLabel(stage, 200, 400);
-		scoreLabel.setText("Your Points: " + pointsService.getPoints() + "\nHighscore: " + pointsService.getHighscore());
+		scoreLabel
+				.setText("Your Points: " + pointsService.getPoints() + "\nHighscore: " + pointsService.getHighscore());
 	}
 
 	@Override

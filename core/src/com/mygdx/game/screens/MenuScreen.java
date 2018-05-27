@@ -6,9 +6,11 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.screens.ui.GameButton;
 import com.mygdx.game.screens.ui.IClickCallback;
 
+/**
+ * First screen in game. Show play and exit button
+ */
 public class MenuScreen extends AbstractScreen
 {
-
 	private Image menuImg;
 	private GameButton newGame;
 
@@ -19,7 +21,6 @@ public class MenuScreen extends AbstractScreen
 
 	protected void init()
 	{
-		// TODO new asstets
 		menuImg = new Image(new Texture("menu.png"));
 		stage.addActor(menuImg);
 

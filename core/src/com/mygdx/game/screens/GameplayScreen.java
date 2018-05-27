@@ -15,6 +15,9 @@ import com.mygdx.game.screens.ui.NextStageButton;
 import com.mygdx.game.services.PlayerLivesService;
 import com.mygdx.game.services.TimeService;
 
+/**
+ * Main screen in game. Creates core controllers and used as main loop in game.
+ */
 public class GameplayScreen extends AbstractScreen
 {
 	private Image mapImg;
@@ -37,10 +40,10 @@ public class GameplayScreen extends AbstractScreen
 	{
 		initMapTexture();
 		initNextStageButton();
-		
+
 		timeService = game.getTimeService();
 		playerLivesService = game.getPlayerLivesService();
-		
+
 		labelsController = new LabelsController(stage, game);
 		mobController = new MobController(stage, game);
 		towerController = new TowerController(stage, game, mobController.getMobsList());
@@ -83,7 +86,7 @@ public class GameplayScreen extends AbstractScreen
 	{
 		towerController.checkHits();
 		labelsController.updateLabels();
-		
+
 		if (timeService.getTime() == 0)
 			mobController.startWave();
 

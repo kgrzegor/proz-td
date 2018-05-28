@@ -34,6 +34,7 @@ public class GameplayScreen extends AbstractScreen
 	public GameplayScreen(MyGdxGame game)
 	{
 		super(game);
+		init();
 	}
 
 	protected void init()
@@ -91,10 +92,10 @@ public class GameplayScreen extends AbstractScreen
 			mobController.startWave();
 
 		if (mobController.allEnemyKilled())
-			endGame("You won");
+			endGame("youwon");
 
 		if (playerLivesService.gameOver())
-			endGame("Game over!");
+			endGame("gameover");
 
 		stage.act();
 	}

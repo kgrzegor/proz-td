@@ -15,6 +15,7 @@ public class MenuScreen extends AbstractScreen
 	public MenuScreen(final MyGdxGame game)
 	{
 		super(game);
+		init();
 	}
 
 	protected void init()

@@ -11,6 +11,10 @@ import com.mygdx.game.screens.ui.GameLabel;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.InfoLabel;
 import com.mygdx.game.services.GoldService;
+import com.mygdx.game.services.UpgradeService;
+
+import Exceptions.GoldException;
+import Exceptions.UpgradeException;
 
 /**
  * Every tower have its own upgrade controller. Shows upgrades menu and range
@@ -29,20 +33,18 @@ public class UpgradeController
 
 	private boolean menuOpened;
 	private int menuX, menuY;
-	private int rangeCost, damageCost, fireRateCooldownCost;
 	private Tower tower;
 	private Stage stage;
-	private GoldService goldService;
 	private Image rangeIndicator;
+	private GoldService goldService;
+	private UpgradeService upgradeService;
 
 	public UpgradeController(Tower tower, Stage stage, GoldService goldService)
 	{
 		this.stage = stage;
 		this.tower = tower;
 		this.goldService = goldService;
-		this.rangeCost = 100;
-		this.damageCost = 100;
-		this.fireRateCooldownCost = 100;
+		this.upgradeService = new UpgradeService();
 		init();
 	}
 
@@ -94,7 +96,7 @@ public class UpgradeController
 			}
 		}).position(menuX - WIDTH, menuY).height(HEIGHT).width(WIDTH).image("upgrade/range.png").build();
 
-		rangeCostLabel = new GameLabel(menuX - WIDTH - 35, menuY + HEIGHT / 2);
+		rangeCostLabel = new GameLabel(menuX - WIDTH - 45, menuY + HEIGHT / 2);
 	}
 
 	private void initUpgradeDamage()
@@ -120,7 +122,7 @@ public class UpgradeController
 			}
 		}).position(menuX - WIDTH, menuY - HEIGHT).height(HEIGHT).width(WIDTH).image("upgrade/firerate.png").build();
 
-		fireRateCooldownCostLabel = new GameLabel(menuX - WIDTH - 35, menuY - HEIGHT / 2);
+		fireRateCooldownCostLabel = new GameLabel(menuX - WIDTH - 45, menuY - HEIGHT / 2);
 	}
 
 	private void initClose()
@@ -156,39 +158,35 @@ public class UpgradeController
 	{
 		try
 		{
-			if (tower.getFireRateCooldown() > 0.1)
-			{
-				goldService.spendGold(fireRateCooldownCost);
-				fireRateCooldownCost += 100;
-				tower.lowerFireRateCooldown();
-				return String.format("Fire rate: %.2f", tower.getFireRateCooldown());
-
-			} else
-			{
-				return "Tower fire rate at max level!";
-			}
-		} catch (Exception e)
+			goldService.spendGold(upgradeService.getFireRateCooldownCost());
+			upgradeService.nextfireRateCooldownLvl();
+			tower.lowerFireRateCooldown();
+			return String.format("Fire rate: %.2f", tower.getFireRateCooldown());
+		} catch (GoldException e)
 		{
 			return e.getMessage();
+		} catch (UpgradeException e)
+		{
+			goldService.addGold(upgradeService.getFireRateCooldownCost());
+			return e.getMessage();
 		}
+
 	}
 
 	protected String upgradeDamage()
 	{
 		try
 		{
-			if (tower.getDamage() < 100)
-			{
-				goldService.spendGold(damageCost);
-				damageCost += 100;
-				tower.addDamage();
-				return ("Damage: " + tower.getDamage());
-			} else
-			{
-				return "Tower damage at max level!";
-			}
-		} catch (Exception e)
+			goldService.spendGold(upgradeService.getDamageCost());
+			upgradeService.nextDamageLvl();
+			tower.addDamage();
+			return ("Damage: " + tower.getDamage());
+		} catch (GoldException e)
 		{
+			return e.getMessage();
+		} catch (UpgradeException e)
+		{
+			goldService.addGold(upgradeService.getDamageCost());
 			return e.getMessage();
 		}
 	}
@@ -197,19 +195,17 @@ public class UpgradeController
 	{
 		try
 		{
-			if (tower.getRange() < 600)
-			{
-				goldService.spendGold(rangeCost);
-				rangeCost += 100;
-				tower.biggerRange();
-				updateRangeIndicator();
-				return ("Range: " + tower.getRange());
-			} else
-			{
-				return "Tower range at max level!";
-			}
-		} catch (Exception e)
+			goldService.spendGold(upgradeService.getRangeCost());
+			upgradeService.nextRangeLvl();
+			tower.biggerRange();
+			updateRangeIndicator();
+			return ("Range: " + tower.getRange());
+		} catch (GoldException e)
 		{
+			return e.getMessage();
+		} catch (UpgradeException e)
+		{
+			goldService.addGold(upgradeService.getDamageCost());
 			return e.getMessage();
 		}
 	}
@@ -235,9 +231,20 @@ public class UpgradeController
 
 	private void updateCostLabels()
 	{
-		damageCostLabel.setText(damageCost + "g");
-		rangeCostLabel.setText(rangeCost + "g");
-		fireRateCooldownCostLabel.setText(fireRateCooldownCost + "g");
+		if (upgradeService.getDamageCost() > 0)
+			damageCostLabel.setText(upgradeService.getDamageCost() + "g");
+		else
+			damageCostLabel.remove();
+
+		if (upgradeService.getRangeCost() > 0)
+			rangeCostLabel.setText(upgradeService.getRangeCost() + "g");
+		else
+			rangeCostLabel.remove();
+
+		if (upgradeService.getFireRateCooldownCost() > 0)
+			fireRateCooldownCostLabel.setText(upgradeService.getFireRateCooldownCost() + "g");
+		else
+			fireRateCooldownCostLabel.remove();
 	}
 
 }

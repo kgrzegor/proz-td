@@ -15,8 +15,8 @@ import com.mygdx.game.entities.enemies.Mob;
 import com.mygdx.game.services.GoldService;
 
 /**
- * Some things should be in towercontroller some in projectille controller, this
- * should simpler
+ * Tower is built by tower controller. It have its own upgrade and projectile
+ * controller.
  */
 public class Tower extends AbstractEntity
 {
@@ -61,13 +61,17 @@ public class Tower extends AbstractEntity
 		});
 	}
 
+	/**
+	 * Recursively calls itself every 0.05 s to find target. When target have been
+	 * found calls itself after fireRateCooldown seconds.
+	 */
 	private void startShooting()
 	{
 		float fireRate;
 		if (shooting)
 			fireRate = fireRateCooldown;
 		else
-			fireRate = 0.05f;
+			fireRate = 0.05f; // check after 0.05 if target is available
 
 		Timer.schedule(new Task()
 		{
@@ -79,6 +83,10 @@ public class Tower extends AbstractEntity
 		}, fireRate);
 	}
 
+	/**
+	 * When range is upgraded projectile often missed target on larger distance,
+	 * hence projectileSpeed needs to be upgraded
+	 */
 	public void biggerRange()
 	{
 		range += 50;
@@ -108,10 +116,9 @@ public class Tower extends AbstractEntity
 		}, 15);
 	}
 
-	/**
+	/*
 	 * GETTERS
 	 */
-
 	public int getTowerY()
 	{
 		return (int) this.getY(Align.center);

@@ -1,7 +1,7 @@
 package com.mygdx.game.entities.enemies;
 
 /**
- * All mob types used by enemy factory
+ * All mob types used by EnemyFactory
  */
 public enum MobType
 {

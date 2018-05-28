@@ -2,11 +2,14 @@ package com.mygdx.game.entities.enemies;
 
 import com.mygdx.game.controllers.MobController;
 
+/**
+ * Weak and slow mob, spawned in large quantity
+ */
 public class Snail extends Mob
 {
 	public Snail(MobController mobController)
 	{
-		super(mobController, "mob/snail.png",54,45);
+		super(mobController, "mob/snail.png", 54, 45);
 		initStats();
 		followPath();
 	}

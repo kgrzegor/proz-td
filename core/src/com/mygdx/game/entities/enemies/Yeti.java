@@ -3,7 +3,7 @@ package com.mygdx.game.entities.enemies;
 import com.mygdx.game.controllers.MobController;
 
 /**
- * Mob with different freeze effect, slower but have more health
+ * Mob with different freeze effect, slow but have more health
  */
 public class Yeti extends Mob
 {

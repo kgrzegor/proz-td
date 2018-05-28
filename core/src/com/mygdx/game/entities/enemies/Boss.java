@@ -1,7 +1,9 @@
 package com.mygdx.game.entities.enemies;
 
 import com.mygdx.game.controllers.MobController;
-
+/**
+ * Slow speed, tons of health, gold and points. Spawned only once at the end
+ */
 public class Boss extends Mob
 {
 	public Boss(MobController mobController)

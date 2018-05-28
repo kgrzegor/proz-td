@@ -9,18 +9,17 @@ public class Demon extends Mob
 {
 	private final static int WIDHT = 39;
 	private final static int HEIGHT = 56;
-	
-	
+
 	public Demon(MobController mobController)
 	{
-		super(mobController, "mob/demon.png",WIDHT,HEIGHT);
+		super(mobController, "mob/demon.png", WIDHT, HEIGHT);
 		initStats();
 		followPath();
 	}
 
 	public Demon(MobController mobController, String subtype, int bonus)
 	{
-		super(mobController, "mob/" + subtype + "demon.png",WIDHT,HEIGHT);
+		super(mobController, "mob/" + subtype + "demon.png", WIDHT, HEIGHT);
 		bonusStats(bonus);
 		followPath();
 	}

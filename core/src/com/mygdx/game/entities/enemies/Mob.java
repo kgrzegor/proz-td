@@ -20,25 +20,29 @@ public abstract class Mob extends AbstractEntity
 	 */
 	private final static int[] xCords = { 145, 470, 470, 1000, 1000, 670, 670, 1380 };
 	private final static int[] yCords = { 265, 265, 540, 540, 320, 320, 140, 140 };
-	private final static int WIDHT = 39;
-	private final static int HEIGHT = 56;
+
 	private final static int STARTING_X = 145;
 	private final static int STARTING_Y = -100;
 
 	private MobController mobController;
 	private int currentPath;
+	
 	protected int health;
 	protected int gold;
 	protected int points;
 	protected int speed;
 
-	public Mob(MobController mobController, String name)
+	public Mob(MobController mobController, String name, int widht, int height)
 	{
-		super(name, STARTING_X, STARTING_Y, WIDHT, HEIGHT);
+		super(name, STARTING_X, STARTING_Y, widht, height);
 		this.mobController = mobController;
 		this.currentPath = 0;
 		this.addListener(new EnemyDamageListener(this));
+		
+		initStats();
 	}
+
+	abstract void initStats();
 
 	/**
 	 * Uses cords to define path for mob

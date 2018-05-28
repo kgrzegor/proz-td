@@ -1,5 +1,7 @@
 package com.mygdx.game.services;
 
+import com.mygdx.game.entities.enemies.MobType;
+
 /**
  * Provides spawn counts and times arrays, stage counter
  */
@@ -7,14 +9,14 @@ public class StageService
 {
 	private int currentStage;
 	private int lastStage;
-	private final float spawnTime;
-	private final int[] spawnCount = { 4, 1 };
+	private final float[] spawnTime = {3,3,1,5,3,3,5};
+	private final int[] spawnCount = { 10, 10, 30, 15,5,10,1 };
+	private final MobType[] waveType = { MobType.Demon, MobType.Yeti, MobType.Snail, MobType.RedDemon, MobType.BiggerYeti, MobType.Mummy, MobType.Boss};
 
 	public StageService()
 	{
 		this.currentStage = 0;
-		this.lastStage = 2;
-		this.spawnTime = 1f;
+		this.lastStage = spawnCount.length;
 	}
 
 	public boolean hasNextStage()
@@ -38,11 +40,6 @@ public class StageService
 		return lastStage;
 	}
 
-	public float getSpawnTime()
-	{
-		return spawnTime;
-	}
-
 	public int getSpawnCount()
 	{
 		return spawnCount[currentStage - 1];
@@ -51,5 +48,15 @@ public class StageService
 	public int getSpawnCountLastStage()
 	{
 		return spawnCount[spawnCount.length - 1];
+	}
+
+	public MobType getWaveType(int inStage)
+	{
+		return waveType[inStage - 1];
+	}
+
+	public float getSpawnTime(int inStage)
+	{
+		return spawnTime[inStage - 1];
 	}
 }

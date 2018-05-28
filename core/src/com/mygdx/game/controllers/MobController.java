@@ -8,7 +8,6 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.entities.PowerUp;
 import com.mygdx.game.entities.enemies.EnemyFactory;
 import com.mygdx.game.entities.enemies.Mob;
-import com.mygdx.game.entities.enemies.MobType;
 import com.mygdx.game.services.GoldService;
 import com.mygdx.game.services.PlayerLivesService;
 import com.mygdx.game.services.PointsService;
@@ -21,8 +20,6 @@ import com.mygdx.game.services.TimeService;
  **/
 public class MobController implements PowerUp
 {
-	private MobType[] waveType = { MobType.Demon, MobType.Yeti };
-
 	private int mobsCreated;
 	private Stage stage;
 	private PlayerLivesService playerLivesService;
@@ -70,7 +67,7 @@ public class MobController implements PowerUp
 				{
 					addMobToStage(waveNumber);
 				}
-			}, 0, stageService.getSpawnTime(), stageService.getSpawnCount() - 1);
+			}, 0, stageService.getSpawnTime(waveNumber), stageService.getSpawnCount() - 1);
 
 		} else
 		{
@@ -83,7 +80,7 @@ public class MobController implements PowerUp
 	 **/
 	private void addMobToStage(int waveNumber)
 	{
-		Mob newMob = enemyFactory.createMob(waveType[waveNumber - 1]);
+		Mob newMob = enemyFactory.createMob(stageService.getWaveType(waveNumber));
 		stage.addActor(newMob);
 		mobsList.add(newMob);
 

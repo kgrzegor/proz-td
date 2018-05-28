@@ -4,17 +4,17 @@ import Exceptions.UpgradeException;
 
 public class UpgradeService
 {
-	private static final int[] rangeCost = { 100, 150, 200, 300, 500, 1000, 2000 };
-	private static final int[] damageCost = { 200, 300, 400, 500, 1000, 2000, 3000, 5000 };
-	private static final int[] fireRateCooldownCost = { 200, 500, 1000, 1500, 2000, 5000, 10000 };
+	private static final int[] rangeCost = { 100, 150, 200, 300, 500, 1000, 2000, 0};
+	private static final int[] damageCost = { 200, 300, 400, 500, 1000, 2000, 3000, 5000, 0};
+	private static final int[] fireRateCooldownCost = { 200, 500, 1000, 1500, 2000, 5000, 9000, 0};
 
 	private int rangeLvl, damageLvl, fireRateCooldownLvl;
 
 	public UpgradeService()
 	{
-		this.rangeLvl = -1;
-		this.damageLvl = -1;
-		this.fireRateCooldownLvl = -1;
+		this.rangeLvl = 0;
+		this.damageLvl = 0;
+		this.fireRateCooldownLvl = 0;
 	}
 
 	public int getRangeCost()
@@ -30,7 +30,7 @@ public class UpgradeService
 			throw new UpgradeException("range");
 	}
 
-	public int getDamageLvl()
+	public int getDamageCost()
 	{
 		return damageCost[damageLvl];
 	}

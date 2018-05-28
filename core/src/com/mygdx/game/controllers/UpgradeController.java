@@ -17,8 +17,9 @@ import Exceptions.GoldException;
 import Exceptions.UpgradeException;
 
 /**
- * Every tower have its own upgrade controller. Shows upgrades menu and range
- * indicator when tower is clicked.
+ * Every tower have its own upgrade controller. Shows upgrades menu with costs
+ * and range indicator when tower is clicked (buttons are created in
+ * constructor, they are only added to stage on click)
  */
 public class UpgradeController
 {
@@ -48,6 +49,23 @@ public class UpgradeController
 		init();
 	}
 
+	private void init()
+	{
+		this.menuX = tower.getTowerX();
+		this.menuY = 100 + tower.getTowerY();
+		menuOpened = false;
+
+		initUpgradeRange();
+		initUpgradeDamage();
+		initUpgradeFireRateCooldown();
+		initClose();
+
+		initRangeIndicator();
+	}
+
+	/**
+	 * Used when clicked on tower
+	 */
 	public void showMenu()
 	{
 		if (menuOpened)
@@ -70,20 +88,6 @@ public class UpgradeController
 		stage.addActor(damageCostLabel);
 		stage.addActor(rangeCostLabel);
 		stage.addActor(fireRateCooldownCostLabel);
-	}
-
-	private void init()
-	{
-		this.menuX = tower.getTowerX();
-		this.menuY = 100 + tower.getTowerY();
-		menuOpened = false;
-
-		initUpgradeRange();
-		initUpgradeDamage();
-		initUpgradeFireRateCooldown();
-		initClose();
-
-		initRangeIndicator();
 	}
 
 	private void initUpgradeRange()
@@ -229,6 +233,9 @@ public class UpgradeController
 		updateCostLabels();
 	}
 
+	/**
+	 * Removes Cost Labels when upgrade at max lvl
+	 */
 	private void updateCostLabels()
 	{
 		if (upgradeService.getDamageCost() > 0)

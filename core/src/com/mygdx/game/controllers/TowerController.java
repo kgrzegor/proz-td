@@ -1,6 +1,6 @@
 package com.mygdx.game.controllers;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -34,9 +34,9 @@ public class TowerController implements PowerUp
 	private Tower[] towers;
 	private Stage stage;
 	private GoldService goldService;
-	private ArrayList<Mob> mobsList;
+	private LinkedList<Mob> mobsList;
 
-	public TowerController(Stage stage, MyGdxGame game, ArrayList<Mob> mobsList)
+	public TowerController(Stage stage, MyGdxGame game, LinkedList<Mob> mobsList)
 	{
 		this.stage = stage;
 		this.goldService = game.getGoldService();

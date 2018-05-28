@@ -1,6 +1,7 @@
 package com.mygdx.game.controllers;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
@@ -19,7 +20,7 @@ import com.mygdx.game.services.TimeService;
  **/
 public class MobController implements PowerUp
 {
-	private ArrayList<Mob> mobsList;
+	private LinkedList<Mob> mobsList;
 	private int mobsCreated;// used only in last stage
 	private Stage stage;
 	private EnemyFactory enemyFactory;
@@ -32,7 +33,7 @@ public class MobController implements PowerUp
 
 	public MobController(Stage stage, MyGdxGame game)
 	{
-		this.mobsList = new ArrayList<Mob>();
+		this.mobsList = new LinkedList<Mob>();
 		this.stage = stage;
 		this.mobsCreated = 0; // used only in last stage
 		this.enemyFactory = new EnemyFactory(this);
@@ -129,7 +130,7 @@ public class MobController implements PowerUp
 		return "Mobs have been frozen";
 	}
 
-	public ArrayList<Mob> getMobsList()
+	public LinkedList<Mob> getMobsList()
 	{
 		return mobsList;
 	}

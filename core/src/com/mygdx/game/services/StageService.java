@@ -3,7 +3,7 @@ package com.mygdx.game.services;
 import com.mygdx.game.entities.enemies.MobType;
 
 /**
- * Provides spawn counts and times arrays, stage counter
+ * Provides spawn counts and spawn times arrays, stage counter, wave types
  */
 public class StageService
 {

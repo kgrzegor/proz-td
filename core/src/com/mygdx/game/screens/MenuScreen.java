@@ -21,7 +21,7 @@ public class MenuScreen extends AbstractScreen
 
 	protected void init()
 	{
-		menuImg = new Image(new Texture("menu.png"));
+		menuImg = new Image(new Texture("map/menu.png"));
 		stage.addActor(menuImg);
 
 		newGame = new GameButton.Builder(new IClickCallback()

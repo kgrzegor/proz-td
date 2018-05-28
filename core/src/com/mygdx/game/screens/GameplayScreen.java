@@ -54,7 +54,7 @@ public class GameplayScreen extends AbstractScreen
 
 	private void initMapTexture()
 	{
-		mapImg = new Image(new Texture("map.jpg"));
+		mapImg = new Image(new Texture("map/map.jpg"));
 		stage.addActor(mapImg);
 	}
 

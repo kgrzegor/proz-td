@@ -87,7 +87,7 @@ public class UpgradeController
 
 	private void initRangeIndicator()
 	{
-		rangeIndicator = new Image(new Texture("rangeindicator.png"));
+		rangeIndicator = new Image(new Texture("upgrade/rangeindicator.png"));
 		rangeIndicator.setTouchable(Touchable.disabled);
 		updateRangeIndicator();
 	}
@@ -111,7 +111,7 @@ public class UpgradeController
 			{
 				closeMenu();
 			}
-		}).position(menuX, menuY - HEIGHT).height(HEIGHT).width(WIDTH).image("close.png").build();
+		}).position(menuX, menuY - HEIGHT).height(HEIGHT).width(WIDTH).image("upgrade/close.png").build();
 	}
 
 	private void initUpgradeFireRateCooldown()
@@ -122,7 +122,7 @@ public class UpgradeController
 			{
 				showInfoLabel(upgradeFireRateCooldown());
 			}
-		}).position(menuX - WIDTH, menuY - HEIGHT).height(HEIGHT).width(WIDTH).image("firerate.png").build();
+		}).position(menuX - WIDTH, menuY - HEIGHT).height(HEIGHT).width(WIDTH).image("upgrade/firerate.png").build();
 
 		fireRateCooldownCostLabel = new GameLabel(menuX - WIDTH - 35, menuY - HEIGHT / 2);
 	}
@@ -156,7 +156,7 @@ public class UpgradeController
 			{
 				showInfoLabel(upgradeDamage());
 			}
-		}).position(menuX, menuY).height(HEIGHT).width(WIDTH).image("damage.png").build();
+		}).position(menuX, menuY).height(HEIGHT).width(WIDTH).image("upgrade/damage.png").build();
 
 		damageCostLabel = new GameLabel(menuX + WIDTH, menuY + HEIGHT / 2);
 	}
@@ -189,7 +189,7 @@ public class UpgradeController
 			{
 				showInfoLabel(upgradeRange());
 			}
-		}).position(menuX - WIDTH, menuY).height(HEIGHT).width(WIDTH).image("range.png").build();
+		}).position(menuX - WIDTH, menuY).height(HEIGHT).width(WIDTH).image("upgrade/range.png").build();
 
 		rangeCostLabel = new GameLabel(menuX - WIDTH - 35, menuY + HEIGHT / 2);
 	}

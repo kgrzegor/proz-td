@@ -56,7 +56,7 @@ public class EndGameScreen extends AbstractScreen
 	@Override
 	protected void init()
 	{
-		endImg = new Image(new Texture("menu.png"));
+		endImg = new Image(new Texture("map/menu.png"));
 		stage.addActor(endImg);
 	}
 

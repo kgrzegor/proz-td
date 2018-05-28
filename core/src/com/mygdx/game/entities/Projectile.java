@@ -15,7 +15,7 @@ public class Projectile extends AbstractEntity
 
 	public Projectile(float towerX, float towerY, int damage)
 	{
-		super("projectile.png", (int) towerX, (int) towerY, WIDHT, HEIGHT);
+		super("map/projectile.png", (int) towerX, (int) towerY, WIDHT, HEIGHT);
 		this.damageEvent = new DamageEvent(damage);
 	}
 

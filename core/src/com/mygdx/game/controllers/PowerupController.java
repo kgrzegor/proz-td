@@ -84,7 +84,7 @@ public class PowerupController
 				clicked(X, Y);
 
 			}
-		}).position(X, Y).height(25).width(28).image("popout.png").build();
+		}).position(X, Y).height(25).width(28).image("map/powerup.png").build();
 	}
 
 	/**

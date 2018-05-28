@@ -9,7 +9,7 @@ public class Yeti extends Mob
 {
 	public Yeti(MobController mobController)
 	{
-		super(mobController, "yeti.png");
+		super(mobController, "mob/yeti.png");
 
 		this.gold = 50;
 		this.health = 30;

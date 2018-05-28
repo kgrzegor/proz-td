@@ -39,7 +39,7 @@ public class Tower extends AbstractEntity
 
 	public Tower(int xCord, int yCord, Stage stage, ArrayList<Mob> mobsList, GoldService goldService)
 	{
-		super("tower.png", xCord, yCord, WIDHT, HEIGHT);
+		super("map/tower.png", xCord, yCord, WIDHT, HEIGHT);
 
 		this.stage = stage;
 		this.targets = mobsList;

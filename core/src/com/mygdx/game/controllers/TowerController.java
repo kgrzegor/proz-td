@@ -58,7 +58,7 @@ public class TowerController implements PowerUp
 				{
 					buildTower(id);
 				}
-			}).position(xCords[id], yCords[id]).height(60).width(100).image("field.png").build();
+			}).position(xCords[id], yCords[id]).height(60).width(100).image("map/field.png").build();
 		}
 
 		for (int i = 0; i < fieldButtons.length; ++i)

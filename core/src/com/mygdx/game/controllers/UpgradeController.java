@@ -44,21 +44,6 @@ public class UpgradeController
 		this.damageCost = 100;
 		this.fireRateCooldownCost = 100;
 		init();
-
-	}
-
-	private void init()
-	{
-		this.menuX = tower.getTowerX();
-		this.menuY = 100 + tower.getTowerY();
-		menuOpened = false;
-
-		initUpgradeRange();
-		initUpgradeDamage();
-		initUpgradeFireRateCooldown();
-		initClose();
-
-		initRangeIndicator();
 	}
 
 	public void showMenu()
@@ -85,6 +70,70 @@ public class UpgradeController
 		stage.addActor(fireRateCooldownCostLabel);
 	}
 
+	private void init()
+	{
+		this.menuX = tower.getTowerX();
+		this.menuY = 100 + tower.getTowerY();
+		menuOpened = false;
+
+		initUpgradeRange();
+		initUpgradeDamage();
+		initUpgradeFireRateCooldown();
+		initClose();
+
+		initRangeIndicator();
+	}
+
+	private void initUpgradeRange()
+	{
+		upgradeRange = new GameButton.Builder(new IClickCallback()
+		{
+			public void onClick()
+			{
+				showInfoLabel(upgradeRange());
+			}
+		}).position(menuX - WIDTH, menuY).height(HEIGHT).width(WIDTH).image("upgrade/range.png").build();
+
+		rangeCostLabel = new GameLabel(menuX - WIDTH - 35, menuY + HEIGHT / 2);
+	}
+
+	private void initUpgradeDamage()
+	{
+		upgradeDamage = new GameButton.Builder(new IClickCallback()
+		{
+			public void onClick()
+			{
+				showInfoLabel(upgradeDamage());
+			}
+		}).position(menuX, menuY).height(HEIGHT).width(WIDTH).image("upgrade/damage.png").build();
+
+		damageCostLabel = new GameLabel(menuX + WIDTH, menuY + HEIGHT / 2);
+	}
+
+	private void initUpgradeFireRateCooldown()
+	{
+		upgradeFireRateCooldown = new GameButton.Builder(new IClickCallback()
+		{
+			public void onClick()
+			{
+				showInfoLabel(upgradeFireRateCooldown());
+			}
+		}).position(menuX - WIDTH, menuY - HEIGHT).height(HEIGHT).width(WIDTH).image("upgrade/firerate.png").build();
+
+		fireRateCooldownCostLabel = new GameLabel(menuX - WIDTH - 35, menuY - HEIGHT / 2);
+	}
+
+	private void initClose()
+	{
+		close = new GameButton.Builder(new IClickCallback()
+		{
+			public void onClick()
+			{
+				closeMenu();
+			}
+		}).position(menuX, menuY - HEIGHT).height(HEIGHT).width(WIDTH).image("upgrade/close.png").build();
+	}
+
 	private void initRangeIndicator()
 	{
 		rangeIndicator = new Image(new Texture("upgrade/rangeindicator.png"));
@@ -101,30 +150,6 @@ public class UpgradeController
 		rangeIndicator.setWidth(tower.getRange() * 2);
 		rangeIndicator.setX(tower.getTowerX(), Align.center);
 		rangeIndicator.setY(tower.getTowerY(), Align.center);
-	}
-
-	private void initClose()
-	{
-		close = new GameButton.Builder(new IClickCallback()
-		{
-			public void onClick()
-			{
-				closeMenu();
-			}
-		}).position(menuX, menuY - HEIGHT).height(HEIGHT).width(WIDTH).image("upgrade/close.png").build();
-	}
-
-	private void initUpgradeFireRateCooldown()
-	{
-		upgradeFireRateCooldown = new GameButton.Builder(new IClickCallback()
-		{
-			public void onClick()
-			{
-				showInfoLabel(upgradeFireRateCooldown());
-			}
-		}).position(menuX - WIDTH, menuY - HEIGHT).height(HEIGHT).width(WIDTH).image("upgrade/firerate.png").build();
-
-		fireRateCooldownCostLabel = new GameLabel(menuX - WIDTH - 35, menuY - HEIGHT / 2);
 	}
 
 	private String upgradeFireRateCooldown()
@@ -148,19 +173,6 @@ public class UpgradeController
 		}
 	}
 
-	private void initUpgradeDamage()
-	{
-		upgradeDamage = new GameButton.Builder(new IClickCallback()
-		{
-			public void onClick()
-			{
-				showInfoLabel(upgradeDamage());
-			}
-		}).position(menuX, menuY).height(HEIGHT).width(WIDTH).image("upgrade/damage.png").build();
-
-		damageCostLabel = new GameLabel(menuX + WIDTH, menuY + HEIGHT / 2);
-	}
-
 	protected String upgradeDamage()
 	{
 		try
@@ -179,19 +191,6 @@ public class UpgradeController
 		{
 			return e.getMessage();
 		}
-	}
-
-	private void initUpgradeRange()
-	{
-		upgradeRange = new GameButton.Builder(new IClickCallback()
-		{
-			public void onClick()
-			{
-				showInfoLabel(upgradeRange());
-			}
-		}).position(menuX - WIDTH, menuY).height(HEIGHT).width(WIDTH).image("upgrade/range.png").build();
-
-		rangeCostLabel = new GameLabel(menuX - WIDTH - 35, menuY + HEIGHT / 2);
 	}
 
 	private String upgradeRange()
@@ -215,6 +214,19 @@ public class UpgradeController
 		}
 	}
 
+	protected void closeMenu()
+	{
+		rangeIndicator.remove();
+		upgradeRange.remove();
+		upgradeDamage.remove();
+		upgradeFireRateCooldown.remove();
+		fireRateCooldownCostLabel.remove();
+		damageCostLabel.remove();
+		rangeCostLabel.remove();
+		close.remove();
+		menuOpened = false;
+	}
+
 	protected void showInfoLabel(String info)
 	{
 		new InfoLabel(stage, menuX - Tower.WIDHT / 2, menuY - 100, info);
@@ -228,16 +240,4 @@ public class UpgradeController
 		fireRateCooldownCostLabel.setText(fireRateCooldownCost + "g");
 	}
 
-	protected void closeMenu()
-	{
-		rangeIndicator.remove();
-		upgradeRange.remove();
-		upgradeDamage.remove();
-		upgradeFireRateCooldown.remove();
-		fireRateCooldownCostLabel.remove();
-		damageCostLabel.remove();
-		rangeCostLabel.remove();
-		close.remove();
-		menuOpened = false;
-	}
 }

@@ -26,8 +26,8 @@ public class NextStageButton extends Button
 	{
 		this.setWidth(64);
 		this.setHeight(32);
-		this.setX(650);
-		this.setY(MyGdxGame.HEIGHT - 40);
+		this.setX(575);
+		this.setY(MyGdxGame.HEIGHT - 38);
 
 		this.addListener(new ClickListener()
 		{

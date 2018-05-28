@@ -33,7 +33,7 @@ public class EnemyFactory
 		case Boss:
 			return new Boss(mobController);
 		default:
-			return null;
+			throw new IllegalArgumentException("Wrong mob type");
 		}
 	}
 }

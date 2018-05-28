@@ -15,33 +15,33 @@ import com.mygdx.game.services.StageService;
 import com.mygdx.game.services.TimeService;
 
 /**
- * TODO: mob spawner should be added, next stage button could be create by this
- * ones
+ * Spawn Mobs according to stage service data, put them on stage and
  **/
 public class MobController implements PowerUp
 {
-	private int mobsCreated;
-	private Stage stage;
-	private PlayerLivesService playerLivesService;
 	private ArrayList<Mob> mobsList;
+	private int mobsCreated;// used only in last stage
+	private Stage stage;
+	private EnemyFactory enemyFactory;
+
+	private PlayerLivesService playerLivesService;
 	private GoldService goldService;
 	private PointsService pointsService;
-	private EnemyFactory enemyFactory;
 	private StageService stageService;
 	private TimeService timeService;
 
 	public MobController(Stage stage, MyGdxGame game)
 	{
+		this.mobsList = new ArrayList<Mob>();
 		this.stage = stage;
+		this.mobsCreated = 0; // used only in last stage
+		this.enemyFactory = new EnemyFactory(this);
+
 		this.playerLivesService = game.getPlayerLivesService();
 		this.goldService = game.getGoldService();
 		this.pointsService = game.getPointsService();
 		this.stageService = game.getStageService();
 		this.timeService = game.getTimeService();
-		this.mobsList = new ArrayList<Mob>();
-		this.enemyFactory = new EnemyFactory(this);
-
-		this.mobsCreated = 0;
 	}
 
 	/**
@@ -111,6 +111,17 @@ public class MobController implements PowerUp
 		mob.remove();
 	}
 
+	/**
+	 * Checks if player killed all enemies in all stages so game can be ended
+	 **/
+	public boolean allEnemyKilled()
+	{
+		if (mobsList.isEmpty() && mobsCreated == stageService.getSpawnCountLastStage())
+			return true;
+		else
+			return false;
+	}
+
 	public String powerUpEffect(float time)
 	{
 		for (Mob m : mobsList)
@@ -121,16 +132,5 @@ public class MobController implements PowerUp
 	public ArrayList<Mob> getMobsList()
 	{
 		return mobsList;
-	}
-
-	/**
-	 * Checks if player killed all enemies in all stages so game can be ended
-	 **/
-	public boolean allEnemyKilled()
-	{
-		if (mobsList.isEmpty() && mobsCreated == stageService.getSpawnCountLastStage())
-			return true;
-		else
-			return false;
 	}
 }

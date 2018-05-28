@@ -5,6 +5,6 @@ public class UpgradeException extends Exception
 {
 	public UpgradeException(String text)
 	{
-		super("Tower" + text + "at max level!");
+		super("Tower " + text + " at max level!");
 	}
 }

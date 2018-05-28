@@ -22,7 +22,17 @@ public class EndGameScreen extends AbstractScreen
 		super(game);
 		pointsService = game.getPointsService();
 
-		initLabels(text);
+		endImg = new Image(new Texture("menu/" + text + ".png"));
+		stage.addActor(endImg);
+
+		init();
+	}
+
+	@Override
+	protected void init()
+	{
+
+		initLabel();
 		initMainMenuButton();
 	}
 
@@ -37,28 +47,17 @@ public class EndGameScreen extends AbstractScreen
 				game.create();
 
 			}
-		}).debug(true).position(500, 200).width(50).height(50).build();
+		}).position(565, 200).width(150).height(64).image("menu/menubutton.png").build();
 
 		stage.addActor(mainMenuButton);
 
 	}
 
-	private void initLabels(String text)
+	private void initLabel()
 	{
-		GameLabel gameoverLabel = new GameLabel(stage, 200, 500, "fontbig.fnt");
-		gameoverLabel.setText(text);
-
-		GameLabel scoreLabel = new GameLabel(stage, 200, 400);
+		GameLabel scoreLabel = new GameLabel(stage, 450, 370, "fontbig.fnt");
 		scoreLabel
 				.setText("Your Points: " + pointsService.getPoints() + "\nHighscore: " + pointsService.getHighscore());
-
-	}
-
-	@Override
-	protected void init()
-	{
-		endImg = new Image(new Texture("map/end.png"));
-		stage.addActor(endImg);
 	}
 
 	public void render(float delta)

@@ -19,7 +19,7 @@ public class MenuScreen extends AbstractScreen
 
 	protected void init()
 	{
-		Image menuImg = new Image(new Texture("map/menu.png"));
+		Image menuImg = new Image(new Texture("menu/menu.png"));
 		stage.addActor(menuImg);
 
 		initNewGame();
@@ -36,7 +36,7 @@ public class MenuScreen extends AbstractScreen
 			{
 				Gdx.app.exit();
 			}
-		}).position(500, 200).height(64).width(150).debug(false).image("exit.png").build();
+		}).position(565, 200).height(64).width(150).debug(false).image("menu/exit.png").build();
 
 		stage.addActor(exitGame);
 	}
@@ -51,7 +51,7 @@ public class MenuScreen extends AbstractScreen
 				game.setScreen(new GameplayScreen(game));
 
 			}
-		}).position(500, 300).height(64).width(150).debug(false).image("start.png").build();
+		}).position(565, 300).height(64).width(150).debug(false).image("menu/start.png").build();
 
 		stage.addActor(newGame);
 	}

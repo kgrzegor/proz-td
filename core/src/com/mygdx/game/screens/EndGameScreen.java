@@ -51,12 +51,13 @@ public class EndGameScreen extends AbstractScreen
 		GameLabel scoreLabel = new GameLabel(stage, 200, 400);
 		scoreLabel
 				.setText("Your Points: " + pointsService.getPoints() + "\nHighscore: " + pointsService.getHighscore());
+
 	}
 
 	@Override
 	protected void init()
 	{
-		endImg = new Image(new Texture("map/menu.png"));
+		endImg = new Image(new Texture("map/end.png"));
 		stage.addActor(endImg);
 	}
 

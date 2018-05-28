@@ -95,6 +95,9 @@ public class ProjectileController
 	 */
 	public void setRange(int range)
 	{
-		this.range = range;
+		if (range >= this.range)
+			this.range = range;
+		else
+			throw new IllegalArgumentException("New range can't be less than previous");
 	}
 }

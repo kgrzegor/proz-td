@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.entities.PowerUp;
+import com.mygdx.game.entities.Powerup;
 import com.mygdx.game.entities.Tower;
 import com.mygdx.game.entities.enemies.Mob;
 import com.mygdx.game.screens.ui.GameButton;
@@ -19,7 +19,7 @@ import Exceptions.GoldException;
  * Creates fields buttons where tower can be build. Can iterate over every tower
  * and check hits
  */
-public class TowerController implements PowerUp
+public class TowerController implements Powerup
 {
 	/**
 	 * Specify where towers can be build on map

@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controllers.MobController;
 import com.mygdx.game.controllers.PowerupController;
-import com.mygdx.game.entities.PowerUp;
+import com.mygdx.game.entities.Powerup;
 import com.mygdx.game.controllers.TowerController;
 import com.mygdx.game.controllers.LabelsController;
 import com.mygdx.game.screens.ui.IClickCallback;
@@ -49,7 +49,7 @@ public class GameplayScreen extends AbstractScreen
 		mobController = new MobController(stage, game);
 		towerController = new TowerController(stage, game, mobController.getMobsList());
 
-		final PowerUp[] powerupList = { mobController, towerController };
+		final Powerup[] powerupList = { mobController, towerController };
 		powerupController = new PowerupController(stage, game, powerupList);
 	}
 

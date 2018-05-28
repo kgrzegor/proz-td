@@ -10,9 +10,8 @@ import com.mygdx.game.entities.Projectile;
 import com.mygdx.game.entities.enemies.Mob;
 
 /**
- * Every tower have its own projectilleController, creates all
- * projectiles, aim them and tells how it should move. Can check if projectile
- * hit anyone.
+ * Every tower have its own projectilleController, creates all projectiles, aim
+ * them and tells how it should move. Can check if projectile hit anyone.
  */
 public class ProjectileController
 {

@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.entities.PowerUp;
+import com.mygdx.game.entities.Powerup;
 import com.mygdx.game.screens.ui.GameButton;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.InfoLabel;
@@ -18,14 +18,15 @@ import com.mygdx.game.services.StageService;
 public class PowerupController
 {
 	private final static int respawnTime = 5;
+	
 	private StageService stageService;
 	private GameButton powerup;
 	private Stage stage;
 	private boolean started;
-	private final PowerUp[] popout;
+	private final Powerup[] popout;
 	private Random rand;
 
-	public PowerupController(Stage stage, MyGdxGame game, final PowerUp[] popout)
+	public PowerupController(Stage stage, MyGdxGame game, final Powerup[] popout)
 	{
 		this.stage = stage;
 		this.popout = popout;
@@ -96,7 +97,6 @@ public class PowerupController
 		String info = popout[rand.nextInt(popout.length)].powerUpEffect(stageService.getCurrentStage() * 10);
 		powerup.remove();
 		new InfoLabel(stage, x - 50, y, info);
-
 	}
 
 }

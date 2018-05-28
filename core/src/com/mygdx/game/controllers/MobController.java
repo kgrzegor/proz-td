@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.entities.PowerUp;
+import com.mygdx.game.entities.Powerup;
 import com.mygdx.game.entities.enemies.EnemyFactory;
 import com.mygdx.game.entities.enemies.Mob;
 import com.mygdx.game.services.GoldService;
@@ -18,7 +18,7 @@ import com.mygdx.game.services.TimeService;
 /**
  * Spawn Mobs according to stage service data and put them on stage.
  **/
-public class MobController implements PowerUp
+public class MobController implements Powerup
 {
 	private LinkedList<Mob> mobsList;
 	private int mobsCreated;// used only in last stage

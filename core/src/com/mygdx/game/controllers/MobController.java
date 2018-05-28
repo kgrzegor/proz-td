@@ -15,7 +15,7 @@ import com.mygdx.game.services.StageService;
 import com.mygdx.game.services.TimeService;
 
 /**
- * Spawn Mobs according to stage service data, put them on stage and
+ * Spawn Mobs according to stage service data and put them on stage.
  **/
 public class MobController implements PowerUp
 {

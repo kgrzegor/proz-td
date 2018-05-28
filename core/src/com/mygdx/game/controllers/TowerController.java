@@ -13,6 +13,8 @@ import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.InfoLabel;
 import com.mygdx.game.services.GoldService;
 
+import Exceptions.GoldException;
+
 /**
  * Creates fields buttons where tower can be build. Can iterate over every tower
  * and check hits
@@ -81,7 +83,7 @@ public class TowerController implements PowerUp
 			towers[id] = new Tower(xCords[id], yCords[id], stage, mobsList, goldService);
 			fieldButtons[id].setTouchable(Touchable.disabled);
 			stage.addActor(towers[id]);
-		} catch (Exception e)
+		} catch (GoldException e)
 		{
 			new InfoLabel(stage, xCords[id], yCords[id] + 20, e.getMessage());
 		}

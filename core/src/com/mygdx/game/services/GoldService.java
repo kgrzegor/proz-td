@@ -1,5 +1,7 @@
 package com.mygdx.game.services;
 
+import Exceptions.GoldException;
+
 /**
  * Provides adding and spending gold
  */
@@ -22,11 +24,11 @@ public class GoldService
 		this.gold += gold;
 	}
 
-	public void spendGold(int cost) throws Exception
+	public void spendGold(int cost) throws GoldException
 	{
 		if (gold >= cost)
 			gold -= cost;
 		else
-			throw new Exception("Not enough gold!\nYou need " + (cost - gold) + "g more.");
+			throw new GoldException(cost - gold);
 	}
 }

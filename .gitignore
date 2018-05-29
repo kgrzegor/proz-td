@@ -136,3 +136,4 @@ tests/build.gradle
 *.css
 
 tests/build/tmp/
+tests/.gitignore

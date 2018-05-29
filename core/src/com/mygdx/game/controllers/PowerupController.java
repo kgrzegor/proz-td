@@ -1,38 +1,45 @@
 package com.mygdx.game.controllers;
 
+import java.util.LinkedList;
 import java.util.Random;
 
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.entities.Powerup;
+import com.mygdx.game.entities.PowerupAffected;
+import com.mygdx.game.events.DamageEvent;
+import com.mygdx.game.events.FreezeEvent;
 import com.mygdx.game.screens.ui.GameButton;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.InfoLabel;
 import com.mygdx.game.services.StageService;
 
 /**
- * There should be observer somewhere
+ * Spawn powerups in different place on map each time with different effect
  */
 public class PowerupController
 {
 	private final static int respawnTime = 5;
+	private LinkedList <PowerupAffected> affected;
+	private boolean started;
+	private Random rand;
+	
 	
 	private StageService stageService;
 	private GameButton powerup;
 	private Stage stage;
-	private boolean started;
-	private final Powerup[] popout;
-	private Random rand;
 
-	public PowerupController(Stage stage, MyGdxGame game, final Powerup[] popout)
+	public PowerupController(Stage stage, MyGdxGame game)
 	{
-		this.stage = stage;
-		this.popout = popout;
-		this.started = false;
+		this.affected = new LinkedList<PowerupAffected>();
 		this.rand = new Random();
+		this.started = false;		
+		
+		this.stage = stage;
 		this.stageService = game.getStageService();
+		
 	}
 
 	/**
@@ -90,13 +97,40 @@ public class PowerupController
 
 	/**
 	 * After being clicked one of the powerup effects is chosen, infolabel with
-	 * effect is shown and powerup is removed. Needs to be change with observer
+	 * effect is shown and powerup is removed.
 	 */
 	protected void clicked(int x, int y)
 	{
-		String info = popout[rand.nextInt(popout.length)].powerUpEffect(stageService.getCurrentStage() * 10);
+		String powerupInfo = null;
+		Event powerupEffect = null;
+		
+		switch (rand.nextInt(2))
+		{
+		case 0:
+			powerupInfo = "Towers have bonus damage!\nMobs have been damaged!";
+			powerupEffect = new DamageEvent(stageService.getCurrentStage()*10);
+			break;
+		case 1:
+			powerupInfo = "Mobs have been frozen!";
+			powerupEffect = new FreezeEvent(stageService.getCurrentStage());
+			break;
+		default:
+			throw new IllegalArgumentException("Wrong powerup Effect");
+		}
+		
+		for (PowerupAffected a : affected)
+			a.fire(powerupEffect);
+		
+		new InfoLabel(stage, x, y, powerupInfo);
 		powerup.remove();
-		new InfoLabel(stage, x - 50, y, info);
 	}
 
+	public void addAffected(PowerupAffected p)
+	{
+		affected.add(p);
+	}
+	public void removeAffected(PowerupAffected p)
+	{
+		affected.remove(p);
+	}
 }

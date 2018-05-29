@@ -127,3 +127,12 @@ Thumbs.db
 !/ios-moe/xcode/*.xcodeproj/project.pbxproj
 /ios-moe/xcode/native/
 todo maps/
+tests/build.gradle
+*.bin
+*.idx
+*.xml
+*.html
+*.js
+*.css
+
+tests/build/tmp/

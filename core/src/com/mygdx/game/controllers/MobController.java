@@ -1,12 +1,10 @@
 package com.mygdx.game.controllers;
 
 import java.util.LinkedList;
-
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.entities.Powerup;
 import com.mygdx.game.entities.enemies.EnemyFactory;
 import com.mygdx.game.entities.enemies.Mob;
 import com.mygdx.game.services.GoldService;
@@ -18,7 +16,7 @@ import com.mygdx.game.services.TimeService;
 /**
  * Spawn Mobs according to stage service data and put them on stage.
  **/
-public class MobController implements Powerup
+public class MobController
 {
 	private LinkedList<Mob> mobsList;
 	private int mobsCreated;// used only in last stage
@@ -30,8 +28,9 @@ public class MobController implements Powerup
 	private PointsService pointsService;
 	private StageService stageService;
 	private TimeService timeService;
+	private PowerupController powerupController;
 
-	public MobController(Stage stage, MyGdxGame game)
+	public MobController(Stage stage, MyGdxGame game, PowerupController powerupController)
 	{
 		this.mobsList = new LinkedList<Mob>();
 		this.stage = stage;
@@ -43,6 +42,7 @@ public class MobController implements Powerup
 		this.pointsService = game.getPointsService();
 		this.stageService = game.getStageService();
 		this.timeService = game.getTimeService();
+		this.powerupController = powerupController;
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class MobController implements Powerup
 			{
 				public void run()
 				{
-					addMobToStage(waveNumber);
+					addMob(waveNumber);
 				}
 			}, 0, stageService.getSpawnTime(waveNumber), stageService.getSpawnCount() - 1);
 
@@ -79,12 +79,13 @@ public class MobController implements Powerup
 	/**
 	 * Uses factory to spawn different mob type
 	 **/
-	private void addMobToStage(int waveNumber)
+	private void addMob(int waveNumber)
 	{
 		Mob newMob = enemyFactory.createMob(stageService.getWaveType(waveNumber));
 		stage.addActor(newMob);
 		mobsList.add(newMob);
-
+		powerupController.addAffected(newMob);
+		
 		if (waveNumber == stageService.getLastStage())
 			++mobsCreated;
 	}
@@ -109,6 +110,7 @@ public class MobController implements Powerup
 	private void removeFromStage(Mob mob)
 	{
 		mobsList.remove(mob);
+		powerupController.removeAffected(mob);
 		mob.remove();
 	}
 
@@ -121,13 +123,6 @@ public class MobController implements Powerup
 			return true;
 		else
 			return false;
-	}
-
-	public String powerUpEffect(float time)
-	{
-		for (Mob m : mobsList)
-			m.freeze(time / 10);
-		return "Mobs have been frozen";
 	}
 
 	public LinkedList<Mob> getMobsList()

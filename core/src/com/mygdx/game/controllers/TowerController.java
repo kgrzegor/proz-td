@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.entities.Powerup;
 import com.mygdx.game.entities.Tower;
 import com.mygdx.game.entities.enemies.Mob;
 import com.mygdx.game.screens.ui.GameButton;
@@ -19,7 +18,7 @@ import Exceptions.GoldException;
  * Creates fields buttons where tower can be build. Can iterate over every tower
  * and check hits
  */
-public class TowerController implements Powerup
+public class TowerController
 {
 	/**
 	 * Specify where towers can be build on map
@@ -35,12 +34,14 @@ public class TowerController implements Powerup
 	private Stage stage;
 	private GoldService goldService;
 	private LinkedList<Mob> mobsList;
+	private PowerupController powerupController;
 
-	public TowerController(Stage stage, MyGdxGame game, LinkedList<Mob> mobsList)
+	public TowerController(Stage stage, MyGdxGame game, LinkedList<Mob> mobsList, PowerupController powerupController)
 	{
 		this.stage = stage;
 		this.goldService = game.getGoldService();
 		this.mobsList = mobsList;
+		this.powerupController = powerupController;
 		towers = new Tower[nFields];
 		initFieldButtons();
 	}
@@ -82,6 +83,7 @@ public class TowerController implements Powerup
 			goldService.spendGold(towerCost);
 			towers[id] = new Tower(xCords[id], yCords[id], stage, mobsList, goldService);
 			fieldButtons[id].setTouchable(Touchable.disabled);
+			powerupController.addAffected(towers[id]);
 			stage.addActor(towers[id]);
 		} catch (GoldException e)
 		{
@@ -102,12 +104,4 @@ public class TowerController implements Powerup
 		}
 	}
 
-	@Override
-	public String powerUpEffect(float strength)
-	{
-		for (Tower t : towers)
-			if (t != null)
-				t.bonusDamage(strength);
-		return "Towers have bonus damage";
-	}
 }

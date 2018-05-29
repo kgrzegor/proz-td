@@ -72,6 +72,7 @@ public class UpgradeController
 		menuOpened = true;
 
 		addStageActors();
+		updateRangeIndicator();
 		updateCostLabels();
 	}
 
@@ -100,6 +101,7 @@ public class UpgradeController
 		}).position(menuX - WIDTH, menuY).height(HEIGHT).width(WIDTH).image("upgrade/range.png").build();
 
 		rangeCostLabel = new GameLabel(menuX - WIDTH - 45, menuY + HEIGHT / 2);
+		
 	}
 
 	private void initUpgradeDamage()

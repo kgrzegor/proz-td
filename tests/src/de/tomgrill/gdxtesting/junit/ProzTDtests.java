@@ -19,7 +19,6 @@ package de.tomgrill.gdxtesting.junit;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -363,12 +362,14 @@ public class ProzTDtests
 			assertEquals("Tower fire rate at max level!", e.getMessage());
 		}
 	}
+
 	@Test
 	public void timeServiceConstructor()
 	{
 		TimeService test = new TimeService();
 		assertEquals(60, test.getTime());
 	}
+
 	@Test
 	public void timeServiceRestTime()
 	{

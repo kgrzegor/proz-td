@@ -5,6 +5,9 @@
 *.ear
 hs_err_pid*
 *.tmp
+/tests/build/test/build/reports/
+/tests/build/test/build/test-results/
+/tests/build/test/build/tmp/
 ## Robovm
 /ios/robovm-build/
 

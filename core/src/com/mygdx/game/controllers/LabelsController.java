@@ -34,8 +34,8 @@ public class LabelsController
 
 	private void initLabels(Stage stage)
 	{
-		scoreLabel = new GameLabel(stage, 20, MyGdxGame.HEIGHT - 20);
-		heartLabel = new GameLabel(stage, 105, MyGdxGame.HEIGHT - 20);
+		scoreLabel = new GameLabel(stage, 10, MyGdxGame.HEIGHT - 20);
+		heartLabel = new GameLabel(stage, 110, MyGdxGame.HEIGHT - 20);
 		stageLabel = new GameLabel(stage, 210, MyGdxGame.HEIGHT - 20);
 		timerLabel = new GameLabel(stage, 315, MyGdxGame.HEIGHT - 20);
 		goldLabel = new GameLabel(stage, 410, MyGdxGame.HEIGHT - 20);

@@ -36,10 +36,10 @@ public class PowerupListener implements EventListener
 
 		if (event instanceof DamageEvent && affected instanceof Mob)
 		{
-			DamageEvent damageEvent = (DamageEvent) event;
-			Mob mob = (Mob) affected;
-			mob.takeDamage(damageEvent.getDamage());
-			return true;
+			//DamageEvent damageEvent = (DamageEvent) event;
+			//Mob mob = (Mob) affected;
+			//mob.takeDamage(damageEvent.getDamage());
+			return false;
 		}
 
 		return false;

@@ -107,7 +107,7 @@ public class PowerupController
 		switch (rand.nextInt(2))
 		{
 		case 0:
-			powerupInfo = "Towers have bonus damage!\nMobs have been damaged!";
+			powerupInfo = "Towers have bonus damage!";
 			powerupEffect = new DamageEvent(stageService.getCurrentStage()*10);
 			break;
 		case 1:

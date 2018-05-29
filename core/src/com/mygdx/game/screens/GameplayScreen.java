@@ -6,8 +6,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controllers.MobController;
-import com.mygdx.game.controllers.PowerUpController;
-import com.mygdx.game.entities.PowerUp;
+import com.mygdx.game.controllers.PowerupController;
 import com.mygdx.game.controllers.TowerController;
 import com.mygdx.game.controllers.LabelsController;
 import com.mygdx.game.screens.ui.IClickCallback;
@@ -15,12 +14,15 @@ import com.mygdx.game.screens.ui.NextStageButton;
 import com.mygdx.game.services.PlayerLivesService;
 import com.mygdx.game.services.TimeService;
 
+/**
+ * Main screen in game. Creates core controllers and used as main loop in game.
+ */
 public class GameplayScreen extends AbstractScreen
 {
 	private Image mapImg;
 	private NextStageButton nextStageButton;
 
-	private PowerUpController powerupController;
+	private PowerupController powerupController;
 	private MobController mobController;
 	private TowerController towerController;
 	private LabelsController labelsController;
@@ -31,27 +33,28 @@ public class GameplayScreen extends AbstractScreen
 	public GameplayScreen(MyGdxGame game)
 	{
 		super(game);
+		init();
 	}
 
 	protected void init()
 	{
 		initMapTexture();
 		initNextStageButton();
-		
+
 		timeService = game.getTimeService();
 		playerLivesService = game.getPlayerLivesService();
 		
+		powerupController = new PowerupController(stage, game);
 		labelsController = new LabelsController(stage, game);
-		mobController = new MobController(stage, game);
-		towerController = new TowerController(stage, game, mobController.getMobsList());
+		mobController = new MobController(stage, game, powerupController);
+		towerController = new TowerController(stage, game, mobController.getMobsList(), powerupController);
 
-		final PowerUp[] powerupList = { mobController, towerController };
-		powerupController = new PowerUpController(stage, game, powerupList);
+		
 	}
 
 	private void initMapTexture()
 	{
-		mapImg = new Image(new Texture("map.jpg"));
+		mapImg = new Image(new Texture("map/map.jpg"));
 		stage.addActor(mapImg);
 	}
 
@@ -83,15 +86,15 @@ public class GameplayScreen extends AbstractScreen
 	{
 		towerController.checkHits();
 		labelsController.updateLabels();
-		
+
 		if (timeService.getTime() == 0)
 			mobController.startWave();
 
 		if (mobController.allEnemyKilled())
-			endGame("You won");
+			endGame("youwon");
 
 		if (playerLivesService.gameOver())
-			endGame("Game over!");
+			endGame("gameover");
 
 		stage.act();
 	}

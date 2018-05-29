@@ -8,6 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+/**
+ * Basic button used in game. Needs to have callback interface implemented.
+ */
 public class GameButton extends Button
 {
 	private GameButton(final Builder builder)

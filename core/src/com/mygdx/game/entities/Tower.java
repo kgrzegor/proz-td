@@ -1,6 +1,6 @@
 package com.mygdx.game.entities;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,35 +12,35 @@ import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.controllers.ProjectileController;
 import com.mygdx.game.controllers.UpgradeController;
 import com.mygdx.game.entities.enemies.Mob;
+import com.mygdx.game.events.PowerupListener;
 import com.mygdx.game.services.GoldService;
 
-public class Tower extends AbstractEntity
+/**
+ * Tower is built by tower controller. It have its own upgrade and projectile
+ * controller.
+ */
+public class Tower extends AbstractEntity implements PowerupAffected
 {
 	public final static int WIDHT = 74;
 	public final static int HEIGHT = 120;
 
-	private float X;
-	private float Y;
-
-	private ProjectileController projectileController;
-	private float projectileSpeed;
+	private double projectileSpeed;
 	private float fireRateCooldown;// smaller = better
 	private int damage;
 	private int range;
 	private boolean shooting;
-	private ArrayList<Mob> targets;
-	private Stage stage;
+
+	private ProjectileController projectileController;
 	private UpgradeController upgradeController;
-	private GoldService goldService;
 
-	public Tower(int xCord, int yCord, Stage stage, ArrayList<Mob> mobsList, GoldService goldService)
+	public Tower(int xCord, int yCord, Stage stage, LinkedList<Mob> mobsList, GoldService goldService)
 	{
-		super("tower.png", xCord, yCord, WIDHT, HEIGHT);
-
-		this.stage = stage;
-		this.targets = mobsList;
-		this.goldService = goldService;
+		super("map/tower.png", xCord, yCord, WIDHT, HEIGHT);
 		this.setPosition(15 + xCord, yCord + 7);
+
+		this.projectileController = new ProjectileController(this, stage, mobsList);
+		this.upgradeController = new UpgradeController(this, stage, goldService);
+
 		init();
 
 		this.startShooting();
@@ -48,14 +48,10 @@ public class Tower extends AbstractEntity
 
 	public void init()
 	{
-		this.X = this.getX(Align.center);
-		this.Y = this.getY(Align.center);
 		this.range = 200;
-		this.projectileController = new ProjectileController(X, Y, range, stage, targets);
-		this.projectileSpeed = 300f;
+		this.projectileSpeed = 500f;
 		this.fireRateCooldown = 1.5f;
 		this.damage = 10;
-		this.upgradeController = new UpgradeController(this, stage, goldService);
 
 		this.addListener(new ClickListener()
 		{
@@ -64,57 +60,38 @@ public class Tower extends AbstractEntity
 				upgradeController.showMenu();
 			}
 		});
-
 	}
 
+	/**
+	 * Recursively calls itself every 0.05 s to find target. When target have been
+	 * found calls itself after fireRateCooldown seconds.
+	 */
 	private void startShooting()
 	{
 		float fireRate;
 		if (shooting)
 			fireRate = fireRateCooldown;
 		else
-			fireRate = 0.05f;
+			fireRate = 0.05f; // check after 0.05 if target is available
 
 		Timer.schedule(new Task()
 		{
 			public void run()
 			{
-				shooting = shoot();
+				shooting = projectileController.findTarget();
 				startShooting();
 			}
-
 		}, fireRate);
-
 	}
 
-	private boolean shoot()
-	{
-		float targetX;
-		float targetY;
-		for (Mob target : targets)
-		{
-			targetX = target.getX(Align.center);
-			targetY = target.getY(Align.center);
-
-			if (Math.hypot(targetX - X, targetY - Y) <= range)
-			{
-				projectileController.add(projectileSpeed, damage, targetX, targetY);
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public ProjectileController getProjectileController()
-	{
-		return projectileController;
-	}
-
+	/**
+	 * When range is upgraded projectile often missed target on larger distance,
+	 * hence projectileSpeed needs to be upgraded
+	 */
 	public void biggerRange()
 	{
 		range += 50;
 		projectileSpeed += 100;
-		projectileController.setRange(range);
 	}
 
 	public void addDamage()
@@ -140,14 +117,17 @@ public class Tower extends AbstractEntity
 		}, 15);
 	}
 
+	/*
+	 * GETTERS
+	 */
 	public int getTowerY()
 	{
-		return (int) Y;
+		return (int) this.getY(Align.center);
 	}
 
 	public int getTowerX()
 	{
-		return (int) X;
+		return (int) this.getX(Align.center);
 	}
 
 	public int getRange()
@@ -163,5 +143,20 @@ public class Tower extends AbstractEntity
 	public float getFireRateCooldown()
 	{
 		return fireRateCooldown;
+	}
+
+	public double getProjectileSpeed()
+	{
+		return projectileSpeed;
+	}
+
+	public ProjectileController getProjectileController()
+	{
+		return projectileController;
+	}
+
+	public void initPowerupListener()
+	{
+		this.addListener(new PowerupListener(this));
 	}
 }

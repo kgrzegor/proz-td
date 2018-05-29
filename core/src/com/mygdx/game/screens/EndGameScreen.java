@@ -8,6 +8,9 @@ import com.mygdx.game.screens.ui.GameLabel;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.services.PointsService;
 
+/**
+ * Shown when game is ended. Shows current result and highscore
+ */
 public class EndGameScreen extends AbstractScreen
 {
 
@@ -19,7 +22,17 @@ public class EndGameScreen extends AbstractScreen
 		super(game);
 		pointsService = game.getPointsService();
 
-		initLabels(text);
+		endImg = new Image(new Texture("menu/" + text + ".png"));
+		stage.addActor(endImg);
+
+		init();
+	}
+
+	@Override
+	protected void init()
+	{
+
+		initLabel();
 		initMainMenuButton();
 	}
 
@@ -27,33 +40,24 @@ public class EndGameScreen extends AbstractScreen
 	{
 		GameButton mainMenuButton = new GameButton.Builder(new IClickCallback()
 		{
-			
+
 			@Override
 			public void onClick()
 			{
 				game.create();
-				
+
 			}
-		}).debug(true).position(500, 200).width(50).height(50).build();
-		
+		}).position(565, 200).width(150).height(64).image("menu/menubutton.png").build();
+
 		stage.addActor(mainMenuButton);
-		
+
 	}
 
-	private void initLabels(String text)
+	private void initLabel()
 	{
-		GameLabel gameoverLabel = new GameLabel(stage, 200, 500, "fontbig.fnt");
-		gameoverLabel.setText(text);
-
-		GameLabel scoreLabel = new GameLabel(stage, 200, 400);
-		scoreLabel.setText("Your Points: " + pointsService.getPoints() + "\nHighscore: " + pointsService.getHighscore());
-	}
-
-	@Override
-	protected void init()
-	{
-		endImg = new Image(new Texture("menu.png"));
-		stage.addActor(endImg);
+		GameLabel scoreLabel = new GameLabel(stage, 450, 370, "fontbig.fnt");
+		scoreLabel
+				.setText("Your Points: " + pointsService.getPoints() + "\nHighscore: " + pointsService.getHighscore());
 	}
 
 	public void render(float delta)

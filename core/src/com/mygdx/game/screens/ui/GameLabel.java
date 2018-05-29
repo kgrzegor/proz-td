@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
+/**
+ * Basic game label
+ */
 public class GameLabel extends Label
 {
 	public GameLabel(int X, int Y)
@@ -16,10 +19,10 @@ public class GameLabel extends Label
 
 	public GameLabel(Stage stage, int X, int Y)
 	{
-		this(X,Y);
+		this(X, Y);
 		stage.addActor(this);
 	}
-	
+
 	public GameLabel(Stage stage, int X, int Y, String font)
 	{
 		super("", prepareLabelStyle(font));
@@ -27,7 +30,7 @@ public class GameLabel extends Label
 		this.setY(Y);
 		stage.addActor(this);
 	}
-	
+
 	private static LabelStyle prepareLabelStyle(String font)
 	{
 		LabelStyle labelStyle = new LabelStyle();

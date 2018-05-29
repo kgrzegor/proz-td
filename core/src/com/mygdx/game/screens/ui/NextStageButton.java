@@ -9,6 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.screens.ui.IClickCallback;
 
+/**
+ * Button used only for calling nest stage/wave, have different image when up
+ * and down
+ */
 public class NextStageButton extends Button
 {
 	public NextStageButton(final IClickCallback callBack)
@@ -22,8 +26,8 @@ public class NextStageButton extends Button
 	{
 		this.setWidth(64);
 		this.setHeight(32);
-		this.setX(650);
-		this.setY(MyGdxGame.HEIGHT - 40);
+		this.setX(575);
+		this.setY(MyGdxGame.HEIGHT - 38);
 
 		this.addListener(new ClickListener()
 		{

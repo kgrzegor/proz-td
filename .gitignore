@@ -4,7 +4,10 @@
 *.war
 *.ear
 hs_err_pid*
-
+*.tmp
+/tests/build/test/build/reports/
+/tests/build/test/build/test-results/
+/tests/build/test/build/tmp/
 ## Robovm
 /ios/robovm-build/
 
@@ -124,3 +127,13 @@ Thumbs.db
 !/ios-moe/xcode/*.xcodeproj/project.pbxproj
 /ios-moe/xcode/native/
 todo maps/
+tests/build.gradle
+*.bin
+*.idx
+*.xml
+*.html
+*.js
+*.css
+
+tests/build/tmp/
+tests/.gitignore

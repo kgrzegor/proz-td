@@ -6,37 +6,46 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.entities.Tower;
+import com.mygdx.game.exceptions.GoldException;
+import com.mygdx.game.exceptions.UpgradeException;
 import com.mygdx.game.screens.ui.GameButton;
 import com.mygdx.game.screens.ui.GameLabel;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.InfoLabel;
 import com.mygdx.game.services.GoldService;
+import com.mygdx.game.services.UpgradeService;
 
+/**
+ * Every tower have its own upgrade controller. Shows upgrades menu with costs
+ * and range indicator when tower is clicked (buttons are created in
+ * constructor, they are only added to stage on click)
+ */
 public class UpgradeController
 {
+	/**
+	 * Width and height of buttons in upgrade menu
+	 */
 	private final static int HEIGHT = 58;
 	private final static int WIDTH = 120;
 
-	private boolean menuOpened;
-	private int menuX, menuY;
-	private int rangeCost, damageCost, fireRateCooldownCost;
-	private Tower tower;
-	private Stage stage;
 	private GameButton upgradeRange, upgradeDamage, upgradeFireRateCooldown, close;
 	private GameLabel rangeCostLabel, damageCostLabel, fireRateCooldownCostLabel;
-	private GoldService goldService;
+
+	private boolean menuOpened;
+	private int menuX, menuY;
+	private Tower tower;
+	private Stage stage;
 	private Image rangeIndicator;
+	private GoldService goldService;
+	private UpgradeService upgradeService;
 
 	public UpgradeController(Tower tower, Stage stage, GoldService goldService)
 	{
 		this.stage = stage;
 		this.tower = tower;
 		this.goldService = goldService;
-		this.rangeCost = 100;
-		this.damageCost = 100;
-		this.fireRateCooldownCost = 100;
+		this.upgradeService = new UpgradeService();
 		init();
-
 	}
 
 	private void init()
@@ -44,13 +53,18 @@ public class UpgradeController
 		this.menuX = tower.getTowerX();
 		this.menuY = 100 + tower.getTowerY();
 		menuOpened = false;
+
 		initUpgradeRange();
 		initUpgradeDamage();
 		initUpgradeFireRateCooldown();
 		initClose();
+
 		initRangeIndicator();
 	}
 
+	/**
+	 * Used when clicked on tower
+	 */
 	public void showMenu()
 	{
 		if (menuOpened)
@@ -58,7 +72,7 @@ public class UpgradeController
 		menuOpened = true;
 
 		addStageActors();
-		updateLabels();
+		updateCostLabels();
 	}
 
 	private void addStageActors()
@@ -75,64 +89,17 @@ public class UpgradeController
 		stage.addActor(fireRateCooldownCostLabel);
 	}
 
-	private void initRangeIndicator()
+	private void initUpgradeRange()
 	{
-		rangeIndicator = new Image(new Texture("rangeindicator.png"));
-		rangeIndicator.setTouchable(Touchable.disabled);
-		updateRangeIndicator();
-	}
-
-	private void updateRangeIndicator()
-	{
-		rangeIndicator.setHeight(tower.getRange() * 2);
-		rangeIndicator.setWidth(tower.getRange() * 2);
-		rangeIndicator.setX(tower.getTowerX(), Align.center);
-		rangeIndicator.setY(tower.getTowerY(), Align.center);
-	}
-
-	private void initClose()
-	{
-		close = new GameButton.Builder(new IClickCallback()
+		upgradeRange = new GameButton.Builder(new IClickCallback()
 		{
 			public void onClick()
 			{
-				closeMenu();
+				showInfoLabel(upgradeRange());
 			}
-		}).position(menuX, menuY - HEIGHT).height(HEIGHT).width(WIDTH).image("close.png").build();
-	}
+		}).position(menuX - WIDTH, menuY).height(HEIGHT).width(WIDTH).image("upgrade/range.png").build();
 
-	private void initUpgradeFireRateCooldown()
-	{
-		upgradeFireRateCooldown = new GameButton.Builder(new IClickCallback()
-		{
-			public void onClick()
-			{
-				showInfoLabel(upgradeFireRateCooldown());
-			}
-		}).position(menuX - WIDTH, menuY - HEIGHT).height(HEIGHT).width(WIDTH).image("firerate.png").build();
-
-		fireRateCooldownCostLabel = new GameLabel(menuX - WIDTH - 35, menuY - HEIGHT / 2);
-	}
-
-	protected String upgradeFireRateCooldown()
-	{
-		try
-		{
-			if (tower.getFireRateCooldown() > 0.1)
-			{
-				goldService.spendGold(fireRateCooldownCost);
-				fireRateCooldownCost += 100;
-				tower.lowerFireRateCooldown();
-				return String.format("Fire rate: %.2f", tower.getFireRateCooldown());
-				
-			} else
-			{
-				return "Tower fire rate at max level!";
-			}
-		} catch (Exception e)
-		{
-			return e.getMessage();
-		}
+		rangeCostLabel = new GameLabel(menuX - WIDTH - 45, menuY + HEIGHT / 2);
 	}
 
 	private void initUpgradeDamage()
@@ -143,76 +110,107 @@ public class UpgradeController
 			{
 				showInfoLabel(upgradeDamage());
 			}
-		}).position(menuX, menuY).height(HEIGHT).width(WIDTH).image("damage.png").build();
+		}).position(menuX, menuY).height(HEIGHT).width(WIDTH).image("upgrade/damage.png").build();
 
 		damageCostLabel = new GameLabel(menuX + WIDTH, menuY + HEIGHT / 2);
+	}
+
+	private void initUpgradeFireRateCooldown()
+	{
+		upgradeFireRateCooldown = new GameButton.Builder(new IClickCallback()
+		{
+			public void onClick()
+			{
+				showInfoLabel(upgradeFireRateCooldown());
+			}
+		}).position(menuX - WIDTH, menuY - HEIGHT).height(HEIGHT).width(WIDTH).image("upgrade/firerate.png").build();
+
+		fireRateCooldownCostLabel = new GameLabel(menuX - WIDTH - 45, menuY - HEIGHT / 2);
+	}
+
+	private void initClose()
+	{
+		close = new GameButton.Builder(new IClickCallback()
+		{
+			public void onClick()
+			{
+				closeMenu();
+			}
+		}).position(menuX, menuY - HEIGHT).height(HEIGHT).width(WIDTH).image("upgrade/close.png").build();
+	}
+
+	private void initRangeIndicator()
+	{
+		rangeIndicator = new Image(new Texture("upgrade/rangeindicator.png"));
+		rangeIndicator.setTouchable(Touchable.disabled);
+		updateRangeIndicator();
+	}
+
+	/**
+	 * When range is upgraded, indicator needs to be updates to show new range
+	 */
+	private void updateRangeIndicator()
+	{
+		rangeIndicator.setHeight(tower.getRange() * 2);
+		rangeIndicator.setWidth(tower.getRange() * 2);
+		rangeIndicator.setX(tower.getTowerX(), Align.center);
+		rangeIndicator.setY(tower.getTowerY(), Align.center);
+	}
+
+	private String upgradeFireRateCooldown()
+	{
+		try
+		{
+			goldService.spendGold(upgradeService.getFireRateCooldownCost());
+			upgradeService.nextfireRateCooldownLvl();
+			tower.lowerFireRateCooldown();
+			return String.format("Fire rate: %.2f", tower.getFireRateCooldown());
+		} catch (GoldException e)
+		{
+			return e.getMessage();
+		} catch (UpgradeException e)
+		{
+			goldService.addGold(upgradeService.getFireRateCooldownCost());
+			return e.getMessage();
+		}
+
 	}
 
 	protected String upgradeDamage()
 	{
 		try
 		{
-			if (tower.getDamage() < 100)
-			{
-				goldService.spendGold(damageCost);
-				damageCost += 100;
-				tower.addDamage();
-				return ("Damage: " + tower.getDamage());
-			} else
-			{
-				return "Tower damage at max level!";
-			}
-		} catch (Exception e)
+			goldService.spendGold(upgradeService.getDamageCost());
+			upgradeService.nextDamageLvl();
+			tower.addDamage();
+			return ("Damage: " + tower.getDamage());
+		} catch (GoldException e)
 		{
+			return e.getMessage();
+		} catch (UpgradeException e)
+		{
+			goldService.addGold(upgradeService.getDamageCost());
 			return e.getMessage();
 		}
 	}
 
-	private void initUpgradeRange()
-	{
-		upgradeRange = new GameButton.Builder(new IClickCallback()
-		{
-			public void onClick()
-			{
-				showInfoLabel(upgradeRange());
-			}
-		}).position(menuX - WIDTH, menuY).height(HEIGHT).width(WIDTH).image("range.png").build();
-
-		rangeCostLabel = new GameLabel(menuX - WIDTH - 35, menuY + HEIGHT / 2);
-	}
-
-	protected String upgradeRange()
+	private String upgradeRange()
 	{
 		try
 		{
-			if (tower.getRange() < 600)
-			{
-				goldService.spendGold(rangeCost);
-				rangeCost += 100;
-				tower.biggerRange();
-				updateRangeIndicator();
-				return ("Range: " + tower.getRange());
-			} else
-			{
-				return "Tower range at max level!";
-			}
-		} catch (Exception e)
+			goldService.spendGold(upgradeService.getRangeCost());
+			upgradeService.nextRangeLvl();
+			tower.biggerRange();
+			updateRangeIndicator();
+			return ("Range: " + tower.getRange());
+		} catch (GoldException e)
 		{
 			return e.getMessage();
+		} catch (UpgradeException e)
+		{
+			goldService.addGold(upgradeService.getDamageCost());
+			return e.getMessage();
 		}
-	}
-
-	protected void showInfoLabel(String info)
-	{
-		new InfoLabel(stage, menuX - Tower.WIDHT / 2, menuY - 100, info);
-		updateLabels();
-	}
-
-	private void updateLabels()
-	{
-		damageCostLabel.setText(damageCost + "g");
-		rangeCostLabel.setText(rangeCost + "g");
-		fireRateCooldownCostLabel.setText(fireRateCooldownCost + "g");
 	}
 
 	protected void closeMenu()
@@ -227,4 +225,32 @@ public class UpgradeController
 		close.remove();
 		menuOpened = false;
 	}
+
+	protected void showInfoLabel(String info)
+	{
+		new InfoLabel(stage, menuX - Tower.WIDHT / 2, menuY - 100, info);
+		updateCostLabels();
+	}
+
+	/**
+	 * Removes Cost Labels when upgrade at max lvl
+	 */
+	private void updateCostLabels()
+	{
+		if (upgradeService.getDamageCost() > 0)
+			damageCostLabel.setText(upgradeService.getDamageCost() + "g");
+		else
+			damageCostLabel.remove();
+
+		if (upgradeService.getRangeCost() > 0)
+			rangeCostLabel.setText(upgradeService.getRangeCost() + "g");
+		else
+			rangeCostLabel.remove();
+
+		if (upgradeService.getFireRateCooldownCost() > 0)
+			fireRateCooldownCostLabel.setText(upgradeService.getFireRateCooldownCost() + "g");
+		else
+			fireRateCooldownCostLabel.remove();
+	}
+
 }

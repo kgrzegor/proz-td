@@ -8,11 +8,15 @@ import com.mygdx.game.services.StageService;
 import com.mygdx.game.services.TimeService;
 import com.badlogic.gdx.Game;
 
+/**
+ * Main class in game, creates all services
+ **/
 public class MyGdxGame extends Game
 {
-
+	/**
+	 * Constants used by OS
+	 **/
 	public final static String GAME_NAME = "Proz Tower Defence";
-
 	public final static int WIDTH = 1280;
 	public final static int HEIGHT = 720;
 
@@ -24,11 +28,14 @@ public class MyGdxGame extends Game
 
 	private boolean paused;
 
+	/**
+	 * Called when game is opened or when new game is played
+	 **/
 	@Override
 	public void create()
 	{
-		playerLivesService = new PlayerLivesService();
-		goldService = new GoldService();
+		playerLivesService = new PlayerLivesService(3);
+		goldService = new GoldService(1000);
 		pointsService = new PointsService();
 		timeService = new TimeService();
 		stageService = new StageService();

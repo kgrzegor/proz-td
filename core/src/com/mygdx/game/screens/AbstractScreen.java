@@ -9,6 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.MyGdxGame;
 
+/**
+ * Screen used to simplify creating all other screens
+ */
 public abstract class AbstractScreen implements Screen
 {
 
@@ -26,7 +29,6 @@ public abstract class AbstractScreen implements Screen
 		stage = new Stage(new StretchViewport(MyGdxGame.WIDTH, MyGdxGame.HEIGHT, camera)); // stretched view
 		spriteBatch = new SpriteBatch();
 		Gdx.input.setInputProcessor(stage);
-		init();
 	}
 
 	protected abstract void init();

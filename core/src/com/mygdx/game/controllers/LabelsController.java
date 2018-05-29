@@ -9,6 +9,9 @@ import com.mygdx.game.services.PointsService;
 import com.mygdx.game.services.StageService;
 import com.mygdx.game.services.TimeService;
 
+/**
+ * Creates all labels in UI and updates them
+ **/
 public class LabelsController
 {
 	private GameLabel scoreLabel, heartLabel, stageLabel, timerLabel, goldLabel;
@@ -32,16 +35,20 @@ public class LabelsController
 	private void initLabels(Stage stage)
 	{
 		scoreLabel = new GameLabel(stage, 20, MyGdxGame.HEIGHT - 20);
-		heartLabel = new GameLabel(stage, 150, MyGdxGame.HEIGHT - 20);
-		stageLabel = new GameLabel(stage, 300, MyGdxGame.HEIGHT - 20);
-		timerLabel = new GameLabel(stage, 400, MyGdxGame.HEIGHT - 20);
-		goldLabel = new GameLabel(stage, 550, MyGdxGame.HEIGHT - 20);
+		heartLabel = new GameLabel(stage, 105, MyGdxGame.HEIGHT - 20);
+		stageLabel = new GameLabel(stage, 210, MyGdxGame.HEIGHT - 20);
+		timerLabel = new GameLabel(stage, 315, MyGdxGame.HEIGHT - 20);
+		goldLabel = new GameLabel(stage, 410, MyGdxGame.HEIGHT - 20);
 	}
 
+	/**
+	 * Updates all labels in game, if game is in last stage timerLabel is removed
+	 **/
 	public void updateLabels()
 	{
 		scoreLabel.setText("Score: " + pointsService.getPoints());
-		heartLabel.setText("Lives: " + playerLivesService.getLivesLeft() + " / 3");
+		heartLabel
+				.setText("Lives: " + playerLivesService.getLivesLeft() + " / " + playerLivesService.getStartingLives());
 		stageLabel.setText("Stage: " + stageService.getCurrentStage() + " / " + stageService.getLastStage());
 		goldLabel.setText("Gold: " + goldService.getGold() + " g");
 

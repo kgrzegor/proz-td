@@ -1,55 +1,61 @@
 package com.mygdx.game.controllers;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.entities.PowerUp;
 import com.mygdx.game.entities.enemies.EnemyFactory;
 import com.mygdx.game.entities.enemies.Mob;
-import com.mygdx.game.entities.enemies.MobType;
 import com.mygdx.game.services.GoldService;
 import com.mygdx.game.services.PlayerLivesService;
 import com.mygdx.game.services.PointsService;
 import com.mygdx.game.services.StageService;
 import com.mygdx.game.services.TimeService;
 
-public class MobController implements PowerUp
+/**
+ * Spawn Mobs according to stage service data and put them on stage.
+ **/
+public class MobController
 {
-	private MobType[] waveType = { MobType.Demon, MobType.Yeti };
-
-	private int mobsCreated;
+	private LinkedList<Mob> mobsList;
+	private int mobsCreated;// used only in last stage
 	private Stage stage;
+	private EnemyFactory enemyFactory;
+
 	private PlayerLivesService playerLivesService;
-	private ArrayList<Mob> mobsList;
 	private GoldService goldService;
 	private PointsService pointsService;
-	private EnemyFactory enemyFactory;
 	private StageService stageService;
 	private TimeService timeService;
+	private PowerupController powerupController;
 
-	public MobController(Stage stage, MyGdxGame game)
+	public MobController(Stage stage, MyGdxGame game, PowerupController powerupController)
 	{
+		this.mobsList = new LinkedList<Mob>();
 		this.stage = stage;
+		this.mobsCreated = 0; // used only in last stage
+		this.enemyFactory = new EnemyFactory(this);
+
 		this.playerLivesService = game.getPlayerLivesService();
 		this.goldService = game.getGoldService();
 		this.pointsService = game.getPointsService();
 		this.stageService = game.getStageService();
 		this.timeService = game.getTimeService();
-		this.mobsList = new ArrayList<Mob>();
-		this.enemyFactory = new EnemyFactory(this);
-
-		this.mobsCreated = 0;
+		this.powerupController = powerupController;
 	}
 
+	/**
+	 * Starts timer in first stage, resets it in every new wave, stops in last wave.
+	 * Spawn mob type with time between and number of them in wave according to
+	 * stageService. Increment stage counter.
+	 **/
 	public void startWave()
 	{
-		
+
 		if (stageService.getCurrentStage() == 0)
 			timeService.start();
-		
-		
+
 		if (stageService.hasNextStage())
 		{
 			stageService.nextStage();
@@ -60,9 +66,9 @@ public class MobController implements PowerUp
 			{
 				public void run()
 				{
-					addMobToStage(waveNumber);
+					addMob(waveNumber);
 				}
-			}, 0, stageService.getSpawnTime(), stageService.getSpawnCount() - 1);
+			}, 0, stageService.getSpawnTime(waveNumber), stageService.getSpawnCount() - 1);
 
 		} else
 		{
@@ -70,16 +76,24 @@ public class MobController implements PowerUp
 		}
 	}
 
-	private void addMobToStage(int waveNumber)
+	/**
+	 * Uses factory to spawn different mob type
+	 **/
+	private void addMob(int waveNumber)
 	{
-		Mob newMob = enemyFactory.createMob(waveType[waveNumber - 1]);
+		Mob newMob = enemyFactory.createMob(stageService.getWaveType(waveNumber));
 		stage.addActor(newMob);
 		mobsList.add(newMob);
-
+		powerupController.addAffected(newMob);
+		
 		if (waveNumber == stageService.getLastStage())
 			++mobsCreated;
 	}
 
+	/**
+	 * Every mob makes one damage to player, with more mob types this could be
+	 * changed
+	 **/
 	public void damagePlayer(Mob mob)
 	{
 		playerLivesService.makeDamage();
@@ -96,26 +110,23 @@ public class MobController implements PowerUp
 	private void removeFromStage(Mob mob)
 	{
 		mobsList.remove(mob);
+		powerupController.removeAffected(mob);
 		mob.remove();
 	}
 
-	public String powerUpEffect(float time)
-	{
-		for (Mob m : mobsList)
-			m.freeze(time / 10);
-		return "Mobs have been frozen";
-	}
-
-	public ArrayList<Mob> getMobsList()
-	{
-		return mobsList;
-	}
-
+	/**
+	 * Checks if player killed all enemies in all stages so game can be ended
+	 **/
 	public boolean allEnemyKilled()
 	{
 		if (mobsList.isEmpty() && mobsCreated == stageService.getSpawnCountLastStage())
 			return true;
 		else
 			return false;
+	}
+
+	public LinkedList<Mob> getMobsList()
+	{
+		return mobsList;
 	}
 }

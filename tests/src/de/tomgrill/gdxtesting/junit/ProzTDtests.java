@@ -27,9 +27,13 @@ import org.junit.runner.RunWith;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.exceptions.GoldException;
+import com.mygdx.game.exceptions.UpgradeException;
 import com.mygdx.game.services.GoldService;
 import com.mygdx.game.services.PlayerLivesService;
 import com.mygdx.game.services.PointsService;
+import com.mygdx.game.services.StageService;
+import com.mygdx.game.services.TimeService;
+import com.mygdx.game.services.UpgradeService;
 
 import de.tomgrill.gdxtesting.GdxTestRunner;
 
@@ -211,11 +215,167 @@ public class ProzTDtests
 		PointsService test = new PointsService();
 		assertEquals(0, test.getPoints());
 	}
+
 	@Test
 	public void pointsServiceAddPoints()
 	{
 		PointsService test = new PointsService();
 		test.addPoints(100);
 		assertEquals(100, test.getPoints());
+	}
+
+	@Test
+	public void stageServiceConstructor1()
+	{
+		StageService test = new StageService();
+		assertEquals(0, test.getCurrentStage());
+	}
+
+	@Test
+	public void stageServiceConstructor2()
+	{
+		StageService test = new StageService();
+		assertNotEquals(0, test.getLastStage());
+	}
+
+	@Test
+	public void stageServiceNextStage()
+	{
+		StageService test = new StageService();
+		test.nextStage();
+		assertEquals(1, test.getCurrentStage());
+	}
+
+	@Test
+	public void stageServiceNextStage2()
+	{
+		StageService test = new StageService();
+		for (int i = 0; i < 1000; ++i)
+			test.nextStage();
+		assertTrue(test.getCurrentStage() == test.getLastStage());
+	}
+
+	@Test
+	public void stageServiceHasNextStage1()
+	{
+		StageService test = new StageService();
+		for (int i = 0; i < 1000; ++i)
+			test.nextStage();
+		assertFalse(test.hasNextStage());
+	}
+
+	@Test
+	public void stageServiceHasNextStage2()
+	{
+		StageService test = new StageService();
+		assertTrue(test.hasNextStage());
+	}
+
+	@Test
+	public void upgradeServiceGetDamageCost()
+	{
+		UpgradeService test = new UpgradeService();
+		int d1 = test.getDamageCost();
+		try
+		{
+			test.nextDamageLvl();
+		} catch (UpgradeException e)
+		{
+			assertTrue(false);
+		}
+		int d2 = test.getDamageCost();
+		assertTrue(d1 < d2);
+	}
+
+	@Test
+	public void upgradeServiceNextDamageLvl()
+	{
+		UpgradeService test = new UpgradeService();
+		try
+		{
+			for (int i = 0; i < 1000; ++i)
+				test.nextDamageLvl();
+			assertTrue(false);
+		} catch (UpgradeException e)
+		{
+			assertEquals("Tower damage at max level!", e.getMessage());
+		}
+	}
+
+	@Test
+	public void upgradeServiceGetRangeCost()
+	{
+		UpgradeService test = new UpgradeService();
+		int r1 = test.getRangeCost();
+		try
+		{
+			test.nextRangeLvl();
+		} catch (UpgradeException e)
+		{
+			assertTrue(false);
+		}
+		int r2 = test.getRangeCost();
+		assertTrue(r1 < r2);
+	}
+
+	@Test
+	public void upgradeServiceNextRangeLvl()
+	{
+		UpgradeService test = new UpgradeService();
+		try
+		{
+			for (int i = 0; i < 1000; ++i)
+				test.nextRangeLvl();
+			assertTrue(false);
+		} catch (UpgradeException e)
+		{
+			assertEquals("Tower range at max level!", e.getMessage());
+		}
+	}
+
+	@Test
+	public void upgradeServiceGetFireRateCooldownCost()
+	{
+		UpgradeService test = new UpgradeService();
+		int f1 = test.getFireRateCooldownCost();
+		try
+		{
+			test.nextfireRateCooldownLvl();
+		} catch (UpgradeException e)
+		{
+			assertTrue(false);
+		}
+		int f2 = test.getFireRateCooldownCost();
+		assertTrue(f1 < f2);
+	}
+
+	@Test
+	public void upgradeServiceNextfireRateCooldownLvl()
+	{
+		UpgradeService test = new UpgradeService();
+		try
+		{
+			for (int i = 0; i < 1000; ++i)
+				test.nextfireRateCooldownLvl();
+			assertTrue(false);
+		} catch (UpgradeException e)
+		{
+			assertEquals("Tower fire rate at max level!", e.getMessage());
+		}
+	}
+	@Test
+	public void timeServiceConstructor()
+	{
+		TimeService test = new TimeService();
+		assertEquals(60, test.getTime());
+	}
+	@Test
+	public void timeServiceRestTime()
+	{
+		TimeService test = new TimeService();
+		int pre = test.getTime();
+		test.resetTime();
+		int post = test.getTime();
+		assertTrue(pre == post);
 	}
 }

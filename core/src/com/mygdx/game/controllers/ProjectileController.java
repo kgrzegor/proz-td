@@ -108,7 +108,7 @@ public class ProjectileController
 				if ((Math.abs(m.getX(Align.center) - p.getX(Align.center))) <= m.getWidth() / 2
 						&& (Math.abs(m.getY(Align.center) - p.getY(Align.center))) <= m.getHeight() / 2)
 				{
-					m.fire(p.getDamageEvent());
+					m.takeDamage(p.getDamage());
 					removeProjectile(p);
 					return;
 				}

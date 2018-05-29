@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.controllers.MobController;
 import com.mygdx.game.entities.AbstractEntity;
 import com.mygdx.game.entities.PowerupAffected;
-import com.mygdx.game.events.EnemyDamageListener;
 import com.mygdx.game.events.PowerupListener;
 
 /**
@@ -39,7 +38,6 @@ public abstract class Mob extends AbstractEntity implements PowerupAffected
 		super(name, STARTING_X, STARTING_Y, widht, height);
 		this.mobController = mobController;
 		this.currentPath = 0;
-		this.addListener(new EnemyDamageListener(this));
 
 		initStats();
 		initPowerupListener();

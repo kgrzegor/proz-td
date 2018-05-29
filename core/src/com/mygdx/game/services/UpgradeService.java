@@ -4,9 +4,9 @@ import com.mygdx.game.exceptions.UpgradeException;
 
 public class UpgradeService
 {
-	private static final int[] rangeCost = { 100, 150, 200, 300, 500, 1000, 2000, 0};
-	private static final int[] damageCost = { 200, 300, 400, 500, 1000, 2000, 3000, 5000, 0};
-	private static final int[] fireRateCooldownCost = { 200, 500, 1000, 1500, 2000, 5000, 9000, 0};
+	private static final int[] rangeCost = { 100, 150, 200, 300, 500, 1000, 2000, 0 };
+	private static final int[] damageCost = { 200, 300, 400, 500, 1000, 2000, 3000, 5000, 0 };
+	private static final int[] fireRateCooldownCost = { 200, 500, 1000, 1500, 2000, 5000, 9000, 0 };
 
 	private int rangeLvl, damageLvl, fireRateCooldownLvl;
 

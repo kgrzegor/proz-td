@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
  * Entity with given texture file, on position (X,Y), with specified width and
  * height
  */
-public abstract class AbstractEntity extends Image
+public abstract class AbstractEntity extends Image 
 {
 	public AbstractEntity(String texutreFile, int X, int Y, int width, int height)
 	{

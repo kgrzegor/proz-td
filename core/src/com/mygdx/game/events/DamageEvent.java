@@ -3,7 +3,7 @@ package com.mygdx.game.events;
 import com.badlogic.gdx.scenes.scene2d.Event;
 
 /**
- * Event used when damaging mob
+ * Event used when damaging mob or giving bonus damage to tower
  */
 public class DamageEvent extends Event
 {

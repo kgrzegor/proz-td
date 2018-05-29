@@ -9,7 +9,6 @@ import com.mygdx.game.entities.enemies.Mob;
  */
 public class EnemyDamageListener implements EventListener
 {
-
 	private final Mob mob;
 
 	public EnemyDamageListener(Mob mob)
@@ -29,5 +28,4 @@ public class EnemyDamageListener implements EventListener
 
 		return true;
 	}
-
 }

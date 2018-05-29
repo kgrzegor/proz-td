@@ -1,4 +1,4 @@
-package Exceptions;
+package com.mygdx.game.exceptions;
 
 @SuppressWarnings("serial")
 public class UpgradeException extends Exception

@@ -1,6 +1,6 @@
 package com.mygdx.game.services;
 
-import Exceptions.UpgradeException;
+import com.mygdx.game.exceptions.UpgradeException;
 
 public class UpgradeService
 {

@@ -1,6 +1,6 @@
 package com.mygdx.game.services;
 
-import Exceptions.GoldException;
+import com.mygdx.game.exceptions.GoldException;
 
 /**
  * Provides adding and spending gold

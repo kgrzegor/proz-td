@@ -6,15 +6,14 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.entities.Tower;
+import com.mygdx.game.exceptions.GoldException;
+import com.mygdx.game.exceptions.UpgradeException;
 import com.mygdx.game.screens.ui.GameButton;
 import com.mygdx.game.screens.ui.GameLabel;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.InfoLabel;
 import com.mygdx.game.services.GoldService;
 import com.mygdx.game.services.UpgradeService;
-
-import Exceptions.GoldException;
-import Exceptions.UpgradeException;
 
 /**
  * Every tower have its own upgrade controller. Shows upgrades menu with costs

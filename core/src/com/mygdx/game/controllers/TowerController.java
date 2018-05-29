@@ -7,12 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.entities.Tower;
 import com.mygdx.game.entities.enemies.Mob;
+import com.mygdx.game.exceptions.GoldException;
 import com.mygdx.game.screens.ui.GameButton;
 import com.mygdx.game.screens.ui.IClickCallback;
 import com.mygdx.game.screens.ui.InfoLabel;
 import com.mygdx.game.services.GoldService;
-
-import Exceptions.GoldException;
 
 /**
  * Creates fields buttons where tower can be build. Can iterate over every tower

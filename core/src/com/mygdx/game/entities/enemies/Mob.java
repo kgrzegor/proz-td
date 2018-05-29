@@ -6,13 +6,15 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.controllers.MobController;
 import com.mygdx.game.entities.AbstractEntity;
+import com.mygdx.game.entities.PowerupAffected;
 import com.mygdx.game.events.EnemyDamageListener;
+import com.mygdx.game.events.PowerupListener;
 
 /**
- * Entity that follows map path. Projectile controller aims for it. Can be damaged
- * when hit by projectile. Removed from stage when have no health
+ * Entity that follows map path. Projectile controller aims for it. Can be
+ * damaged when hit by projectile. Removed from stage when have no health
  */
-public abstract class Mob extends AbstractEntity
+public abstract class Mob extends AbstractEntity implements PowerupAffected
 {
 	/**
 	 * Cords (x,y) are points where mob turn either left or right. Starting x and y
@@ -26,7 +28,7 @@ public abstract class Mob extends AbstractEntity
 
 	private MobController mobController;
 	private int currentPath;
-	
+
 	protected int health;
 	protected int gold;
 	protected int points;
@@ -38,11 +40,17 @@ public abstract class Mob extends AbstractEntity
 		this.mobController = mobController;
 		this.currentPath = 0;
 		this.addListener(new EnemyDamageListener(this));
-		
+
 		initStats();
+		initPowerupListener();
 	}
 
 	abstract void initStats();
+
+	public void initPowerupListener()
+	{
+		this.addListener(new PowerupListener(this));
+	}
 
 	/**
 	 * Uses cords to define path for mob

@@ -12,13 +12,14 @@ import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.controllers.ProjectileController;
 import com.mygdx.game.controllers.UpgradeController;
 import com.mygdx.game.entities.enemies.Mob;
+import com.mygdx.game.events.PowerupListener;
 import com.mygdx.game.services.GoldService;
 
 /**
  * Tower is built by tower controller. It have its own upgrade and projectile
  * controller.
  */
-public class Tower extends AbstractEntity
+public class Tower extends AbstractEntity implements PowerupAffected
 {
 	public final static int WIDHT = 74;
 	public final static int HEIGHT = 120;
@@ -152,5 +153,10 @@ public class Tower extends AbstractEntity
 	public ProjectileController getProjectileController()
 	{
 		return projectileController;
+	}
+
+	public void initPowerupListener()
+	{
+		this.addListener(new PowerupListener(this));
 	}
 }
